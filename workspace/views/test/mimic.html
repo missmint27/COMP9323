@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>界面风格</title>
+<style type="text/css">
+body,html{
+ height:100%;
+ margin:0 auto;
+}
+*{
+ margin:0;
+ padding:0;
+}
+#left{
+ width:180px;
+ padding-right:20px;
+ float:left;
+ background:green;
+ height:100%;
+}
+#left .sidebarbox{
+ margin:1em;
+ border:1px dotted #fff;
+ background:#9ff;
+ 
+}
+.sidebarbox h4{
+  background:#fff;
+ cursor:move;
+}
+.sidebarbox p{
+ padding:1em 0;
+}
+#left #control{
+ width:8px;
+ float:right;
+ border:1px solid #000;
+ border-top-width:0;
+ border-bottom-width:0;
+ background:#ccc;
+ cursor: e-resize;
+ height:100%;
+ position:absolute;
+}
+#right{
+ margin-left:-200px;
+ background:yellow;
+ width:auto;
+ height:100%;
+}
+#right div{
+ margin:0 1em 2em 1em;;
+ background:#f96;
+ border:1px solid #999;
+}
+#right div h4{
+ background:#fc9;
+ cursor:move;
+}
+</style>
+<script language="javascript">
+ var offsetX = 0;
+ var isDrag = false;
+ var MAX_LEFT_WIDTH = 500;
+ var MIN_LEFT_WIDTH = 230;
+ var currentLeft = MIN_LEFT_WIDTH;
+ var leftWidth = MIN_LEFT_WIDTH - 10;
+
+ function $(id){
+   return document.getElementById(id);
+ } 
+ function stopEvent(evt){
+     var event = window.event?window.event:evt;
+     if (event.preventDefault) {
+       event.preventDefault();
+       event.stopPropagation();
+     } else {
+       event.returnValue = false;
+     }
+ } 
+ function drag(){
+  $('left').style.width = MIN_LEFT_WIDTH - 10;
+  $('control').style.left = MIN_LEFT_WIDTH;
+  
+  $('control').onmousedown = function(evt){
+   var evt = window.event?window.event:evt;
+   if ((evt.which && evt.which == 1 ) || (evt.button && evt.button == 1)){
+    isDrag = true;
+    offsetX = evt.clientX;
+    zjhDrag(evt);
+   }
+   stopEvent(evt);
+  }  
+  document.onmousemove = function(evt){
+   if(isDrag){
+    var evt = window.event?window.event:evt;
+    if(evt.clientX > MAX_LEFT_WIDTH){
+     $('control').style.left = MAX_LEFT_WIDTH + 'px';
+     $('left').style.width = (MAX_LEFT_WIDTH - 10) + 'px';
+    }else if(evt.clientX < MIN_LEFT_WIDTH){
+     $('control').style.left = MIN_LEFT_WIDTH + 'px';
+     $('left').style.width = (MIN_LEFT_WIDTH - 10) + 'px';
+    }else{
+     $('control').style.left = evt.clientX - offsetX + currentLeft + 'px';
+     $('left').style.width = evt.clientX - offsetX + leftWidth +'px';
+    }
+
+    stopEvent(evt);
+   }
+  }  
+  document.onmouseup = function(evt){
+   isDrag = false;
+   var evt = window.event?window.event:evt;
+   zjhDrag(evt);
+   stopEvent(evt);
+  }
+  function zjhDrag(evt){
+   if(evt.clientX > MAX_LEFT_WIDTH){
+    currentLeft = MAX_LEFT_WIDTH;
+    leftWidth = MAX_LEFT_WIDTH - 10;
+   }else if(evt.clientX < MIN_LEFT_WIDTH){
+    currentLeft = MIN_LEFT_WIDTH;
+    leftWidth = MIN_LEFT_WIDTH - 10;
+   }else{
+    currentLeft = parseInt($('control').style.left);
+    leftWidth = parseInt($('left').style.width);
+   }
+  }
+ }
+</script>
+</head>
+
+<body onLoad="drag();">
+<div id="left" style="width:180px;">
+ <div id="control" style="left:190px;">&nbsp;</div>
+ <div class="sidebarbox">
+  <h4>This is left one</h4>
+  <p>Content here:)</p>
+ </div>
+ <div class="sidebarbox">
+  <h4>This is left two</h4>
+  <p>Content here:)</p>
+ </div>
+ <div class="sidebarbox">
+  <h4>This is left three</h4>
+  <p>Content here:)</p>
+ </div>
+</div>
+<div id="right" style="margin-left:-200px;">
+ <div>
+  <h4>This is right one</h4>
+  <p>Content here^_^</p>
+ </div>
+ <div>
+  <h4>This is right two</h4>
+  <p>Content here^_^</p>
+ </div>
+ <div>
+  <h4>This is right three</h4>
+  <p>Content here^_^</p>
+ </div>
+</div>
+</body>
+</html>
