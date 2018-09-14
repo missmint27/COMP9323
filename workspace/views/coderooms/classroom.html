@@ -21,7 +21,7 @@
 				<div class="nav-name">
 					<a href="../pages/homepage.html">OurCodes</a>
 				</div>
-				
+
 				<img src="../../public/img/avatar/avatar3.png" class="avatar"  alt="">
 				<!--Can be replaced after login-->
 				<div class="nav-username">
@@ -49,7 +49,7 @@
                          onmouseover="this.src='../../public/icon/participant-4abdac.png'"
                          onmouseout="this.src='../../public/icon/participant-fff.png'">
                 </div>
-				
+
 				<div class="nav-bottom">
 					<div class="nav-bo">
 						<img class="nav-icon" onclick="javascript:location.href='setting.html'" src="../../public/icon/settings-fff.png"
@@ -62,17 +62,47 @@
 					<div class="nav-slash">/</div>
 					<div class="nav-menu"><a class="nav-sign" href="../pages/signin.html">Sign in</a></div>
 				</div>
-				
+
 			</div>
 		</nav>
 
+        <script type="text/javascript">
+            /*This part is for search bar*/
+            function searchBar() {
+                var x = document.getElementById("hidDiv");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+            function advSearch() {
+                var x = document.getElementById("hidAdv");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+
+        </script>
 		<div class="block-1">
 			<div class="b1-main">
                 <div class="b1-search">
-                    <!--点击搜索图标显示这个框子 现在我只是画出来。。。-->
-                    <img class="nav-icon" onclick="javascript:location.href='search.html'" src="../../public/icon/search-fff.png"
-                         onmouseover="this.src='../../public/icon/search-e6e6e6.png'"
-                         onmouseout="this.src='../../public/icon/search-fff.png'"/>
+                    <div class="search-icon">
+                        <img class="nav-icon" src="../../public/icon/search-fff.png"
+                             onmouseover="this.src='../../public/icon/search-e6e6e6.png'"
+                             onmouseout="this.src='../../public/icon/search-fff.png'"
+                             onclick="searchBar()" style="display: inline-block;float: left;"/>
+                    </div>
+                    <div id="hidDiv" style="display: none;">
+                        <input type="text" class="b1-searcher" placeholder="e.g. Ella">
+
+                        <input class="b1-advsearch btn-primary" type="button" value="+ Advanced Search" onclick="advSearch()">
+                    </div>
+                    <div id="hidAdv" class="b1-divadv" style="display: none;">
+
+                    </div>
                 </div>
 				<div class="b1-codes">
 
@@ -85,13 +115,13 @@
 			</div>
 
 			<div class="b1-result">
-				
+
 			</div>
 		</div>
 
 		<div class="block-2">
 			<div class="b2-review">
-				
+
 			</div>
 		</div>
 	</body>
