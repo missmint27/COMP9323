@@ -36,20 +36,21 @@
 						<a href="follow.html">Follower</a>
 					</div>
 				</div>
+                <!--click these two buttons show and hide a div of contents-->
                 <div class="nav-circle">
-                    <img src="../../public/icon/folder.png" id="project-list" class="circle-icon">
+                    <img src="../../public/icon/folder-fff.png" class="circle-icon" id="project-list"
+                        onmouseover="this.src='../../public/icon/folder-4abdac.png'"
+                        onmouseout="this.src='../../public/icon/folder-fff.png'">
+                    <!--怎么可以一起变呀？-->
                 </div>
 
                 <div class="nav-circle">
-                    <img src="../../public/icon/participant.png" class="circle-icon" id="participant-list">
+                    <img src="../../public/icon/participant-fff.png" class="circle-icon" id="participant-list"
+                         onmouseover="this.src='../../public/icon/participant-4abdac.png'"
+                         onmouseout="this.src='../../public/icon/participant-fff.png'">
                 </div>
 				
 				<div class="nav-bottom">
-					<div class="nav-bo">
-						<img class="nav-icon" onclick="javascript:location.href='search.html'" src="../../public/icon/search-fff.png"
-						onmouseover="this.src='../../public/icon/search-e6e6e6.png'"
-						onmouseout="this.src='../../public/icon/search-fff.png'"/>
-					</div>
 					<div class="nav-bo">
 						<img class="nav-icon" onclick="javascript:location.href='setting.html'" src="../../public/icon/settings-fff.png"
 						onmouseover="this.src='../../public/icon/settings-e6e6e6.png'"
@@ -67,8 +68,22 @@
 
 		<div class="block-1">
 			<div class="b1-main">
-				
+                <div class="b1-search">
+                    <!--点击搜索图标显示这个框子 现在我只是画出来。。。-->
+                    <img class="nav-icon" onclick="javascript:location.href='search.html'" src="../../public/icon/search-fff.png"
+                         onmouseover="this.src='../../public/icon/search-e6e6e6.png'"
+                         onmouseout="this.src='../../public/icon/search-fff.png'"/>
+                </div>
+				<div class="b1-codes">
+
+                </div>
+                <div class="b1-button">
+                    <button class="btn-primary" style="width: 4rem;">RUN</button>
+                    <!--点击换成HIDE COMMENTS-->
+                    <button class="btn-primary" style="width: 10rem;margin-left: 5px;">SHOW COMMENTS</button>
+                </div>
 			</div>
+
 			<div class="b1-result">
 				
 			</div>

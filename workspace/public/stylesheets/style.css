@@ -9,7 +9,11 @@ body{
 	background-color: #fff; 
 	color: #999999;
 }
-button{}
+button{
+  width: 4rem;
+  height: 2rem;
+  font-size: 13px;
+}
 .container {
   width: 100%;
   padding-right: 15px;
@@ -40,6 +44,12 @@ a:hover, a:focus{
   width: 4rem;
   height: 2rem;
   font-size: 13px;
+}
+.btn-primary{
+  border: 1px solid #ffffff;
+  background-color: #666666;
+  color: #ffffff;
+  border-radius: 5%;
 }
 
 /*---------CLASSROOM PAGE------------*/
@@ -88,9 +98,27 @@ a:hover, a:focus{
   font-size: 13px;
   text-align: center;
 }
+.nav-circle{
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #fff;
+  margin-top: 20px;
+  margin-left: 16%;
+  text-align: center;
+  vertical-align: center;
+}
+.nav-circle:hover, .nav-circle:focus{
+  border: 2px solid #4abdac;
+  background-color: #fff;
+}
+.circle-icon{
+  margin-top: 8px;
+  margin-left: 2px;
+}
 .nav-sign{
   font-size: 14px;
-  width: 100%
+  width: 100%;
   margin-bottom:20px;
 }
 .nav-sign div{
@@ -99,7 +127,7 @@ a:hover, a:focus{
   display: inline-block;
 }
 .nav-bottom{
-  margin-top: 480px;
+  margin-top: 330px;
   margin-left: 32%;
 }
 .nav-bo{
@@ -121,8 +149,26 @@ a:hover, a:focus{
 .b1-main{
   background-color: #666666;
   height: 70%;/*height need to be Responsive*/
-  width: 100%
+  width: 100%;
   overflow: scroll;
+}
+.b1-search{
+  height: 25px;
+  width: 99.8%;
+  border: 1px dotted #ffffff;
+}
+.b1-codes{
+  height: 82%;
+  width: 98%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px 9px;
+  border: 1px double #ffffff;
+  overflow: scroll;
+}
+.b1-button{
+  padding-left: 20px;
+  height: 20px;
 }
 .b1-result{
   background-color: #f7b733;
