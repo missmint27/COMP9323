@@ -71,9 +71,11 @@
             /*This part is for search bar*/
             function searchBar() {
                 var x = document.getElementById("hidDiv");
+                var y = document.getElementById("hidAdv");
                 if (x.style.display === "none") {
                     x.style.display = "block";
                 } else {
+                    y.style.display = "none";
                     x.style.display = "none";
                 }
             }
@@ -102,6 +104,21 @@
                         <input class="b1-advsearch btn-primary" type="button" value="+ Advanced Search" onclick="advSearch()">
                     </div>
                     <div id="hidAdv" class="b1-divadv" style="display: none;">
+                        <ul class="b1-adv-ul">
+                            <li class="b1-adv-li">
+                                <input type="checkbox" name="advancedsearch" value="title" id="advs1">
+                                <label for="advs1">Title</label>
+                            </li>
+                            <li class="b1-adv-li">
+                                <input type="checkbox" name="advancedsearch" value="author" id="advs2">
+                                <label for="advs2">Author</label>
+                            </li>
+                            <li class="b1-adv-li">
+                                <input type="checkbox" name="advancedsearch" value="Content" id="advs3">
+                                <label for="advs3">Content</label>
+                            </li>
+                        </ul>
+                        <button class="btn-primary">Search</button>
 
                     </div>
                 </div>
@@ -124,6 +141,15 @@
 			<div class="b2-review">
 
 			</div>
+            <div class="b2-leave">
+                <div class="b2-permission">
+                    <h6>Permission:</h6>
+                    <p>Read</p>
+                    <p>Write</p>
+                </div>
+                <button class="btn-primary" style="background-color:#cc0000;width: 150px;">LEAVE ROOM</button>
+            </div>
+
 		</div>
 	</body>
 </html>

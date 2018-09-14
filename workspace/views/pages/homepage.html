@@ -62,14 +62,16 @@
 
 		<script type="text/javascript">
 			/*This part is for search bar*/
-			function searchBar() {
-				var x = document.getElementById("hidDiv");
-				if (x.style.display === "none") {
-					x.style.display = "block";
-				} else {
-					x.style.display = "none";
-				}
-			}
+            function searchBar() {
+                var x = document.getElementById("hidDiv");
+                var y = document.getElementById("hidAdv");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    y.style.display = "none";
+                    x.style.display = "none";
+                }
+            }
             function advSearch() {
                 var x = document.getElementById("hidAdv");
                 if (x.style.display === "none") {
@@ -93,16 +95,226 @@
 					<input class="b1-advsearch btn-primary" type="button" value="+ Advanced Search" onclick="advSearch()">
 				</div>
 				<div id="hidAdv" class="b1-divadv" style="display: none;">
+                    <ul class="b1-adv-ul">
+                        <li class="b1-adv-li">
+                            <input type="checkbox" name="advancedsearch" value="title" id="advs1">
+                            <label for="advs1">Title</label>
+                        </li>
+                        <li class="b1-adv-li">
+                            <input type="checkbox" name="advancedsearch" value="author" id="advs2">
+                            <label for="advs2">Author</label>
+                        </li>
+                        <li class="b1-adv-li">
+                            <input type="checkbox" name="advancedsearch" value="Content" id="advs3">
+                            <label for="advs3">Content</label>
+                        </li>
+                    </ul>
+                    <button class="btn-primary">Search</button>
 
 				</div>
 			</div>
 			<div class="b4-classrooms">
+                <div class="b4-my">
+                    <h3>My Coderooms:</h3>
+                    <div class="b4-block">
 
+                        <div class="row">
+                            <div class="b4-subblock">
+                                <div class="b4-submain">
+                                    <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                                    <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                                    <h5 style="width: 50%;">Author: Ella</h5>
+                                    <div class="b4-participants">
+                                        <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                        <img class="b4-avatar" src="../../public/icon/user0.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user1.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user2.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user3.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user4.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user5.png" />
+                                    </div>
+                                </div>
+                                <div class="b4-subside">
+                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="b4-subblock">
+                                <div class="b4-submain">
+                                    <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                                    <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                                    <h5 style="width: 50%;">Author: Ella</h5>
+                                    <div class="b4-participants">
+                                        <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                        <img class="b4-avatar" src="../../public/icon/user0.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user1.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user2.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user3.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user4.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user5.png" />
+                                    </div>
+                                </div>
+                                <div class="b4-subside">
+                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="b4-subblock">
+                                <div class="b4-submain">
+                                    <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                                    <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                                    <h5 style="width: 50%;">Author: Ella</h5>
+                                    <div class="b4-participants">
+                                        <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                        <img class="b4-avatar" src="../../public/icon/user0.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user1.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user2.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user3.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user4.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user5.png" />
+                                    </div>
+                                </div>
+                                <div class="b4-subside">
+                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="b4-subblock">
+                                <div class="b4-submain">
+                                    <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                                    <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                                    <h5 style="width: 50%;">Author: Ella</h5>
+                                    <div class="b4-participants">
+                                        <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                        <img class="b4-avatar" src="../../public/icon/user0.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user1.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user2.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user3.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user4.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user5.png" />
+                                    </div>
+                                </div>
+                                <div class="b4-subside">
+                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+
+                </div>
+                <div class="b4-others">
+                    <h3>Other Coderooms:</h3>
+                    <div class="b4-block">
+                        <div class="row">
+                            <div class="b4-subblock">
+                                <div class="b4-submain">
+                                    <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                                    <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                                    <h5 style="width: 50%;">Author: Ella</h5>
+                                    <div class="b4-participants">
+                                        <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                        <img class="b4-avatar" src="../../public/icon/user0.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user1.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user2.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user3.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user4.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user5.png" />
+                                    </div>
+                                </div>
+                                <div class="b4-subside">
+                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="b4-subblock">
+                                <div class="b4-submain">
+                                    <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                                    <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                                    <h5 style="width: 50%;">Author: Ella</h5>
+                                    <div class="b4-participants">
+                                        <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                        <img class="b4-avatar" src="../../public/icon/user0.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user1.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user2.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user3.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user4.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user5.png" />
+                                    </div>
+                                </div>
+                                <div class="b4-subside">
+                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="b4-subblock">
+                                <div class="b4-submain">
+                                    <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                                    <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                        NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                                    <h5 style="width: 50%;">Author: Ella</h5>
+                                    <div class="b4-participants">
+                                        <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                        <img class="b4-avatar" src="../../public/icon/user0.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user1.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user2.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user3.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user4.png" />
+                                        <img class="b4-avatar" src="../../public/icon/user5.png" />
+                                    </div>
+                                </div>
+                                <div class="b4-subside">
+                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
 			</div>
-
-
 		</div>
 
 
 	</body>
+    <div>
+        Icons made by
+        <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a>
+        from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by
+        <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+    </div>
 </html>
