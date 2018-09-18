@@ -82,37 +82,44 @@
             }
 		</script>
 		<div class="block-4">
-			<div class="b1-search">
-				<div class="search-icon">
-					<img class="nav-icon" src="../../public/icon/search-fff.png"
-						 onmouseover="this.src='../../public/icon/search-e6e6e6.png'"
-						 onmouseout="this.src='../../public/icon/search-fff.png'"
-						 onclick="searchBar()" style="display: inline-block;float: left;"/>
-				</div>
-				<div id="hidDiv" style="display: none;">
-					<input type="text" class="b1-searcher" placeholder="e.g. Ella">
+            <div class="b4-menu">
+                <div class="b1-search">
+                    <div class="search-icon">
+                        <img class="nav-icon" src="../../public/icon/search-fff.png"
+                             onmouseover="this.src='../../public/icon/search-e6e6e6.png'"
+                             onmouseout="this.src='../../public/icon/search-fff.png'"
+                             onclick="searchBar()" style="display: inline-block;float: left;"/>
+                    </div>
+                    <div id="hidDiv" style="display: none;">
+                        <input type="text" class="b1-searcher" placeholder="e.g. Ella">
 
-					<input class="b1-advsearch btn-primary" type="button" value="+ Advanced Search" onclick="advSearch()">
-				</div>
-				<div id="hidAdv" class="b1-divadv" style="display: none;">
-                    <ul class="b1-adv-ul">
-                        <li class="b1-adv-li">
-                            <input type="checkbox" name="advancedsearch" value="title" id="advs1">
-                            <label for="advs1">Title</label>
-                        </li>
-                        <li class="b1-adv-li">
-                            <input type="checkbox" name="advancedsearch" value="author" id="advs2">
-                            <label for="advs2">Author</label>
-                        </li>
-                        <li class="b1-adv-li">
-                            <input type="checkbox" name="advancedsearch" value="Content" id="advs3">
-                            <label for="advs3">Content</label>
-                        </li>
-                    </ul>
-                    <button class="btn-primary">Search</button>
+                        <input class="b1-advsearch btn-primary" type="button" value="+ Advanced Search" onclick="advSearch()">
+                    </div>
+                    <div id="hidAdv" class="b1-divadv" style="display: none;">
+                        <ul class="b1-adv-ul">
+                            <li class="b1-adv-li">
+                                <input type="checkbox" name="advancedsearch" value="title" id="advs1">
+                                <label for="advs1">Title</label>
+                            </li>
+                            <li class="b1-adv-li">
+                                <input type="checkbox" name="advancedsearch" value="author" id="advs2">
+                                <label for="advs2">Author</label>
+                            </li>
+                            <li class="b1-adv-li">
+                                <input type="checkbox" name="advancedsearch" value="Content" id="advs3">
+                                <label for="advs3">Content</label>
+                            </li>
+                        </ul>
+                        <button class="btn-primary">Search</button>
 
-				</div>
-			</div>
+                    </div>
+                </div>
+                <div class="b4-1" style="float: right; margin-right: 30px;">
+                    <button class="btn-primary" style="width:7rem;height: 2rem;font-size: 10px;">Create CodeRoom</button>
+                </div>
+            </div>
+
+
 			<div class="b4-classrooms">
                 <div class="b4-my">
                     <h3>My Coderooms:</h3>

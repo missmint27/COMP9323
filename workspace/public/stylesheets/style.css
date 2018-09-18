@@ -450,7 +450,13 @@ search-icon{
     display: inline-block;
     float: left;
 }
+.b4-menu{
+    display: block;
+    height: 3rem;
+    width: 100%;
+}
 .b4-classrooms{
+    display: block;
     padding-top:30px;
     padding-left: 50px;
     padding-bottom: 200px;
