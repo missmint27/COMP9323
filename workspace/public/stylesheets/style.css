@@ -42,8 +42,8 @@ a:hover, a:focus{
 }
 
 .btn-primary{
-    border: 2px solid #ffffff;
-    background-color: #4abdac;
+    border: 2px solid #f7b733;
+    background-color: #f7b733;
     color: #ffffff;
     border-radius: 5%;
 }
@@ -183,7 +183,7 @@ input[type=checkbox]:checked + label:before {
     float: left;
 }
 .b1-main{
-    background-color: #666666;
+    background-color: #d9d9d9;
     height: 70%;/*height need to be Responsive*/
     width: 100%;
     overflow: scroll;
@@ -263,7 +263,7 @@ search-icon{
     height: 20px;
 }
 .b1-result{
-    background-color: #f7b733;
+    background-color: #49c3b18c;
     height: 30%;/*height need to be Responsive*/
     overflow: scroll;
 }
@@ -281,14 +281,14 @@ search-icon{
 .b2-review{
     width: 100%;
     height: 90%;/*height need to be Responsive*/
-    background-color: #dfdce3;
+    background-color: #ffc85794;
     overflow: scroll;
 }
 .b2-leave{
      width: 100%;
      height: 10%;
      text-align: center;
-     background-color: #dfdce3;
+     background-color: #ffc85794;
 }
 .b2-permission{
     width: 100%;
@@ -446,7 +446,7 @@ search-icon{
 .block-4{
     width:92%;
     height:805px;
-    background-color: #666666;
+    background-color: #d9d9d9;
     display: inline-block;
     float: left;
 }
@@ -464,7 +464,7 @@ search-icon{
     overflow: scroll;
 }
 .b4-classrooms h3{
-    color: #ffffff;
+    color: #666666;
     font-weight: 300;
 }
 .b4-block{
@@ -480,17 +480,17 @@ search-icon{
     float: left;
     width: 77%;
     height: 100%;
-    background-color: #f7b733;
+    background-color: #4abdac;
     padding-left: 30px;
 }
 .b4-submain h4{
-    color: #666666;
+    color: #ffffff;
     font-weight: 600;
     padding-top: 10px;
     margin: 0;
 }
 .b4-submain P{
-    color: #666666;
+    color: #ffffff;
     font-weight: 300;
     font-size: 13px;
     margin: 0;
@@ -498,7 +498,7 @@ search-icon{
 .b4-submain h5{
     display: inline-block;
     float: left;
-    color: #666666;
+    color: #ffffff;
     font-weight: 500;
     font-size: 13px;
     padding-top: 10px;
@@ -513,7 +513,7 @@ search-icon{
 .b4-avatar{
     width: 24px;
     height: 24px;
-    border:2px solid #f7b733;
+    border:2px solid #4abdac;
     border-radius: 50%;
     overflow: hidden;
     align-items: center;
@@ -525,7 +525,7 @@ search-icon{
     float: left;
     width:20%;
     height:100%;
-    background-color: #4abdac;
+    background-color: #f7b733;
     text-align: center;
 }
 .b4-subside button{
