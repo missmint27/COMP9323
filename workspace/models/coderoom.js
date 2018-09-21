@@ -29,4 +29,11 @@ var coderoomSchema = new mongoose.Schema({
     ]
 });
 
+// Virtual for author's URL
+coderoomSchema
+    .virtual('url')
+    .get(function () {
+        return '/api/coderoom/' + this._id;
+    });
+
 module.exports = mongoose.model("coderoom", coderoomSchema);

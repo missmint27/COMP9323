@@ -27,7 +27,11 @@ var UserSchema = new mongoose.Schema({
     ],
     isAdmin: {type: Boolean, default: false},
 });
-
+// Virtual for author's URL
+UserSchema
+    .virtual('url')
+    .get(function () {
+        return '/api/users/' + this._id;
+    });
 UserSchema.plugin(passportLocalMongoose);
-
 module.exports = mongoose.model("User", UserSchema);

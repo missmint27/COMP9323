@@ -9,5 +9,10 @@ var projectSchema = new mongoose.Schema({
     }
     ],
 });
-
+// Virtual for author's URL
+projectSchema
+    .virtual('url')
+    .get(function () {
+        return '/api/projects/' + this._id;
+    });
 module.exports = mongoose.model("project", projectSchema);

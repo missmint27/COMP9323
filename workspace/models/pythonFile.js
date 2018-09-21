@@ -12,5 +12,10 @@ var pythonFileSchema = new mongoose.Schema({
         }
     ],
 });
-
+// Virtual for author's URL
+pythonFileSchema
+    .virtual('url')
+    .get(function () {
+        return '/api/python_files/' + this._id;
+    });
 module.exports = mongoose.model("PythonFile", pythonFileSchema);
