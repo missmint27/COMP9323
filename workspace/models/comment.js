@@ -11,7 +11,14 @@ var commentSchema = mongoose.Schema({
             ref: "User"
         },
         username: String
-    }
+    },
+    start: Number,
+    end: Number,
 });
-
+// Virtual for author's URL
+commentSchema
+    .virtual('url')
+    .get(function () {
+        return '/api/comments/' + this._id;
+    });
 module.exports = mongoose.model("Comment", commentSchema);
