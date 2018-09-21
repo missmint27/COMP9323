@@ -1,32 +1,32 @@
 var mongoose = require("mongoose");
 
 var coderoomSchema = new mongoose.Schema({
-   name: String,
-   image: String,
-   upvote:Number,
-   downVote:Number,
-   rank:Number,
-   description:String,
-   code:[{
-       type:String,
-   }],
-   author: {
+    name: String,
+    upvote: Number,
+    downVote: Number,
+    rank: Number,
+    description: String,
+    permitted_user: String,
+    project: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Project"
+    },
+    author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
         username: String
     },
-    
-   comments: [
-      {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: "Comment"
-      }
-   ]
-   
-   
-   
+    users: [
+        {
+            id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            username: String
+        }
+    ]
 });
 
 module.exports = mongoose.model("coderoom", coderoomSchema);
