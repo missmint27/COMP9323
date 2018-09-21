@@ -6,6 +6,20 @@
         <link rel="icon" href="../../public/icon/website.png" type="image/x-icon">
         <link rel="stylesheet" href="../../public/stylesheets/style.css">
 	    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 	</head>
 	<script>
@@ -102,7 +116,7 @@
                     <div id="hidDiv" style="display: none;">
                         <input type="text" class="b1-searcher" placeholder="e.g. Ella">
 
-                        <input class="b1-advsearch btn-primary" type="button" value="+ Advanced Search" onclick="advSearch()">
+                        <input class="b1-advsearch my-button" type="button" value="+ Advanced Search" onclick="advSearch()">
                     </div>
                     <div id="hidAdv" class="b1-divadv" style="display: none;">
                         <ul class="b1-adv-ul">
@@ -119,22 +133,27 @@
                                 <label for="advs3">Content</label>
                             </li>
                         </ul>
-                        <button class="btn-primary">Search</button>
+                        <button class="my-button">Search</button>
 
                     </div>
                 </div>
 				<div class="b1-codes">
+                    <pre class="pre-scrollable">aaaaaaaaã
+                    </pre>
 
                 </div>
                 <div class="b1-button">
-                    <button class="btn-primary" style="width: 4rem;">RUN</button>
+                    <button class="my-button btn-warning" style="width: 6rem;">RUN</button>
                     <!--点击换成HIDE COMMENTS-->
-                    <button class="btn-primary" style="width: 10rem;margin-left: 5px;">SHOW COMMENTS</button>
+                    <button class="my-button btn-warning" style="width: 17rem;margin-left: 5px;">SHOW COMMENTS</button>
                 </div>
 			</div>
 
 			<div class="b1-result">
-
+                <br>
+                <samp style="padding: 20px 20px;overflow: scrollable">
+                    This is the result...
+                </samp>
 			</div>
 		</div>
 
@@ -148,7 +167,7 @@
                     <p>Read</p>
                     <p>Write</p>
                 </div>
-                <button class="btn-primary" style="background-color:#cc0000;width: 150px;">LEAVE ROOM</button>
+                <button class="my-button btn-danger" style="width: 150px;">LEAVE ROOM</button>
             </div>
 
 		</div>

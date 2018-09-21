@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--friendly to mobile -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <html>
 	<head>
 	    <title>Homepage</title>
         <link rel="icon" href="../../public/icon/website.png" type="image/x-icon">
 	    <link rel="stylesheet" href="../../public/stylesheets/style.css">
 	    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 	</head>
 
@@ -94,7 +112,7 @@
                     <div id="hidDiv" style="display: none;">
                         <input type="text" class="b1-searcher" placeholder="e.g. Ella">
 
-                        <input class="b1-advsearch btn-primary" type="button" value="+ Advanced Search" onclick="advSearch()">
+                        <input class="b1-advsearch my-button" type="button" value="+ Advanced Search" onclick="advSearch()">
                     </div>
                     <div id="hidAdv" class="b1-divadv" style="display: none;">
                         <ul class="b1-adv-ul">
@@ -111,12 +129,12 @@
                                 <label for="advs3">Content</label>
                             </li>
                         </ul>
-                        <button class="btn-primary">Search</button>
+                        <button class="my-button">Search</button>
 
                     </div>
                 </div>
-                <div class="b4-1" style="float: right; margin-right: 30px;">
-                    <button class="btn-primary" style="width:7rem;height: 2rem;font-size: 10px;">Create CodeRoom</button>
+                <div class="b4-1">
+                    <button class="my-button" style="width:7rem;font-size: 10px;">Create CodeRoom</button>
                 </div>
             </div>
 
@@ -146,7 +164,15 @@
                                     </div>
                                 </div>
                                 <div class="b4-subside">
-                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <div class="btn-group">
+                                        <button class="my-button dropdown-toggle" data-toggle="dropdown" style="margin:0">
+                                            Manage<span class="caret"></span></button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Delete Room</a></li>
+                                            <li><a href="#">Revoke Permission</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -171,7 +197,15 @@
                                     </div>
                                 </div>
                                 <div class="b4-subside">
-                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <div class="btn-group">
+                                        <button class="my-button dropdown-toggle" data-toggle="dropdown" style="margin:0">
+                                            Manage<span class="caret"></span></button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Delete Room</a></li>
+                                            <li><a href="#">Revoke Permission</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -196,7 +230,15 @@
                                     </div>
                                 </div>
                                 <div class="b4-subside">
-                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <div class="btn-group">
+                                        <button class="my-button dropdown-toggle" data-toggle="dropdown" style="margin:0">
+                                            Manage<span class="caret"></span></button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Delete Room</a></li>
+                                            <li><a href="#">Revoke Permission</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -221,7 +263,15 @@
                                     </div>
                                 </div>
                                 <div class="b4-subside">
-                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <div class="btn-group">
+                                        <button class="my-button dropdown-toggle" data-toggle="dropdown" style="margin:0">
+                                            Manage<span class="caret"></span></button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Delete Room</a></li>
+                                            <li><a href="#">Revoke Permission</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -256,7 +306,8 @@
                                     </div>
                                 </div>
                                 <div class="b4-subside">
-                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <button class="my-button" onclick="window.location.href='">Join</button>
                                 </div>
                             </div>
                         </div>
@@ -281,7 +332,8 @@
                                     </div>
                                 </div>
                                 <div class="b4-subside">
-                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <button class="my-button" onclick="window.location.href='">Join</button>
                                 </div>
                             </div>
                         </div>
@@ -306,7 +358,8 @@
                                     </div>
                                 </div>
                                 <div class="b4-subside">
-                                    <button class="btn-primary" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View</button>
+                                    <button class="my-button" onclick="window.location.href='">Join</button>
                                 </div>
                             </div>
                         </div>
