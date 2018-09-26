@@ -79,7 +79,7 @@ input[type=checkbox]:checked + label:before {
 /*       Nav       bar      */
 .nav-bar{
     width: 8%;
-    height: 805px;/*height need to be Responsive*/
+    height: 100vh;/*height need to be Responsive*/
     background-color:#4abdac;
     float: left;
     display: inline-block;
@@ -194,7 +194,7 @@ input[type=checkbox]:checked + label:before {
 .block-1{
     padding: 0;
     width: 75%;/*width need to be Responsive*/
-    height: 805px;
+    height: 100vh;
     display: inline-block;
     float: left;
 }
@@ -293,19 +293,19 @@ search-icon{
 .block-2{
     padding:0;
     width: 17%;/*width need to be Responsive*/
-    height: 805px;
+    height: 100vh;
     display: inline-block;
     float: left;
 }
 .b2-review{
     width: 100%;
-    height: 90%;/*height need to be Responsive*/
+    height: 85%;/*height need to be Responsive*/
     background-color: #ffc85794;
     overflow: scroll;
 }
 .b2-leave{
      width: 100%;
-     height: 10%;
+     height: 15%;
      text-align: center;
      background-color: #ffc85794;
 }
@@ -470,7 +470,7 @@ search-icon{
 /******************************************* Home Page */
 .block-4{
     width:92%;
-    height:805px;
+    height:100vh;
     background-color: #d9d9d9;
     display: inline-block;
     float: left;
