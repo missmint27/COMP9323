@@ -520,12 +520,14 @@ search-icon{
     font-weight: 600;
     padding-top: 10px;
     margin: 0;
+    margin-top: 5px;
 }
 .b4-submain P{
     color: #ffffff;
     font-weight: 300;
     font-size: 13px;
     margin: 0;
+    margin-top: 5px;
 }
 .b4-submain h5{
     display: inline-block;
