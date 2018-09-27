@@ -1,14 +1,102 @@
 <!DOCTYPE html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <html>
-	<head>
-	<title>Classroom</title>
-		<link rel="icon" href="../../public/icon/website.png" type="image/x-icon">
-		<link rel="stylesheet" href="../../public/stylesheets/style.css">
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<head>
+	<title>Sign in</title>
+	<link rel="icon" href="../../public/icon/website.png" type="image/x-icon">
+	<link rel="stylesheet" href="../../public/stylesheets/style.css">
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 
-	</head>
-	<body>
-		
-	</body>
+</head>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var sideMenu = false;
+        $(".b3-moveclick").click(function() {
+            if (!sideMenu) {
+                sideMenu = true;
+                $(".b3-moveclick").animate({left: "586px"});
+                $(".b3-hold-right").css('display','none');
+                $(".b3-hold-left").css('display','inline-block');
+                $(".b3-moveclick-left").css('display','none');
+                $(".b3-moveclick-right").css('display','inline-block');
+                $(".b3-form-in").css('display','none');
+                $(".b3-form-up").css('display','inline-block');
+            }
+            else {
+                sideMenu = false;
+                $(".b3-moveclick").animate({left: "520px"});
+                $(".b3-hold-right").css('display','inline-block');
+                $(".b3-hold-left").css('display','none');
+                $(".b3-moveclick-left").css('display','inline-block');
+                $(".b3-moveclick-right").css('display','none');
+                $(".b3-form-in").css('display','inline-block');
+                $(".b3-form-up").css('display','none');
+            }
+        });
+    });
+</script>
+<body>
+<div class="block-3">
+	<div class="b3-disk">
+		<div class="b3-cover"></div>
+		<div class="b3_triangle1"></div>
+		<div class="b3_triangle2"></div>
+		<div class="b3-hold">
+			<div class="b3-hold-right" style="display: none;float: right">
+				<h2>up</h2>
+			</div>
+			<div class="b3-hold-left" style="float: left">
+				<h2>in</h2>
+			</div>
+
+		</div>
+		<div class="b3-moveclick" style="left: 586px;">
+			<div class="b3-moveclick-left" style="display: none;">
+				<h2>Sign in</h2>
+			</div>
+			<div class="b3-moveclick-right">
+				<h2>Sign up</h2>
+			</div>
+		</div>
+		<div class="b3-label">
+			<div class="b3-name"><a href="../pages/homepage.html">OurCodes</a></div>
+
+			<div class="b3-hidden">
+
+				<div class="b3-form-in" style="display:none;">
+					<form action="post">
+						<div class="b3-username">
+							<input type="text" name="username" class="b3-input" placeholder="Username">
+						</div>
+						<div class="b3-password">
+							<input type="password" name="password" class="b3-input" placeholder="Password">
+						</div>
+						<div class="">
+							<button class="btn b3-button">Sign in</button>
+						</div>
+					</form>
+				</div>
+
+				<div class="b3-form-up">
+					<form action="post">
+						<div class="b3-username">
+							<input type="text" name="username" class="b3-input" placeholder="Username">
+						</div>
+						<div class="b3-email">
+							<input type="text" name="username" class="b3-input" placeholder="Email">
+						</div>
+						<div class="b3-password">
+							<input type="password" name="password" class="b3-input" placeholder="Password">
+						</div>
+						<div class="">
+							<button class="btn b3-button">Sign up</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+</body>
 </html>

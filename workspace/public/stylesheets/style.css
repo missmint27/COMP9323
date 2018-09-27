@@ -402,6 +402,15 @@ search-icon{
     border-radius: 2%;
     z-index: 1;
 }
+    .b3-hold div{
+        height:100%;
+        width: 65px;
+    }
+    .b3-hold h2{
+        color:#f7b733;
+        font-weight: 400;
+        margin-top: 35px;
+    }
 .b3-moveclick{
     position: absolute;
     width: 190px;
@@ -411,6 +420,11 @@ search-icon{
     border-radius: 2%;
     z-index: 4;
 }
+    .b3-moveclick h2{
+        color:#666666;
+        font-weight: 400;
+        margin-top: 35px;
+    }
 .b3-label{
     position: absolute;
     width: 320px;;
