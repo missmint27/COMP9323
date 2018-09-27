@@ -580,3 +580,12 @@ search-icon{
     margin-top: 20%;
     width: 100px;
 }
+/*****************************************/
+/* Setting---- user profile*/
+.block-5{
+    width:92%;
+    height:100vh;
+    background-color: #d9d9d9;
+    display: inline-block;
+    float: left;
+}
