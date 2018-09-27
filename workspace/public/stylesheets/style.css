@@ -588,4 +588,25 @@ search-icon{
     background-color: #d9d9d9;
     display: inline-block;
     float: left;
+    color:#666666;
+    overflow: scroll;
 }
+.block-5 input{
+    height: 40px;
+}
+.b5-avatar{
+    width: 150px;
+    height: 150px;
+    border:4px solid #ffffff;
+    border-radius: 50%;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+}
+
+    .b5-a{
+        color: #308377;
+    }
+    .b5-a:hover, .b5-a:focus{
+        color: #4abdac;
+    }
