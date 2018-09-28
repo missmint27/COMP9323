@@ -585,7 +585,8 @@ search-icon{
 .block-5{
     width:92%;
     height:100vh;
-    background-color: #d9d9d9;
+    /*background-color: #d9d9d9;*/
+    background-color: #ffffff;
     display: inline-block;
     float: left;
     color:#666666;
@@ -598,7 +599,8 @@ search-icon{
 .b5-avatar{
     width: 150px;
     height: 150px;
-    border:4px solid #ffffff;
+    /*border:4px solid #ffffff;*/
+    border:4px solid #f7b733;
     border-radius: 50%;
     overflow: hidden;
     align-items: center;
@@ -612,6 +614,13 @@ search-icon{
     .b5-a:hover, .b5-a:focus{
         color: #4abdac;
     }
+.b5-button{
+    width: 10rem;
+}
+.b5-button:hover, b5-button:focus{
+    color: #666666;
+    background-color: #f7b733b8;
+}
 /**************************************/
 /*   Create room page*/
 .block-6{

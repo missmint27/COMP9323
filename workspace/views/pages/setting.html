@@ -125,7 +125,7 @@
 
                 <ul class="list-group">
                     <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Coderooms</strong></span> 125
+                    <li class="list-group-item text-right"><span class="pull-left"><strong>Coderooms</strong></span> 3
                     </li>
                     <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 14</li>
                     <li class="list-group-item text-right"><span class="pull-left"><strong>Following</strong></span> 37
@@ -234,11 +234,11 @@
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <br>
-                                    <button class="my-button" type="submit" style="width: 10rem;">
+                                    <button class="my-button b5-button" type="submit">
                                         <i class="glyphicon glyphicon-ok-sign"></i>
                                         Save
                                     </button>
-                                    <button class="my-button" type="reset" style="width: 10rem;">
+                                    <button class="my-button b5-button" type="reset">
                                         <i class="glyphicon glyphicon-repeat"></i>
                                         Reset
                                     </button>
@@ -248,149 +248,48 @@
                         <hr>
                     </div><!--/tab-pane-->
 
-                    <div class="tab-pane" id="coderooms">
+                    <div class="tab-pane table-responsive" id="coderooms">
 
                         <h2></h2>
 
                         <hr>
-                        <form class="form" action="##" method="post" id="registrationForm">
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="first_name"><h4>First name</h4></label>
-                                    <input type="text" class="form-control" name="first_name" id="first_name"
-                                           placeholder="first name" title="enter your first name if any.">
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="last_name"><h4>Last name</h4></label>
-                                    <input type="text" class="form-control" name="last_name" id="last_name"
-                                           placeholder="last name" title="enter your last name if any.">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="phone"><h4>Phone</h4></label>
-                                    <input type="text" class="form-control" name="phone" id="phone"
-                                           placeholder="enter phone" title="enter your phone number if any.">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-xs-6">
-                                    <label for="mobile"><h4>Mobile</h4></label>
-                                    <input type="text" class="form-control" name="mobile" id="mobile"
-                                           placeholder="enter mobile number" title="enter your mobile number if any.">
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="email"><h4>Email</h4></label>
-                                    <input type="email" class="form-control" name="email" id="email"
-                                           placeholder="you@email.com" title="enter your email.">
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="email"><h4>Location</h4></label>
-                                    <input type="email" class="form-control" id="location" placeholder="somewhere"
-                                           title="enter a location">
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="password"><h4>Password</h4></label>
-                                    <input type="password" class="form-control" name="password" id="password"
-                                           placeholder="password" title="enter your password.">
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="password2"><h4>Verify</h4></label>
-                                    <input type="password" class="form-control" name="password2" id="password2"
-                                           placeholder="password2" title="enter your password2.">
-                                </div>
-                            </div>
+                        <form class="form" action="##" method="post" id="coderoomtable">
+                            <table class="table table-hover table-striped">
+                                <caption>My Coderooms</caption>
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>#Participants</th>
+                                    <th>Manage</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Code1</td>
+                                    <td>20</td>
+                                    <td>560001</td>
+                                </tr>
+                                <tr>
+                                    <td>Code2</td>
+                                    <td>14</td>
+                                    <td>400003</td>
+                                </tr>
+                                <tr>
+                                    <td>Code3</td>
+                                    <td>27</td>
+                                    <td>411027</td>
+                                </tr>
+                                </tbody>
+                            </table>
 
                         </form>
 
                     </div><!--/tab-pane-->
                     <div class="tab-pane" id="follow">
                         <hr>
-                        <form class="form" action="##" method="post" id="registrationForm">
-                            <div class="form-group">
+                        <form class="form" action="##" method="post" id="followform">
 
-                                <div class="col-xs-6">
-                                    <label for="first_name"><h4>First name</h4></label>
-                                    <input type="text" class="form-control" name="first_name" id="first_name"
-                                           placeholder="first name" title="enter your first name if any.">
-                                </div>
-                            </div>
-                            <div class="form-group">
 
-                                <div class="col-xs-6">
-                                    <label for="last_name"><h4>Last name</h4></label>
-                                    <input type="text" class="form-control" name="last_name" id="last_name"
-                                           placeholder="last name" title="enter your last name if any.">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="phone"><h4>Phone</h4></label>
-                                    <input type="text" class="form-control" name="phone" id="phone"
-                                           placeholder="enter phone" title="enter your phone number if any.">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-xs-6">
-                                    <label for="mobile"><h4>Mobile</h4></label>
-                                    <input type="text" class="form-control" name="mobile" id="mobile"
-                                           placeholder="enter mobile number" title="enter your mobile number if any.">
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="email"><h4>Email</h4></label>
-                                    <input type="email" class="form-control" name="email" id="email"
-                                           placeholder="you@email.com" title="enter your email.">
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="email"><h4>Location</h4></label>
-                                    <input type="email" class="form-control" id="location" placeholder="somewhere"
-                                           title="enter a location">
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="password"><h4>Password</h4></label>
-                                    <input type="password" class="form-control" name="password" id="password"
-                                           placeholder="password" title="enter your password.">
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="password2"><h4>Verify</h4></label>
-                                    <input type="password" class="form-control" name="password2" id="password2"
-                                           placeholder="password2" title="enter your password2.">
-                                </div>
-                            </div>
 
                         </form>
                     </div>
