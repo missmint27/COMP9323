@@ -621,6 +621,77 @@ search-icon{
     color: #666666;
     background-color: #f7b733b8;
 }
+.user-follower,
+.user-following {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.user-follower img,
+.user-following img {
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    width: 40px;
+}
+
+.user-follower a,
+.user-following a {
+    font-size: 1.1em;
+    line-height: 1;
+}
+
+.user-follower .username,
+.user-following .username {
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+.user-follower .btn,
+.user-following .btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 3rem;
+    min-width: 92px;
+}
+
+.btn-toggle-following {
+    background-color: #7bae16;
+    color: #fff;
+}
+
+.btn-toggle-following:hover {
+    background-color: #ef2020;
+    color: #fff;
+}
+
+.btn-toggle-following:hover span {
+    display: none;
+}
+
+.btn-toggle-following:hover:after {
+    content: 'Unfollow';
+    display: inline;
+}
+
+.btn-toggle-following:hover i:before {
+    content: '\f129';
+}
+
+/* list icons */
+.list-icons-demo li {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.list-icons-demo li i {
+    font-size: 24px;
+}
+
+.list-icons-demo2 li {
+    margin-bottom: 10px;
+}
 /**************************************/
 /*   Create room page*/
 .block-6{
