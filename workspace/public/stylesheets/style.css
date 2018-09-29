@@ -665,12 +665,12 @@ search-icon{
 }
 
 .btn-toggle-following {
-    background-color: #7bae16;
+    background-color: #4abdac;
     color: #fff;
 }
 
 .btn-toggle-following:hover {
-    background-color: #ef2020;
+    background-color: #d9534f;
     color: #fff;
 }
 
