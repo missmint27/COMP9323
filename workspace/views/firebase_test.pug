@@ -16,12 +16,12 @@ html(lang='en')
         h1=title
     div.form-group
         label(for='code_input') Code Input:
-        textarea#code_input.form-control(type='textarea', name='code_input', onchange="updateCode()")
-
+        button.btn.btn-primary(type='submit', id = "btn", onclick="change()") Change Permission:
+        textarea#code_input.form-control(name='code_input')
     div.form-group
         label(for='code') Code:
         pre(id="code")
-        
+
     div.form-group
         label(for='result') Result:
         pre(id='result')
