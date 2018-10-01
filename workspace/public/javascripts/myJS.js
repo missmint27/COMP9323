@@ -25,12 +25,15 @@
     const dbRefCode = dbRefObject.child('code').child(roomId);
     const code_input = document.getElementById('code_input');
 
+
     //同步输入框
     dbRefCode.on('value', snap => {
         const content = snap.val();
         code_input.value = content['content'];
+        editor.setValue(code_input.value);
+        //有问题，如果不是在文件底部修改的，那么每次都会跳转到文件底部
+        editor.execCommand("goDocEnd");
     });
-
     //同步code显示框
     dbRefCode.on('value', snap => {
         const content = snap.val();
@@ -75,9 +78,10 @@
         mode: "python",
         theme: "darcula",
         lineNumbers: true,
-        autoMatchBrackets: true,
-        readOnly: false                 //set to true if user have the permission.
+        // autoMatchBrackets: true,
+        // readOnly: false                 //set to true if user have the permission.
     });
+    editor.focus();
     //function to update code to firebase
     function updateCode() {
         editor.save();
@@ -89,7 +93,17 @@
     }
     //when editor's content changed, call updateCode()
     editor.on('change', updateCode);
+
 })();
+
+
+// function updateCode() {
+//     const roomId = '5bab7be8ade838281621911a';
+//     const code_input = document.getElementById('code_input');
+//     firebase.database().ref().child('code/').child(roomId).update(
+//         {'content': code_input.value}
+//     );
+// }
 
 function addComment() {
     const roomId = '5bab7be8ade838281621911a';
@@ -138,7 +152,11 @@ function run() {
         method: 'get',
         dataType: 'json'
     }).done(function (data) {
-        result.innerText = JSON.stringify(data);
+        //json 格式输出
+        // result.innerText = JSON.stringify(data);
+        //string 输出
+        result.innerText = data['output'];
+
     }).fail(function (xhr, status) {
         result.innerText = 'Fail: ' + xhr.status + ', Reason: ' + status;
     }).always(function () {
