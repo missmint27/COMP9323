@@ -14,30 +14,40 @@ html(lang='en')
         link(rel='stylesheet' href="/javascripts/codemirror/theme/darcula.css")
     body
         h1=title
-        label(for='user_list') User List:
-        ul(id='user_list')
-        label(for='comment_list') Comment List:
-        ul(id='comment_list')
-        label(for='code') Code:
-        pre(id="code")
     div.form-group
         label(for='code_input') Code Input:
         textarea#code_input.form-control(type='textarea', name='code_input', onchange="updateCode()")
+
     div.form-group
-        label(for='comment_input') Comment Input:
-        input#comment_input.form-control(type='text', name='comment_input')
-        button.btn.btn-primary(type='submit', id = "btn2", onclick="addComment()") Comment Submit:
-    div.form-group
-        label(for='user_input') User Input:
-        input#user_input.form-control(type='text', name='user_input')
-        button.btn.btn-primary(type='submit', id = "btn3", onclick="addUser()") User Submit:
-    div.form-group
-        label(for='user_id') User Delete:
-        input#user_id.form-control(type='text', name='user_id')
-        button.btn.btn-primary(type='submit', id = "btn4", onclick="removeUser()") User Delete:
+        label(for='code') Code:
+        pre(id="code")
+        
     div.form-group
         label(for='result') Result:
         pre(id='result')
         button.btn.btn-primary(type='submit', id = "btn5", onclick="run()") Run
+
+    div.form-group
+        label(for='comment_input') Comment Input:
+        input#comment_input.form-control(type='text', name='comment_input')
+        button.btn.btn-primary(type='submit', id = "btn2", onclick="addComment()") Comment Submit:
+
+    div.form-group
+        label(for='comment_list') Comment List:
+        ul(id='comment_list')
+
+    div.form-group
+        label(for='user_input') User Input:
+        input#user_input.form-control(type='text', name='user_input')
+        button.btn.btn-primary(type='submit', id = "btn3", onclick="addUser()") User Submit:
+
+    div.form-group
+        label(for='user_id') User Delete:
+        input#user_id.form-control(type='text', name='user_id')
+        button.btn.btn-primary(type='submit', id = "btn4", onclick="removeUser()") User Delete:
+
+    div.form-group
+        label(for='user_list') User List:
+        ul(id='user_list')
 
     script(src="/javascripts/myJS.js")
