@@ -11,7 +11,7 @@
     firebase.initializeApp(config);
     console.log("Test.");
 
-    var roomId = '5bab7be8ade838281621911a'
+    var roomId = '5bab7be8ade838281621911a';
 
 
     const code = document.getElementById('code');
@@ -69,16 +69,26 @@
         liChanged.innerText = JSON.stringify(snap.val());
     });
 
+    //CodeMirro Editor initialize
+    //Need further changes for optimization.
+    var editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
+        mode: "python",
+        theme: "darcula",
+        lineNumbers: true,
+        autoMatchBrackets: true
+    });
+    //function to update code to firebase
+    function updateCode() {
+        editor.save();
+        const roomId = '5bab7be8ade838281621911a';
+        const code_input = document.getElementById('code_input');
+        firebase.database().ref().child('code/').child(roomId).update(
+            {'content': code_input.value}
+        );
+    }
+    //when editor's content changed, call updateCode()
+    editor.on('change', updateCode);
 })();
-
-//通过侦测keyup来触发此function， 将code update到firebase，之后需结合permission使用
-function updateCode() {
-    const roomId = '5bab7be8ade838281621911a';
-    const code_input = document.getElementById('code_input');
-    firebase.database().ref().child('code/').child(roomId).update(
-        {'content': code_input.value}
-    );
-}
 
 function addComment() {
     const roomId = '5bab7be8ade838281621911a';
@@ -98,7 +108,7 @@ function addUser() {
     const user = {
         id: '5bb053d0efdfca206dc66b3f',
         username: 'tester6'
-    }
+    };
     const roomId = '5bab7be8ade838281621911a';
     const url = '/users/' + user.id;
     const user_input = document.getElementById('user_input');
@@ -107,7 +117,7 @@ function addUser() {
             'username': user.username, 
             'permission': false, 
             'ask-for-permission': false,
-            'url': '/users/' + user.id
+            'url': url
         });
 }
 

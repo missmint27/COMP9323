@@ -9,6 +9,7 @@ var firebase = require('firebase');
 var pythonExecutor = require('../controllers/pythonExecutor');
 const fs = require('fs');
 const spawn = require('child_process').spawn;
+const async = require('async');
 
 var config = {
     apiKey: "AIzaSyDyFnZMXeY2gXJNSZe58tqbOkZX7-5yiDM",
@@ -19,6 +20,11 @@ var config = {
     messagingSenderId: "837737259182"
 };
 firebase.initializeApp(config);
+//testing firebase
+router.get('/test', function(req, res) {
+    console.log("Firebase testing...");
+    res.render('firebase_test');
+});
 
 //可工作
 router.get("/", middleware.isLoggedIn, function(req, res) {

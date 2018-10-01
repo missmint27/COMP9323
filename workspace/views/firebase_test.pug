@@ -8,7 +8,10 @@ html(lang='en')
         script(src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js")
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
         script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-        //link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='/javascripts/codemirror/lib/codemirror.css')
+        script(src="/javascripts/codemirror/lib/codemirror.js")
+        script(src="/javascripts/codemirror/mode/python/python.js")
+        link(rel='stylesheet' href="/javascripts/codemirror/theme/darcula.css")
     body
         h1=title
         label(for='user_list') User List:
@@ -19,7 +22,7 @@ html(lang='en')
         pre(id="code")
     div.form-group
         label(for='code_input') Code Input:
-        textarea#code_input.form-control(type='textarea', name='code_input', onkeyup="updateCode()")
+        textarea#code_input.form-control(type='textarea', name='code_input', onchange="updateCode()")
     div.form-group
         label(for='comment_input') Comment Input:
         input#comment_input.form-control(type='text', name='comment_input')
@@ -37,4 +40,4 @@ html(lang='en')
         pre(id='result')
         button.btn.btn-primary(type='submit', id = "btn5", onclick="run()") Run
 
-    script(src="/javascripts/fb.js")
+    script(src="/javascripts/myJS.js")
