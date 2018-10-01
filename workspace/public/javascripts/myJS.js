@@ -9,7 +9,7 @@ var config = {
 };
 firebase.initializeApp(config);
 
-var permission = false;
+var permission = true;
 var roomId = '5bab7be8ade838281621911a';
 //CodeMirro Editor initialize
 //Need further changes for optimization.
@@ -20,7 +20,6 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
     // autoMatchBrackets: true,
     readOnly: !permission                 //set to true if user have the permission.
 });
-var cursorPos = {line: 0, ch: 0};
 //function to update code to firebase
 function updateCode() {
     const roomId = '5bab7be8ade838281621911a';
@@ -30,12 +29,7 @@ function updateCode() {
 }
 
 //when editor's content changed, call updateCode()
-editor.on('change', () => {
-    cursorPos.line = editor.getCursor().line;
-    cursorPos.ch   = editor.getCursor().ch;
-    updateCode();
-    editor.setCursor(cursorPos);
-});
+editor.on('change', updateCode);
 
 const code = document.getElementById('code');
 const comment_list = document.getElementById('comment_list');
@@ -48,7 +42,12 @@ const dbRefUserList = dbRefObject.child('user_list').child(roomId);
 const dbRefCode = dbRefObject.child('code').child(roomId);
 const code_input = document.getElementById('code_input');
 
-
+//初始化输入框
+dbRefCode.once('value', snap => {
+    const content = snap.val();
+    code_input.value = content['content'];
+    editor.setValue(code_input.value);
+});
 //同步输入框
 dbRefCode.on('value', snap => {
     const content = snap.val();
@@ -137,7 +136,7 @@ function removeUser(user) {
 
 function run() {
     const result = document.getElementById('result');
-    const roomId = '5bab7be8ade838281621911a';
+    const roomId = '5bab7be8ade838281621911a'
     const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/run';
     var jqxhr = $.ajax({
         url: url,
@@ -162,15 +161,13 @@ function change() {
     console.log("permission: ", permission);
     editor.setValue(code_input.value);
     editor.setOption("readOnly", !permission);
+    if (permission != true) {
+        editor.setOption("theme", "lucario");
+    }
+    else {
+        editor.setOption("theme", "darcula");
+    }
 }
-
-
-
-
-
-
-
-
 
 
 //还需要将classroom1，user1, comment1之类的改成classroomID, userID, commentID
