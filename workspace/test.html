@@ -31,11 +31,19 @@
 <div class="form-group">
 	<label for="user_input">User Input:</label>
 	<input class="form-control" id="user_input" type="text" name="user_input">
-	<button class="btn btn-primary" type="submit" id="btn3" onclick="addUser()">User Submit:</button>
+	<button class="btn btn-primary" type="submit" id="btn3" onclick="addUser(user_input.value)">User Submit:</button>
 </div>
 <div class="form-group">
 	<label for="user_id">User Delete:</label>
 	<input class="form-control" id="user_id" type="text" name="user_id">
 	<button class="btn btn-primary" type="submit" id="btn4" onclick="removeUser()">User Delete:</button>
+</div>
 
-	<script src="fb.js"></script></div></html>
+<div class="form-group">
+	<label for="result">Result:</label>
+	<pre id="result"></pre>
+	<button class="btn btn-primary" type="submit" id="btn5" onclick="run()">Run</button>
+
+</div>
+	<script src="fb.js"></script>
+</html>
