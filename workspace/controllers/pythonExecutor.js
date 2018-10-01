@@ -1,5 +1,6 @@
 const fs = require('fs');
 const spawn = require('child_process').spawn;
+const async = require('async');
 module.exports = (res, roomID, code) => {
     let filename = 'pythonFiles/' + roomID + ".py";
     let runCommand = "./" + filename;
@@ -10,7 +11,15 @@ module.exports = (res, roomID, code) => {
     });
     let process = spawn('python3',[runCommand]);
     process.stdout.on('data', function(data) {
-        res.json({output: data.toString()});
+        if (data) {
+            console.log(data.toString());
+            res.json({output: data.toString()});
+        }
+
+    });
+    process.stderr.on('data', function(data) {
+        console.log(data.toString());
+        res.json({err: data.toString()});
     })
 };
 
