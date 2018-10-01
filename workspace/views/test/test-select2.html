@@ -18,24 +18,13 @@
         }
     </style>
     <script type="text/javascript">
-        select(document, tanchu); 
-/*=select[[ 
-* 
-* 跨浏览器选中文字事件 
-* @param 
-* object o 响应选中事件的DOM对象，required 
-* function fn(sText,target,mouseP)选中文字非空时的回调函数，required 
-* |-@param 
-* |-sText 选中的文字内容 
-* |-target 触发mouseup事件的元素 
-* |-mouseP 触发mouseup事件时鼠标坐标 
-*/ 
+        select(document, tanchu);
 		function select(o, fn){ 
 			o.onmouseup = function(e){ 
 			var event = window.event || e; 
 			var target = event.srcElement ? event.srcElement : event.target; 
 			if (/input|textarea/i.test(target.tagName) && /firefox/i.test(navigator.userAgent)) { 
-				//Firefox在文本框内选择文字 
+				//Firefox choose in textarea
 				var staIndex=target.selectionStart; 
 				var endIndex=target.selectionEnd; 
 				if(staIndex!=endIndex){ 
@@ -44,18 +33,17 @@
 				} 
 			} 
 			else{ 
-				//获取选中文字 
+				//get choosen
 				var sText = document.selection == undefined ? document.getSelection().toString():document.selection.createRange().text; 
 				if (sText != "") { 
-					//将参数传入回调函数fn 
+					//return parameters into fn
 					fn(sText, target); 
 				} 
 			} 
 			} 
-		} 
-	/*]]select=*/ 
+		}
 		function tanchu(txt,tar){ 
-			alert("文字属于"+tar.tagName+"元素，选中内容为："+txt); 
+			alert("This is belong to"+tar.tagName+"elements，choose："+txt);
 		} 
     </script>
 </head>
@@ -63,5 +51,6 @@
 	<textarea cols="60" rows="8">
 	asp、php、asp.net、javascript、jquery、vbscript、dos
 	</textarea>
+	
 </body>
 </html>

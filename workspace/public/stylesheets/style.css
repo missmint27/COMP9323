@@ -273,8 +273,20 @@ search-icon{
     margin-top: 35px;
     margin-bottom: 10px;
     padding: 5px 9px;
-    border: 1px double #ffffff;
     overflow: scroll;
+}
+.b1-textarea{
+    background-color: transparent;
+    border: 1px solid #fff;
+    outline:none;
+    resize:none;
+}
+.b1-popup{
+    display: none;
+    height: 25px;
+    width: 25px;
+    z-index: 4;
+    border-radius: 50%;
 }
 .b1-button{
     padding-left: 20px;
