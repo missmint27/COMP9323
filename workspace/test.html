@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+	<h1></h1>
+	<label for="user_list">User List:</label>
+	<ul id="user_list"></ul>
+	<label for="comment_list">Comment List:</label>
+	<ul id="comment_list"></ul>
+	<label for="code">Code:</label>
+	<pre id="code"></pre>
+</body>
+<div class="form-group">
+	<label for="code_input">Code Input:</label>
+	<input class="form-control" id="code_input" type="text" name="code_input" onkeyup="updateCode()">
+</div>
+<div class="form-group">
+	<label for="comment_input">Comment Input:</label>
+	<input class="form-control" id="comment_input" type="text" name="comment_input">
+	<button class="btn btn-primary" type="submit" id="btn2" onclick="addComment()">Comment Submit:</button>
+</div>
+<div class="form-group">
+	<label for="user_input">User Input:</label>
+	<input class="form-control" id="user_input" type="text" name="user_input">
+	<button class="btn btn-primary" type="submit" id="btn3" onclick="addUser(user_input.value)">User Submit:</button>
+</div>
+<div class="form-group">
+	<label for="user_id">User Delete:</label>
+	<input class="form-control" id="user_id" type="text" name="user_id">
+	<button class="btn btn-primary" type="submit" id="btn4" onclick="removeUser()">User Delete:</button>
+</div>
+
+<div class="form-group">
+	<label for="result">Result:</label>
+	<pre id="result"></pre>
+	<button class="btn btn-primary" type="submit" id="btn5" onclick="run()">Run</button>
+
+</div>
+	<script src="fb.js"></script>
+</html>
