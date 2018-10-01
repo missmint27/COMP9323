@@ -1,0 +1,40 @@
+doctype html
+html(lang='en')
+    head
+        title= title
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+        script(src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js")
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+        //link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        h1=title
+        label(for='user_list') User List:
+        ul(id='user_list')
+        label(for='comment_list') Comment List:
+        ul(id='comment_list')
+        label(for='code') Code:
+        pre(id="code")
+    div.form-group
+        label(for='code_input') Code Input:
+        textarea#code_input.form-control(type='textarea', name='code_input', onkeyup="updateCode()")
+    div.form-group
+        label(for='comment_input') Comment Input:
+        input#comment_input.form-control(type='text', name='comment_input')
+        button.btn.btn-primary(type='submit', id = "btn2", onclick="addComment()") Comment Submit:
+    div.form-group
+        label(for='user_input') User Input:
+        input#user_input.form-control(type='text', name='user_input')
+        button.btn.btn-primary(type='submit', id = "btn3", onclick="addUser()") User Submit:
+    div.form-group
+        label(for='user_id') User Delete:
+        input#user_id.form-control(type='text', name='user_id')
+        button.btn.btn-primary(type='submit', id = "btn4", onclick="removeUser()") User Delete:
+    div.form-group
+        label(for='result') Result:
+        pre(id='result')
+        button.btn.btn-primary(type='submit', id = "btn5", onclick="run()") Run
+
+    script(src="/javascripts/fb.js")
