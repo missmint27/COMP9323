@@ -1,8 +1,8 @@
-var Comment = require("../models/comment");
+// var Comment = require("../models/comment");
 var Coderoom = require("../models/coderoom");
 module.exports = {
     isLoggedIn: function(req, res, next){
-        if(req.isAuthenticated()){
+        if(req.user){
             return next();
         }
         req.flash("error", "You must be signed in to do that!");
@@ -10,13 +10,15 @@ module.exports = {
     },
     checkUserCoderoom: function(req, res, next){
         if(req.isAuthenticated()){
-            Coderoom.findById(req.params.id, function(err, Coderoom){
-               if(Coderoom.author.id.equals(req.user._id) || req.user.isAdmin){
+            Coderoom.findById(req.params.id, function(err, found_coderoom){
+               if(found_coderoom.permitted_user.id.equals(req.user._id)
+                   || found_coderoom.author.id.equals(req.user._id)
+                   || req.user.isAdmin){
                    next();
                } else {
                    req.flash("error", "You don't have permission to do that!");
                    console.log("BADD!!!");
-                   res.redirect("/campgrounds/" + req.params.id);
+                   res.redirect("/coderooms/" + req.params.id);
                }
             });
         } else {
@@ -32,7 +34,7 @@ module.exports = {
                    next();
                } else {
                    req.flash("error", "You don't have permission to do that!");
-                   res.redirect("/campgrounds/" + req.params.id);
+                   res.redirect("/coderooms/" + req.params.id);
                }
             });
         } else {

@@ -6,11 +6,7 @@ var coderoomSchema = new mongoose.Schema({
     downVote: Number,
     rank: Number,
     description: String,
-    permitted_user: String,
-    project: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Project"
-    },
+
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
@@ -18,22 +14,22 @@ var coderoomSchema = new mongoose.Schema({
         },
         username: String
     },
-    users: [
-        {
-            id: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User"
-            },
-            username: String
-        }
-    ]
+
 });
 
 // Virtual for author's URL
 coderoomSchema
     .virtual('url')
     .get(function () {
-        return '/api/coderoom/' + this._id;
+        return '/coderooms/' + this._id;
     });
-
+coderoomSchema.virtual('code').get(function() {
+    return ''
+})
+coderoomSchema.virtual('comment').get(function() {
+    return ''
+})
+coderoomSchema.virtual('user_list').get(function() {
+    return ''
+})
 module.exports = mongoose.model("coderoom", coderoomSchema);
