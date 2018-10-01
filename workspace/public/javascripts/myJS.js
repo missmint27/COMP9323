@@ -155,7 +155,10 @@ function run() {
         //json 格式输出
         // result.innerText = JSON.stringify(data);
         //string 输出
-        result.innerText = data['output'];
+        if (data['output'])
+        	result.innerText = data['output'];
+        else
+        	result.innerText = data['err'];
 
     }).fail(function (xhr, status) {
         result.innerText = 'Fail: ' + xhr.status + ', Reason: ' + status;
