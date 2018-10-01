@@ -34,7 +34,11 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(bodyParser.urlencoded({extended: true}));
+
+//currently working on pug for simplyfication, will change to ejs later.
 app.set("view engine", "pug");
+
+
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride('_method'));
 app.use(cookieParser('secret'));
