@@ -75,7 +75,8 @@
         mode: "python",
         theme: "darcula",
         lineNumbers: true,
-        autoMatchBrackets: true
+        autoMatchBrackets: true,
+        readOnly: false                 //set to true if user have the permission.
     });
     //function to update code to firebase
     function updateCode() {
