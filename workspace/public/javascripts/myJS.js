@@ -10,7 +10,7 @@ var config = {
 firebase.initializeApp(config);
 
 var permission = true;
-var roomId = '5bab7be8ade838281621911a';
+var roomId = '5bab7be8ade838281621911a';//需要动态获取roomid
 //CodeMirro Editor initialize
 //Need further changes for optimization.
 var editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
