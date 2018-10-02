@@ -97,7 +97,7 @@ dbRefCommentList.on('child_changed', snap => {
 });
 
 function addComment() {
-    const roomId = '5bab7be8ade838281621911a';
+    const roomId = '5bab7be8ade838281621911a'; //需要动态获取roomid
     const comment_input = document.getElementById('comment_input');
     const newPostRef = firebase.database().ref().child('comment_list/' + roomId).push(
         {
