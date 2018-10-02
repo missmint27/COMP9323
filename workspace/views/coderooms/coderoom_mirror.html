@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+<head>
+    <title>Classroom</title>
+    <link rel="icon" href="../../public/icon/website.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../public/stylesheets/style.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+    <link rel="stylesheet" href="../../public/javascripts/codemirror/lib/codemirror.css">
+    <script type="text/javascript" src="/javascripts/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="/javascripts/codemirror/mode/python/python.js"></script>
+    <link rel='stylesheet' href="../../public/javascripts/codemirror/theme/darcula.css">
+    <script type="text/javascript" src="../../public/javascripts/myJS.js"></script>
+
+
+
+</head>
+<script>
+    $(document).ready(function () {
+        $("#click_btn").click(function () {
+            $("#hello").html("hello，xxx");
+        });
+    });
+</script>
+<body style="height: 100vh">
+
+<nav class="nav-bar">
+    <div class="nav-container">
+        <div class="nav-name">
+            <a href="../pages/homepage.html">OurCodes</a>
+        </div>
+
+        <img src="../../public/img/avatar/avatar3.png" class="avatar" alt="">
+        <div class="nav-sign">
+            <div class="nav-menu"><a class="nav-sign" href="../pages/signup.html">Sign up</a></div>
+            <div class="nav-slash">/</div>
+            <div class="nav-menu"><a class="nav-sign" href="../pages/signin.html">Sign in</a></div>
+        </div>
+        <!--Can be replaced after login-->
+        <div class="nav-username">
+            <span>Please sign in</span>
+        </div>
+
+
+        <!--click these two buttons show and hide a div of contents-->
+
+
+        <div class="nav-bottom">
+            <div class="nav-circle">
+                <img src="../../public/icon/folder-fff.png" class="circle-icon" id="project-list"
+                     onmouseover="this.src='../../public/icon/folder-4abdac.png'"
+                     onmouseout="this.src='../../public/icon/folder-fff.png'">
+                <!--怎么可以一起变呀？-->
+            </div>
+            <div class="nav-circle">
+                <img src="../../public/icon/participant-fff.png" class="circle-icon" id="participant-list"
+                     onmouseover="this.src='../../public/icon/participant-4abdac.png'"
+                     onmouseout="this.src='../../public/icon/participant-fff.png'">
+            </div>
+            <div class="nav-bo">
+                <img class="nav-icon" onclick="javascript:location.href='../pages/setting.html'"
+                     src="../../public/icon/settings-fff.png"
+                     onmouseover="this.src='../../public/icon/settings-e6e6e6.png'"
+                     onmouseout="this.src='../../public/icon/settings-fff.png'"/>
+            </div>
+        </div>
+
+
+    </div>
+</nav>
+
+<script type="text/javascript">
+    /*This part is for search bar*/
+    function searchBar() {
+        var x = document.getElementById("hidDiv");
+        var y = document.getElementById("hidAdv");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            y.style.display = "none";
+            x.style.display = "none";
+        }
+    }
+
+    function advSearch() {
+        var x = document.getElementById("hidAdv");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+</script>
+<div class="block-1">
+    <div class="b1-main">
+        <div class="b1-search">
+            <div class="search-icon">
+                <img class="nav-icon" src="../../public/icon/search-fff.png"
+                     onmouseover="this.src='../../public/icon/search-e6e6e6.png'"
+                     onmouseout="this.src='../../public/icon/search-fff.png'"
+                     onclick="searchBar()" style="display: inline-block;float: left;"/>
+            </div>
+            <div id="hidDiv" style="display: none;">
+                <input type="text" class="b1-searcher" placeholder="e.g. Ella">
+
+                <input class="b1-advsearch my-button" type="button" value="+ Advanced Search" onclick="advSearch()">
+            </div>
+            <div id="hidAdv" class="b1-divadv" style="display: none;">
+                <ul class="b1-adv-ul">
+                    <li class="b1-adv-li">
+                        <input type="checkbox" name="advancedsearch" value="title" id="advs1">
+                        <label for="advs1">Title</label>
+                    </li>
+                    <li class="b1-adv-li">
+                        <input type="checkbox" name="advancedsearch" value="author" id="advs2">
+                        <label for="advs2">Author</label>
+                    </li>
+                    <li class="b1-adv-li">
+                        <input type="checkbox" name="advancedsearch" value="Content" id="advs3">
+                        <label for="advs3">Content</label>
+                    </li>
+                </ul>
+                <button class="my-button">Search</button>
+
+            </div>
+        </div>
+        <script type="text/javascript">
+            select(document, tanchu);
+            function select(o, fn){
+                o.onmouseup = function(e){
+                    var oDiv = document.getElementById("div1");
+                    var event = window.event || e;
+                    var target = event.srcElement ? event.srcElement : event.target;
+                    var left = e.clientX;
+                    var top = e.clientY;
+                    if (/input|textarea/i.test(target.tagName) && /firefox/i.test(navigator.userAgent)) {
+                        //Firefox choose in textarea
+                        var staIndex=target.selectionStart;
+                        var endIndex=target.selectionEnd;
+                        if(staIndex!=endIndex){
+                            var sText=target.value.substring(staIndex,endIndex);
+                            alert("11111This is belong to "+target.tagName+" elements，choose："+sText);
+                            oDiv.style.display = 'block';
+                            oDiv.style.left = left + 'px';
+                            oDiv.style.top = top + 'px';
+                            fn(sText,target);
+                        } else{
+                            oDiv.style.display = 'none';
+                        }
+
+                    } else{
+                        //get choosen
+                        var sText = document.selection == undefined ? document.getSelection().toString():document.selection.createRange().text;
+                        if (sText != "") {
+                            //return parameters into fn
+                            oDiv.style.display = "block";
+                            oDiv.style.left = left + "px";
+                            oDiv.style.top = top + "px";
+                            alert("222222This is belong to "+target.tagName+" elements，choose："+sText);
+                            fn(sText, target);
+                        }else{
+                            oDiv.style.display = "none";
+                        }
+                    }
+                }
+            }
+            function tanchu(txt,tar) {
+                //alert("This is belong to"+tar.tagName+"elements，choose："+txt);
+            }
+
+        </script>
+        <div class="b1-codes">
+            <!--<textarea cols="145" rows="22" class="b1-textarea" id="p1">
+            </textarea>
+            <label for='code_input'> Code Input:</label>-->
+            <textarea class="b1-textarea" cols="145" rows="22" id="code_input" name='code_input' onchange="updateCode()"></textarea>
+
+            <div id="div1" style="position: absolute;display: none;">
+                <button class="my-button b1-popup" id>+</button>
+            </div>
+
+        </div>
+        <div class="b1-button">
+            <button class="my-button btn-warning" style="width: 6rem;">RUN</button>
+            <!--点击换成SHOW COMMENTS-->
+            <script type="text/javascript">
+                function hideComments() {
+                    var button = document.getElementById("comments-btn");
+                    var review = document.getElementById("comments");
+                    if (review.style.display === "") {
+                        review.style.display = "none";
+                        button.innerHTML = "SHOW COMMENTS";
+                    } else {
+                        review.style.display = "";
+                        button.innerHTML = "HIDE COMMENTS";
+                    }
+                }
+            </script>
+            <button class="my-button btn-warning" style="width: 17rem;margin-left: 5px;" id="comments-btn" onclick="hideComments()">HIDE COMMENTS</button>
+        </div>
+    </div>
+
+    <div class="b1-result">
+        <br>
+        <samp style="padding: 20px 20px;overflow: scroll">
+            <!--<label for='result'> Result:-->
+            <pre id='result'></pre>
+            <button class="btn-primary my-button" type='submit' id = "btn5" onclick="run()">RUN</button>
+        </samp>
+    </div>
+</div>
+
+<div class="block-2">
+    <div class="b2-review">
+        <div id="comments">
+            <ul>
+                <li>review 1</li>
+                <li>review 2</li>
+                <li>review 3</li>
+            </ul>
+        </div>
+    </div>
+    <div class="b2-leave">
+        <div class="b2-permission">
+            <h6>Permission:</h6>
+            <p>Read</p>
+            <p>Write</p>
+        </div>
+        <button class="my-button btn-danger" style="width: 150px;">LEAVE ROOM</button>
+    </div>
+
+</div>
+</body>
+</html>
