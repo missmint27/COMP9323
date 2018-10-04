@@ -16,10 +16,10 @@ html(lang='en')
     body
         h3="Room ID: " + roomId
         h3="User ID: " + userId
-
+    button.btn.btn-primary(type='submit', id = "btn0", onclick='requirePermission()') Require Permission:
     div.form-group
         label(for='code_input') Code Input:
-        button.btn.btn-primary(type='submit', id = "btn", onclick='change()') Change Permission:
+        button.btn.btn-primary(type='submit', id = "btn", onclick='passPermission()') Change Permission:
         textarea#code_input.form-control(name='code_input')
     div.form-group
         label(for='code') Code:

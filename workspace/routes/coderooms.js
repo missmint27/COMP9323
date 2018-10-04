@@ -68,39 +68,40 @@ router.post("/", middleware.isLoggedIn,function(req, res) {
         fb_root.child('user_list/' + coderoom.id).child(req.user.id)
             .update({
                 'username': req.user.username,
-                'permission': true,
-                'ask-for-permission': false,
                 'url': '/users/' + req.user.id,
             });
+        fb_root.child('permission/' + coderoom.id).update(
+            { "userId" : req.user.id}
+        );
         res.json("room id: %s created", coderoom.id);
     });
 });
 
-
-router.get('/:roomId/permission/:userId', middleware.isLoggedIn, function(req, res, next) {
+//pass permission to userId
+router.put('/:roomId/permission/:userId', middleware.isLoggedIn, function(req, res, next) {
    console.log('Passing permission');
-   const holderRef = fb_root.child('user_list/' + req.params.roomId)
-        .child(req.user.id);
-   const targetRef = fb_root.child('user_list/' + req.params.roomId)
-       .child(req.params.userId);
+   const permissionRef = fb_root.child('permission/' + req.params.roomId);
+   const requestingRef = fb_root.child('ask-for-permission/' + req.params.roomId);
 
    async.parallel({
        holder: function (callback) {
-           holderRef.child('permission').once('value').then(function (snapshot) {
-               callback(null, snapshot.val());
+           permissionRef.once('value').then(function (snapshot) {
+               callback(null, snapshot.val().userId);
            });
        },
        target: function (callback) {
-           targetRef.child('ask-for-permission').once('value').then(function (snapshot) {
+           requestingRef.child(req.params.userId).once('value').then(function (snapshot) {
                callback(null, snapshot.val());
            });
        }
    }, function(err, results) {
-       //TODO: clear all the ask-for-permission status.
-       if(results.holder) {
+       console.log(results.holder);
+       console.log(req.user.id);
+       if(results.holder === req.user.id) {
+           console.log(results.target);
            if(results.target) {
-               targetRef.update( {'permission': true} );
-               holderRef.update( {'permission': false} );
+               permissionRef.update( {'userId': req.params.userId} );
+               requestingRef.remove();
                res.status('200').json({'msg': 'Permission transferd to User: ' + req.params.userId});
            } else {
                res.status('400').json({'msg': 'user ' + req.params.userId + ' is not asking for permission'});
@@ -109,6 +110,16 @@ router.get('/:roomId/permission/:userId', middleware.isLoggedIn, function(req, r
            res.status('400').json({'msg': "You Don't have permission."});
        }
    })
+});
+
+//require for permission
+router.put('/:roomId/permission', middleware.isLoggedIn, function(req, res, next) {
+    console.log('requiring permission');
+    const requestingRef = fb_root.child('ask-for-permission/' + req.params.roomId);
+    const obj = {};
+    obj[req.user.id] = true;
+    requestingRef.update( obj );
+    res.json({'msg': 'Fin'});
 });
 
 //可工作
@@ -154,7 +165,7 @@ router.get("/:id",function(req, res, next) {
 
 //可工作
 router.get("/:id/run",function(req, res, next) {
-    console.log("run code in this coderoom.");
+    console.log("run code in this coderoom.", req.params.id);
     const dbRefCode = firebase.database().ref().child('code').child(req.params.id);
     dbRefCode.once('value', snap => {
         const content = snap.val();
