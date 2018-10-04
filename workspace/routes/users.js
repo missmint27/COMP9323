@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var async = require('async');
 module.exports = (app, passport) => {
     router.get('/login', function (req, res) {
         res.render('login_form', {title: 'Log in', errors: req.flash('error')});
@@ -23,7 +24,8 @@ module.exports = (app, passport) => {
         //sanitizeBody('username, password...').trim().escape()
         var user = new User({
             username: req.body.username,
-            password: req.body.password
+            password: req.body.password,
+            coderoom: null
         });
         user.save(function (err) {
             if (err) {
@@ -34,5 +36,38 @@ module.exports = (app, passport) => {
         });
     });
 
+    router.get('/users/:id', function(req, res, next) {
+        User.findById(req.params.id).exec(function(err, user) {
+            if (err) return next(err);
+            const user_info = {
+                username:   user.username,
+                userId:     user._id,
+                email:      user.email,
+                birthday:   user.birthday,
+                country:    user.country,
+                city:       user.city,
+                avatar:     user.avatar,
+                coderoom:   user.coderoom,
+                following:  user.following,
+                follower:   user.follower,
+            };
+            res.json(user_info);
+        })
+        //TODO get the full info.
+    });
+
+    //for short info.
+    router.get('/api/users/:id', function(req, res, next) {
+        User.findById(req.params.id).exec(function(err, user) {
+            if (err) return next(err);
+            const user_info = {
+                username:   user.username,
+                userId:     user._id,
+                avatar:     user.avatar,
+                coderoom:   user.coderoom
+            };
+            res.json(user_info);
+        })
+    });
     app.use('/', router);
 };

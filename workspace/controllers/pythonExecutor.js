@@ -11,15 +11,10 @@ module.exports = (res, roomID, code) => {
     });
     let process = spawn('python3',[runCommand]);
     process.stdout.on('data', function(data) {
-        if (data) {
-            console.log(data.toString());
-            res.json({output: data.toString()});
-        }
-
+        if (data) { res.json({output: data.toString()}); }
     });
     process.stderr.on('data', function(data) {
-        console.log(data.toString());
-        res.json({err: data.toString()});
+        if (data) { res.json({err: data.toString()}); }
     })
 };
 

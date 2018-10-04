@@ -6,6 +6,7 @@ var flash = require("connect-flash");
 var Coderoom = require('../models/coderoom');
 var async = require('async');
 var User = require('../models/user');
+var middleware = require('../middleware/index');
 //root route
 router.get("/", function(req, res, next){
     console.log("homepage333");

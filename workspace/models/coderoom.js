@@ -25,11 +25,11 @@ coderoomSchema
     });
 coderoomSchema.virtual('code').get(function() {
     return ''
-})
+});
 coderoomSchema.virtual('comment').get(function() {
     return ''
-})
+});
 coderoomSchema.virtual('user_list').get(function() {
     return ''
-})
+});
 module.exports = mongoose.model("coderoom", coderoomSchema);

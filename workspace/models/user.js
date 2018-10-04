@@ -9,6 +9,7 @@ var UserSchema = new mongoose.Schema({
     birthday:{type: Date},
     country:String,
     city:String,
+    avatar: String,                     //The url for avatar
     coderoom: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Coderoom"
@@ -41,3 +42,4 @@ UserSchema
     });
 UserSchema.plugin(passportLocalMongoose);
 module.exports = mongoose.model("User", UserSchema);
+

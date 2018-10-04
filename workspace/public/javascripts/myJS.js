@@ -1,5 +1,4 @@
-
-    //FireBase 设置
+ //FireBase 设置
     var config = {
         apiKey: "AIzaSyDyFnZMXeY2gXJNSZe58tqbOkZX7-5yiDM",
         authDomain: "comp9323-97bb4.firebaseapp.com",
@@ -22,7 +21,6 @@
         // autoMatchBrackets: true,
         readOnly: !permission                 //set to true if user have the permission.
     });
-
     //when editor's content changed, call updateCode()
     editor.on('change', updateCode);
 
@@ -93,7 +91,6 @@
     });
 
     //同步comment list，与user list类似，但是comment可以改，user不行
-    //comment list 需要有：（作者, 内容, 子comment，。。。）
     dbRefCommentList.on('child_added', snap => {
         const li = document.createElement('li');
         li.innerText = JSON.stringify(snap.val(), null, 3);
