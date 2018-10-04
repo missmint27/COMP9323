@@ -118,7 +118,10 @@ function run() {
     const result = document.getElementById('result');
     const host = window.location.host;
     const path = window.location.pathname;
-    const url = 'http://' + host + path + '/run';
+
+    // const url = 'http://' + host + path + '/run';
+    const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/run';
+    console.log(url);
     $.ajax({
         url: url,
         method: 'get',
