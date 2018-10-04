@@ -8,7 +8,6 @@
         messagingSenderId: "837737259182"
     };
     firebase.initializeApp(config);
-
     var permission = false;
     var roomId = '5bab7be8ade838281621911a';//需要动态获取roomid
     var userId = '5bb053d0efdfca206dc66b3b';
