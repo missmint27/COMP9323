@@ -1129,7 +1129,7 @@ var run = function () {
 var listener = function (event) {
   run.call(event.data);
 };
-// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
+// Node.bootstrap 0.9+ & IE10+ has setImmediate, otherwise:
 if (!setTask || !clearTask) {
   setTask = function setImmediate(fn) {
     var args = [];
@@ -1145,7 +1145,7 @@ if (!setTask || !clearTask) {
   clearTask = function clearImmediate(id) {
     delete queue[id];
   };
-  // Node.js 0.8-
+  // Node.bootstrap 0.8-
   if (__webpack_require__(20)(process) == 'process') {
     defer = function (id) {
       process.nextTick(ctx(run, id, 1));
@@ -7960,7 +7960,7 @@ module.exports = function () {
     if (parent) parent.enter();
   };
 
-  // Node.js
+  // Node.bootstrap
   if (isNode) {
     notify = function () {
       process.nextTick(flush);

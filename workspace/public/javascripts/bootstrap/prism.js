@@ -1,6 +1,6 @@
 
 /* **********************************************
-     Begin prism-core.js
+     Begin prism-core.bootstrap
 ********************************************** */
 
 var _self = (typeof window !== 'undefined')
@@ -8,7 +8,7 @@ var _self = (typeof window !== 'undefined')
 	: (
 		(typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope)
 		? self // if in worker
-		: {}   // if in node js
+		: {}   // if in node bootstrap
 	);
 
 /**
@@ -488,7 +488,7 @@ Token.stringify = function(o, language, parent) {
 
 if (!_self.document) {
 	if (!_self.addEventListener) {
-		// in Node.js
+		// in Node.bootstrap
 		return _self.Prism;
 	}
 
@@ -538,14 +538,14 @@ if (typeof module !== 'undefined' && module.exports) {
 	module.exports = Prism;
 }
 
-// hack for components to work correctly in node.js
+// hack for components to work correctly in node.bootstrap
 if (typeof global !== 'undefined') {
 	global.Prism = Prism;
 }
 
 
 /* **********************************************
-     Begin prism-markup.js
+     Begin prism-markup.bootstrap
 ********************************************** */
 
 Prism.languages.markup = {
@@ -606,7 +606,7 @@ Prism.languages.svg = Prism.languages.markup;
 
 
 /* **********************************************
-     Begin prism-css.js
+     Begin prism-css.bootstrap
 ********************************************** */
 
 Prism.languages.css = {
@@ -663,7 +663,7 @@ if (Prism.languages.markup) {
 }
 
 /* **********************************************
-     Begin prism-clike.js
+     Begin prism-clike.bootstrap
 ********************************************** */
 
 Prism.languages.clike = {
@@ -698,7 +698,7 @@ Prism.languages.clike = {
 
 
 /* **********************************************
-     Begin prism-javascript.js
+     Begin prism-javascript.bootstrap
 ********************************************** */
 
 Prism.languages.javascript = Prism.languages.extend('clike', {
@@ -758,7 +758,7 @@ Prism.languages.js = Prism.languages.javascript;
 
 
 /* **********************************************
-     Begin prism-file-highlight.js
+     Begin prism-file-highlight.bootstrap
 ********************************************** */
 
 (function () {

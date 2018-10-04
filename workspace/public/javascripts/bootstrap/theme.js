@@ -147,7 +147,7 @@ var mrChecklist = {
   })
 }; //
 //
-// dropzone.js
+// dropzone.bootstrap
 //
 //
 
@@ -166,20 +166,20 @@ $(function () {
   });
 }); //
 //
-// filter.js
+// filter.bootstrap
 //
-// Initialises the List.js plugin and provides interface to list objects
+// Initialises the List.bootstrap plugin and provides interface to list objects
 //
 
 /* global List */
 
 var mrFilterList = function ($) {
   /**
-   * Check for List.js dependency
-   * List.js - http://listjs.com
+   * Check for List.bootstrap dependency
+   * List.bootstrap - http://listjs.com
    */
   if (typeof List === 'undefined') {
-    throw new Error('mrFilterList requires list.js (http://listjs.com)');
+    throw new Error('mrFilterList requires list.bootstrap (http://listjs.com)');
   }
   /**
    * ------------------------------------------------------------------------
@@ -220,11 +220,11 @@ var mrFilterList = function ($) {
       this.element = element; // Get class of list elements to be used within this data-filter-list element
 
       var listData = element.dataset[Selector.DATA_ATTR_CAMEL]; // data-filter-by rules collected from filterable elements
-      // to be passed to List.js
+      // to be passed to List.bootstrap
 
-      this.valueNames = []; // List.js instances included in this filterList
+      this.valueNames = []; // List.bootstrap instances included in this filterList
 
-      this.lists = []; // Find all matching list elements and initialise List.js on each
+      this.lists = []; // Find all matching list elements and initialise List.bootstrap on each
 
       this.initAllLists(listData); // Bind the search input to each list in the array of lists
 
@@ -247,9 +247,9 @@ var mrFilterList = function ($) {
       var _this2 = this;
 
       // Each individual list needs a unique ID to be added
-      // as a class as List.js identifies lists by class
+      // as a class as List.bootstrap identifies lists by class
       var listID = Selector.DATA_ATTR + "-" + new Date().getTime(); // Use the first child of the list and parse all data-filter-by attributes inside.
-      // Pass to parseFilters to construct an array of valueNames appropriate for List.js
+      // Pass to parseFilters to construct an array of valueNames appropriate for List.bootstrap
 
       var filterables = listElement.querySelectorAll("*:first-child [" + Selector.DATA_FILTER_BY + "]");
       mrUtil.forEach(filterables, function (index, filterElement) {
@@ -261,9 +261,9 @@ var mrFilterList = function ($) {
       // This is necessary because similar items in the list element could produce
       // the same rule in the valueNames array.
 
-      this.valueNames = mrUtil.dedupArray(this.valueNames); // Add unique ID as class to the list so List.js can handle it individually
+      this.valueNames = mrUtil.dedupArray(this.valueNames); // Add unique ID as class to the list so List.bootstrap can handle it individually
 
-      listElement.classList.add(listID); // Set up the list instance using the List.js library
+      listElement.classList.add(listID); // Set up the list instance using the List.bootstrap library
 
       var list = new List(element, {
         valueNames: this.valueNames,
@@ -289,13 +289,13 @@ var mrFilterList = function ($) {
       }
 
       filters.forEach(function (filter) {
-        // Store appropriate rule for List.js in the valueNames array
+        // Store appropriate rule for List.bootstrap in the valueNames array
         if (filter === 'text') {
           if (filterElement.className !== filterElement.nodeName + "-" + Selector.FILTER_TEXT) {
             _this3.valueNames.push(filterElement.className + " " + filterElement.nodeName + "-" + Selector.FILTER_TEXT);
           }
 
-          $listElement.find(filterElement.nodeName.toLowerCase() + "[" + Selector.DATA_FILTER_BY + "*=\"text\"]") // Prepend element type to class on filterable element as List.js needs separate classes
+          $listElement.find(filterElement.nodeName.toLowerCase() + "[" + Selector.DATA_FILTER_BY + "*=\"text\"]") // Prepend element type to class on filterable element as List.bootstrap needs separate classes
           .addClass(filterElement.nodeName + "-" + Selector.FILTER_TEXT);
         } else if (filter.indexOf('data-') === 0) {
           $listElement.find("[" + Selector.DATA_FILTER_BY + "*=\"" + filter + "\"]").addClass("filter-by-" + filter);
@@ -330,7 +330,7 @@ var mrFilterList = function ($) {
 
     _proto2.searchLists = function searchLists(event) {
       // Retrieve the filterList object from the element
-      var filterList = $(this).data(DATA_KEY); // Apply the currently searched term to the List.js instances in this filterList instance
+      var filterList = $(this).data(DATA_KEY); // Apply the currently searched term to the List.bootstrap instances in this filterList instance
 
       mrUtil.forEach(filterList.lists, function (index, list) {
         list.search(event.target.value);
@@ -414,7 +414,7 @@ var mrKanban = {
   })
 }; //
 //
-// prism.js
+// prism.bootstrap
 //
 // Initialises the prism code highlighting plugin
 

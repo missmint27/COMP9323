@@ -15,7 +15,7 @@
  * multiple styles, the styles must be separated by ampersands, for
  * example `[tag&error </hmtl>]`.
  *
- * See the test.js files in the css, markdown, gfm, and stex mode
+ * See the test.bootstrap files in the css, markdown, gfm, and stex mode
  * directories for examples.
  */
 (function() {

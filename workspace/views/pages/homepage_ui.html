@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<!--friendly to mobile -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<html>
+<head>
+    <title>Homepage</title>
+    <link rel="icon" href="../../public/icon/website.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../public/stylesheets/style.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+<nav class="nav-bar">
+    <div class="nav-container">
+        <div class="nav-name">
+            <a href="../pages/homepage_ui.html">OurCodes</a>
+        </div>
+
+        <img src="../../public/img/avatar/avatar3.png" class="avatar" alt="">
+        <div class="nav-sign">
+            <div class="nav-menu"><a class="nav-sign" href="../pages/signup.html">Sign up</a></div>
+            <div class="nav-slash">/</div>
+            <div class="nav-menu"><a class="nav-sign" href="../pages/signin.html">Sign in</a></div>
+        </div>
+        <!--Can be replaced after login-->
+        <div class="nav-username">
+            <span>Please sign in</span>
+        </div>
+
+
+        <!--click these two buttons show and hide a div of contents-->
+
+
+        <div class="nav-bottom">
+            <div class="nav-circle">
+                <img src="../../public/icon/folder-fff.png" class="circle-icon" id="project-list"
+                     onmouseover="this.src='../../public/icon/folder-4abdac.png'"
+                     onmouseout="this.src='../../public/icon/folder-fff.png'">
+                <!--怎么可以一起变呀？-->
+            </div>
+            <div class="nav-circle">
+                <img src="../../public/icon/participant-fff.png" class="circle-icon" id="participant-list"
+                     onmouseover="this.src='../../public/icon/participant-4abdac.png'"
+                     onmouseout="this.src='../../public/icon/participant-fff.png'">
+            </div>
+            <div class="nav-bo">
+                <img class="nav-icon" onclick="javascript:location.href='setting.html'"
+                     src="../../public/icon/settings-fff.png"
+                     onmouseover="this.src='../../public/icon/settings-e6e6e6.png'"
+                     onmouseout="this.src='../../public/icon/settings-fff.png'"/>
+            </div>
+        </div>
+
+
+    </div>
+</nav>
+
+<script type="text/javascript">
+    /*This part is for search bar*/
+    function searchBar() {
+        var x = document.getElementById("hidDiv");
+        var y = document.getElementById("hidAdv");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            y.style.display = "none";
+            x.style.display = "none";
+        }
+    }
+
+    function advSearch() {
+        var x = document.getElementById("hidAdv");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+<div class="block-4">
+    <div class="b4-menu">
+        <div class="b1-search">
+            <div class="search-icon">
+                <img class="nav-icon" src="../../public/icon/search-fff.png"
+                     onmouseover="this.src='../../public/icon/search-e6e6e6.png'"
+                     onmouseout="this.src='../../public/icon/search-fff.png'"
+                     onclick="searchBar()" style="display: inline-block;float: left;"/>
+            </div>
+            <div id="hidDiv" style="display: none;">
+                <input type="text" class="b1-searcher" placeholder="e.g. Ella">
+
+                <input class="b1-advsearch my-button" type="button" value="+ Advanced Search" onclick="advSearch()">
+            </div>
+            <div id="hidAdv" class="b1-divadv" style="display: none;">
+                <ul class="b1-adv-ul">
+                    <li class="b1-adv-li">
+                        <input type="checkbox" name="advancedsearch" value="title" id="advs1">
+                        <label for="advs1">Title</label>
+                    </li>
+                    <li class="b1-adv-li">
+                        <input type="checkbox" name="advancedsearch" value="author" id="advs2">
+                        <label for="advs2">Author</label>
+                    </li>
+                    <li class="b1-adv-li">
+                        <input type="checkbox" name="advancedsearch" value="Content" id="advs3">
+                        <label for="advs3">Content</label>
+                    </li>
+                </ul>
+                <button class="my-button">Search</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="b4-classrooms">
+        <div class="b4-my">
+            <h3>
+                My Coderooms:
+                <button class="my-button" style="width:14rem;font-size: 13px;font-weight:500;margin-left: 3rem;"
+                        onclick="window.location.href='createroom.html'">Create CodeRoom
+                </button>
+            </h3>
+            <div class="b4-block">
+
+                <div class="row">
+                    <div class="b4-subblock">
+                        <div class="b4-submain">
+                            <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                            <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                            <h5 style="width: 50%;">Author: Ella</h5>
+                            <div class="b4-participants">
+                                <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                <img class="b4-avatar" src="../../public/icon/user0.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user1.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user2.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user3.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user4.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user5.png"/>
+                            </div>
+                        </div>
+                        <div class="b4-subside">
+                            <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View
+                            </button>
+                            <div class="btn-group">
+                                <button class="my-button dropdown-toggle" data-toggle="dropdown" style="margin:0">
+                                    Manage<span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Delete Room</a></li>
+                                    <li><a href="#">Revoke Permission</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="b4-subblock">
+                        <div class="b4-submain">
+                            <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                            <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                            <h5 style="width: 50%;">Author: Ella</h5>
+                            <div class="b4-participants">
+                                <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                <img class="b4-avatar" src="../../public/icon/user0.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user1.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user2.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user3.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user4.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user5.png"/>
+                            </div>
+                        </div>
+                        <div class="b4-subside">
+                            <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View
+                            </button>
+                            <div class="btn-group">
+                                <button class="my-button dropdown-toggle" data-toggle="dropdown" style="margin:0">
+                                    Manage<span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Delete Room</a></li>
+                                    <li><a href="#">Revoke Permission</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="b4-subblock">
+                        <div class="b4-submain">
+                            <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                            <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                            <h5 style="width: 50%;">Author: Ella</h5>
+                            <div class="b4-participants">
+                                <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                <img class="b4-avatar" src="../../public/icon/user0.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user1.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user2.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user3.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user4.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user5.png"/>
+                            </div>
+                        </div>
+                        <div class="b4-subside">
+                            <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View
+                            </button>
+                            <div class="btn-group">
+                                <button class="my-button dropdown-toggle" data-toggle="dropdown" style="margin:0">
+                                    Manage<span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Delete Room</a></li>
+                                    <li><a href="#">Revoke Permission</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="b4-subblock">
+                        <div class="b4-submain">
+                            <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                            <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                            <h5 style="width: 50%;">Author: Ella</h5>
+                            <div class="b4-participants">
+                                <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                <img class="b4-avatar" src="../../public/icon/user0.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user1.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user2.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user3.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user4.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user5.png"/>
+                            </div>
+                        </div>
+                        <div class="b4-subside">
+                            <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View
+                            </button>
+                            <div class="btn-group">
+                                <button class="my-button dropdown-toggle" data-toggle="dropdown" style="margin:0">
+                                    Manage<span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Delete Room</a></li>
+                                    <li><a href="#">Revoke Permission</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <div class="b4-others">
+            <h3>Other Coderooms:</h3>
+            <div class="b4-block">
+                <div class="row">
+                    <div class="b4-subblock">
+                        <div class="b4-submain">
+                            <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                            <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                            <h5 style="width: 50%;">Author: Ella</h5>
+                            <div class="b4-participants">
+                                <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                <img class="b4-avatar" src="../../public/icon/user0.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user1.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user2.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user3.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user4.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user5.png"/>
+                            </div>
+                        </div>
+                        <div class="b4-subside">
+                            <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View
+                            </button>
+                            <button class="my-button" onclick="window.location.href='">Join</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="b4-subblock">
+                        <div class="b4-submain">
+                            <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                            <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                            <h5 style="width: 50%;">Author: Ella</h5>
+                            <div class="b4-participants">
+                                <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                <img class="b4-avatar" src="../../public/icon/user0.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user1.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user2.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user3.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user4.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user5.png"/>
+                            </div>
+                        </div>
+                        <div class="b4-subside">
+                            <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View
+                            </button>
+                            <button class="my-button" onclick="window.location.href='">Join</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="b4-subblock">
+                        <div class="b4-submain">
+                            <h4>TITLEEEEEEEEEEEEEEEEE</h4>
+                            <p>DESCRIPTIONNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+                                NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</p>
+                            <h5 style="width: 50%;">Author: Ella</h5>
+                            <div class="b4-participants">
+                                <h5 style="margin-right:20px;margin-top: -5px; ">Participants:</h5>
+                                <img class="b4-avatar" src="../../public/icon/user0.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user1.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user2.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user3.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user4.png"/>
+                                <img class="b4-avatar" src="../../public/icon/user5.png"/>
+                            </div>
+                        </div>
+                        <div class="b4-subside">
+                            <button class="my-button" onclick="window.location.href='../coderooms/coderoom.html'">View
+                            </button>
+                            <button class="my-button" onclick="window.location.href='">Join</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<div>
+    Icons made by
+    <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a>
+    from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by
+    <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+</div>
+</html>
