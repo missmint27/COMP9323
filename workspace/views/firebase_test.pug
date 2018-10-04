@@ -1,7 +1,7 @@
 doctype html
 html(lang='en')
     head
-        title= title
+        title= "CodeRoom TESTING"
         meta(charset='utf-8')
         meta(name='viewport', content='width=device-width, initial-scale=1')
         link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
@@ -12,11 +12,14 @@ html(lang='en')
         script(src="/javascripts/codemirror/lib/codemirror.js")
         script(src="/javascripts/codemirror/mode/python/python.js")
         link(rel='stylesheet' href="/javascripts/codemirror/theme/darcula.css")
+        link(rel='stylesheet' href="/javascripts/codemirror/theme/lucario.css")
     body
-        h1=title
+        h3="Room ID: " + roomId
+        h3="User ID: " + userId
+
     div.form-group
         label(for='code_input') Code Input:
-        button.btn.btn-primary(type='submit', id = "btn", onclick="change()") Change Permission:
+        button.btn.btn-primary(type='submit', id = "btn", onclick='change()') Change Permission:
         textarea#code_input.form-control(name='code_input')
     div.form-group
         label(for='code') Code:
@@ -30,24 +33,23 @@ html(lang='en')
     div.form-group
         label(for='comment_input') Comment Input:
         input#comment_input.form-control(type='text', name='comment_input')
-        button.btn.btn-primary(type='submit', id = "btn2", onclick="addComment()") Comment Submit:
+        button.btn.btn-primary(type='submit', id = "btn2", onclick="postComment()") Comment Submit:
 
     div.form-group
         label(for='comment_list') Comment List:
         ul(id='comment_list')
 
-    div.form-group
-        label(for='user_input') User Input:
-        input#user_input.form-control(type='text', name='user_input')
-        button.btn.btn-primary(type='submit', id = "btn3", onclick="addUser()") User Submit:
+    //div.form-group
+    //    label(for='user_input') User Input:
+    //    input#user_input.form-control(type='text', name='user_input')
+    //    button.btn.btn-primary(type='submit', id = "btn3", onclick="addUser()") User Submit:
+
+    //div.form-group
+    //    label(for='user_id') User Delete:
+    //    input#user_id.form-control(type='text', name='user_id')
+    //    button.btn.btn-primary(type='submit', id = "btn4", onclick="removeUser()") User Delete:
 
     div.form-group
-        label(for='user_id') User Delete:
-        input#user_id.form-control(type='text', name='user_id')
-        button.btn.btn-primary(type='submit', id = "btn4", onclick="removeUser()") User Delete:
-
-    div.form-group
-        label(for='user_list') User List:
-        ul(id='user_list')
-
+            label(for='user_list') User List:
+            ul(id='user_list')
     script(src="/javascripts/myJS.js")

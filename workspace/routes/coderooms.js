@@ -1,14 +1,10 @@
 var express = require("express");
 var router  = express.Router();
 var Coderoom = require("../models/coderoom");
-// var Comment = require("../models/comment");
-// var File = require('../models/pythonFile');
+var User = require('../models/user');
 var middleware = require("../middleware");
-var request = require("request");
 var firebase = require('firebase');
 var pythonExecutor = require('../controllers/pythonExecutor');
-const fs = require('fs');
-const spawn = require('child_process').spawn;
 const async = require('async');
 
 var config = {
@@ -20,14 +16,21 @@ var config = {
     messagingSenderId: "837737259182"
 };
 firebase.initializeApp(config);
+//firebase root directory
+var fb_root = firebase.database().ref();
+
 //testing firebase
 router.get('/test', function(req, res) {
+    let roomId = '5bab7be8ade838281621911a';
+    let userId = '5bb053d0efdfca206dc66b3b';
     console.log("Firebase testing...");
-    res.render('firebase_test');
+    console.log("TEST ON ROOM ID: ", roomId);
+    console.log("TEST ON USER ID: ", roomId);
+    res.render('firebase_test', {roomId: roomId, userId: userId});
 });
 
 //可工作
-router.get("/", middleware.isLoggedIn, function(req, res) {
+router.get("/", function(req, res) {
     console.log("Show all coderooms");
     Coderoom.find().exec(function(err, coderoom) {
         if (err) { return next(err); }
@@ -53,57 +56,104 @@ router.post("/", middleware.isLoggedIn,function(req, res) {
             name: req.body.name,
             description: req.body.description,
             author:{
-                id: req.session.passport.user.id,
-                username: req.session.passport.user.username
+                id: req.user.id,
+                username: req.user.username
             }
         });
     coderoom.save(function(err) {
         if (err) { return next(err); }
-        firebase.database().ref().child('code/').child(coderoom.id).update(
+        fb_root.child('code/').child(coderoom.id).update(
             {'content': "print(\"Hello World\")"}
         );
-        firebase.database().ref().child('user_list/' + coderoom.id).child(req.session.passport.user.id)
+        fb_root.child('user_list/' + coderoom.id).child(req.user.id)
             .update({
-                'username': req.session.passport.user.username,
+                'username': req.user.username,
                 'permission': true,
                 'ask-for-permission': false,
-                'url': '/users/' + req.session.passport.user.id
+                'url': '/users/' + req.user.id,
             });
         res.json("room id: %s created", coderoom.id);
     });
 });
+
+
+router.get('/:roomId/permission/:userId', middleware.isLoggedIn, function(req, res, next) {
+   console.log('Passing permission');
+   const holderRef = fb_root.child('user_list/' + req.params.roomId)
+        .child(req.user.id);
+   const targetRef = fb_root.child('user_list/' + req.params.roomId)
+       .child(req.params.userId);
+
+   async.parallel({
+       holder: function (callback) {
+           holderRef.child('permission').once('value').then(function (snapshot) {
+               callback(null, snapshot.val());
+           });
+       },
+       target: function (callback) {
+           targetRef.child('ask-for-permission').once('value').then(function (snapshot) {
+               callback(null, snapshot.val());
+           });
+       }
+   }, function(err, results) {
+       //TODO: clear all the ask-for-permission status.
+       if(results.holder) {
+           if(results.target) {
+               targetRef.update( {'permission': true} );
+               holderRef.update( {'permission': false} );
+               res.status('200').json({'msg': 'Permission transferd to User: ' + req.params.userId});
+           } else {
+               res.status('400').json({'msg': 'user ' + req.params.userId + ' is not asking for permission'});
+           }
+       } else {
+           res.status('400').json({'msg': "You Don't have permission."});
+       }
+   })
+});
+
 //可工作
 // get coderoom by its id
-router.get("/:id",function(req, res) {
+router.get("/:id",function(req, res, next) {
     console.log("show coderoom by id");
     async.parallel({
+        //get the room
         room: function(callback) {
             Coderoom.findById(req.params.id).exec(function (err, coderoom) {
                 if (err) { return next(err); }
-                callback(coderoom);
+                callback(null, coderoom);
             })
         },
+        //put user into the user list under the coderoom
         user: function(callback) {
-            firebase.database().ref().child('user_list/' + req.params.id)
-                .child(req.session.passport.user.id)
+            if (req.user) {
+                //TODO change to if not user.
+                User.findByIdAndUpdate(req.user.id,
+                    {coderoom: {_id:req.params.id}}, {new:true}, function(err, user) {
+                        if(err) { return next(err); }
+                        console.log(user);
+                });
+                fb_root.child('user_list/' + req.params.id)
+                    .child(req.user.id)
                     .update({
-                        'username':req.session.passport.user.username,
+                        'username': req.user.username,
                         'permission': false,
                         'ask-for-permission': false,
-                        'url': '/users/' + req.session.passport.user.id
+                        'url': '/users/' + req.user.id
                     });
-            callback(null, user.id);
+                callback(null, req.user.id);
+            } else { callback(null, null); }
         }
     }, function(err, results) {
+        //if user not logged in, user will be null.
         res.json({
-            coderoom: result.coderoom,
-            user: result.user
+            coderoom: results.room,
+            user: results.user
         });
     })
 });
 
 //可工作
-router.get("/:id/run",function(req, res) {
+router.get("/:id/run",function(req, res, next) {
     console.log("run code in this coderoom.");
     const dbRefCode = firebase.database().ref().child('code').child(req.params.id);
     dbRefCode.once('value', snap => {
@@ -113,165 +163,51 @@ router.get("/:id/run",function(req, res) {
 });
 
 // delete coderoom by its id
-router.delete("/:id",function(req, res) {
+router.delete("/:id",middleware.isLoggedIn, function(req, res, next) {
     console.log("Delete coderoom");
+    //TODO owner of coderoom can do this
     Coderoom.findByIdAndRemove(req.params.id).exec(function(err, coderoom) {
         if (err) { return next(err); }
         res.json({Message: "Deleted!"});
     });
-    // TODO delete the coderoom in user schema.
+    // TODO delete the coderoom in all user schema.
     // TODO delete all coderoom entries in fireabse.
+    res.status('200').json({'msg': 'coderoom ' + req.params.id + ' deleted'})
 });
 
-router.delete("/:roomId/users/:id", function(req, res) {
-    //need to change after impliment firebase
-    console.log("Delete user in this coderoom");
-    async.waterfall([
-        function(callback) {
-            Coderoom.findById(req.params.roomId).exec(function(err, coderoom) {
-                if (err) { return next(err); }
-                callback(null, coderoom);
-            });
-        },
-        function(arg1, callback) {
-            let user_list = arg1.users;
-            for (user in user_list) {
-                if (user_list[user].id == req.params.id) {
-                    user_list.splice(user, 1);
-                }
-            }
-            callback(null, user_list);
+//delete user under this room
+router.delete("/:roomId/users", middleware.isLoggedIn, function(req, res, next) {
+    const userId = req.user.id;
+    console.log("Delete user in this coderoom, userId: ", userId);
+
+    fb_root.child('user_list/' + req.params.roomId).child(userId).remove();
+    res.status('200').json({'msg': 'user ' + userId + ' deleted'});
+});
+
+router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next) {
+    console.log("post comment.");
+    fb_root.child('comment_list/' + req.params.roomId).push({
+            authorId: req.user.id,
+            author: req.user.username,
+            content: req.body.content,
+            position: req.body.pos
         }
-    ], function(err, result) {
-        Coderoom.findByIdAndUpdate(req.params.roomId, {$set: {result}}, function(err, updated) {
-            if (err) {return next(err); }
-            res.json(updated);
-        })
-    });
+    );
+    //TODO err handler?
+    res.status('200').json({'msg': 'Comment created.'});
+});
+
+router.put('/:roomId/comments/:commentId', middleware.isLoggedIn, function(req, res, next) {
+    console.log("modifying comment.");
+    fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).udpate({
+            content: req.body.content
+        }
+    );
+    res.status('200').json({'msg': 'Comment modified.'});
 });
 
 module.exports = router;
 
-//
-// //INDEX - show all coderooms
-// router.get("/", function(req, res){
-//     if(req.query.search){
-//         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-//         Coderoom.find({name:regex}, function(err, allCoderooms){
-//            if(err){
-//                console.log(err);
-//            } else {
-//                var noMatch;
-//                request('https://maps.googleapis.com/maps/api/geocode/json?address=sardine%20lake%20ca&key=AIzaSyBtHyZ049G_pjzIXDKsJJB5zMohfN67llM', function (error, response, body) {
-//                 if (!error && response.statusCode == 200) {
-//                      // Show the HTML for the Modulus homepage.
-//                      if(allCoderooms.length < 1){
-//
-//                           noMatch = "No coderooms match that query, please try again.";
-//                           console.log(noMatch);
-//                          //eval(require("locus"));
-//                           res.render("coderooms/index",{coderooms:allCoderooms,noMatch:noMatch});
-//                      }
-//                      console.log("got here");
-//                         res.render("coderooms/index",{coderooms:allCoderooms,noMatch:noMatch});
-//                 }
-//             });
-//            }
-//         });
-//     }
-//     else{
-//     // Get all coderooms from DB
-//     Coderoom.find({}, function(err, allCoderooms){
-//        if(err){
-//            console.log(err);
-//        } else {
-//                  // Show the HTML for the Modulus homepage.
-//                 res.render("coderooms/index",{coderooms:allCoderooms});
-//     }});
-// }});
-//
-// //CREATE - add new coderooms to DB
-// //router.post("/", middleware.isLoggedIn, function(req, res){
-// router.post("/", function(req, res){
-//     // get data from form and add to campgrounds array
-//
-//     var name = req.body.name;
-//     var image = req.body.image;
-//     var code = req.body.code;
-//     var desc = req.body.description;
-//     var author = {
-//         id: req.user._id,
-//         username: req.user.username
-//     }
-//     var newCoderoom = {name: name, image: image, description: desc,code: req.body.code,author:author}
-//     // Create a new campground and save to DB
-//     Coderoom.create(newCoderoom, function(err, newlyCreated){
-//         if(err){
-//             console.log(err);
-//         } else {
-//             //redirect back to coderooms page
-//             res.redirect("/coderooms");
-//         }
-//     });
-// });
-//
-// //NEW - show form to create new campground
-// router.get("/new", middleware.isLoggedIn, function(req, res){
-//    res.render("coderooms/new");
-// });
-//
-// // SHOW - shows more info about one campground
-// router.get("/:id", function(req, res){
-//     //find the campground with provided ID
-//     Coderoom.findById(req.params.id).populate("comments").exec(function(err, foundCoderoom){
-//         if(err){
-//             console.log(err);
-//         } else {
-//             //render show template with that campground
-//             res.render("coderooms/show", {coderoom: foundCoderoom});
-//         }
-//     });
-// });
-//
-// router.get("/:id/edit", middleware.checkUserCoderoom, function(req, res){
-//
-//     //find the campground with provided ID
-//     Coderoom.findById(req.params.id, function(err, foundCoderoom){
-//         if(err){
-//             console.log(err);
-//         } else {
-//             //render show template with that coderoom
-//             res.render("coderooms/edit", {coderoom: foundCoderoom});
-//         }
-//     });
-// });
-//
-// router.put("/:id", function(req, res){
-//     var newData = {name: req.body.name, image: req.body.image, code: req.body.code,description: req.body.desc};
-//     Coderoom.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, coderoom){
-//         if(err){
-//             req.flash("error", err.message);
-//             res.redirect("back");
-//         } else {
-//             req.flash("success","Successfully Updated!");
-//             res.redirect("/coderooms/" + coderoom._id);
-//         }
-//     });
-// });
-// router.delete("/:id", function(req, res) {
-//   Coderoom.findByIdAndRemove(req.params.id, function(err, coderoom) {
-//     Comment.remove({
-//       _id: {
-//         $in: coderoom.comments
-//       }
-//     }, function(err, comments) {
-//       req.flash('error', coderoom.name + ' deleted!');
-//       res.redirect('/coderooms');
-//     })
-//   });
-// });
-//
-//
 // function escapeRegex(text) {
 //     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 // };
