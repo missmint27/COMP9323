@@ -629,7 +629,7 @@ search-icon{
 .b5-button{
     width: 10rem;
 }
-.b5-button:hover, b5-button:focus{
+.b5-button:hover, .b5-button:focus{
     color: #666666;
     background-color: #f7b733b8;
 }

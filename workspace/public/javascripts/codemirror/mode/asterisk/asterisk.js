@@ -4,7 +4,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  mode/asterisk/asterisk.js
+ *       Filename:  mode/asterisk/asterisk.bootstrap
  *
  *    Description:  CodeMirror mode for Asterisk dialplan
  *

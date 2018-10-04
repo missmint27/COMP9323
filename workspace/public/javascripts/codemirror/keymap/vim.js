@@ -2700,7 +2700,7 @@
     }
 
     /*
-     * Below are miscellaneous utility functions used by vim.js
+     * Below are miscellaneous utility functions used by vim.bootstrap
      */
 
     /**
@@ -4755,7 +4755,7 @@
       },
       substitute: function(cm, params) {
         if (!cm.getSearchCursor) {
-          throw new Error('Search feature not available. Requires searchcursor.js or ' +
+          throw new Error('Search feature not available. Requires searchcursor.bootstrap or ' +
               'any other getSearchCursor implementation.');
         }
         var argString = params.argString;

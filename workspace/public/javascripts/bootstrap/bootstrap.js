@@ -12,7 +12,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.1.3): util.js
+ * Bootstrap (v4.1.3): util.bootstrap
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -142,7 +142,7 @@ var Util = function ($) {
 }($);
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.1.3): alert.js
+ * Bootstrap (v4.1.3): alert.bootstrap
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -317,7 +317,7 @@ var Alert = function ($) {
 }($);
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.1.3): button.js
+ * Bootstrap (v4.1.3): button.bootstrap
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -481,7 +481,7 @@ var Button = function ($) {
 }($);
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.1.3): carousel.js
+ * Bootstrap (v4.1.3): carousel.bootstrap
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -985,7 +985,7 @@ var Carousel = function ($) {
 }($);
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.1.3): collapse.js
+ * Bootstrap (v4.1.3): collapse.bootstrap
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -1353,7 +1353,7 @@ var Collapse = function ($) {
 }($);
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.1.3): dropdown.js
+ * Bootstrap (v4.1.3): dropdown.bootstrap
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -1482,7 +1482,7 @@ var Dropdown = function ($) {
 
       if (showEvent.isDefaultPrevented()) {
         return;
-      } // Disable totally Popper.js for Dropdown in Navbar
+      } // Disable totally Popper.bootstrap for Dropdown in Navbar
 
 
       if (!this._inNavbar) {
@@ -1491,7 +1491,7 @@ var Dropdown = function ($) {
          * Popper - https://popper.js.org
          */
         if (typeof Popper === 'undefined') {
-          throw new TypeError('Bootstrap dropdown require Popper.js (https://popper.js.org)');
+          throw new TypeError('Bootstrap dropdown require Popper.bootstrap (https://popper.js.org)');
         }
 
         var referenceElement = this._element;
@@ -1632,7 +1632,7 @@ var Dropdown = function ($) {
           preventOverflow: {
             boundariesElement: this._config.boundary
           }
-        } // Disable Popper.js if we have a static display
+        } // Disable Popper.bootstrap if we have a static display
 
       };
 
@@ -1841,7 +1841,7 @@ var Dropdown = function ($) {
 }($, Popper);
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.1.3): modal.js
+ * Bootstrap (v4.1.3): modal.bootstrap
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -2231,7 +2231,7 @@ var Modal = function ($) {
       }
     }; // ----------------------------------------------------------------------
     // the following methods are used to handle overflowing modals
-    // todo (fat): these should probably be refactored out of modal.js
+    // todo (fat): these should probably be refactored out of modal.bootstrap
     // ----------------------------------------------------------------------
 
 
@@ -2412,7 +2412,7 @@ var Modal = function ($) {
 }($);
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.1.3): tooltip.js
+ * Bootstrap (v4.1.3): tooltip.bootstrap
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -2513,7 +2513,7 @@ var Tooltip = function ($) {
        * Popper - https://popper.js.org
        */
       if (typeof Popper === 'undefined') {
-        throw new TypeError('Bootstrap tooltips require Popper.js (https://popper.js.org)');
+        throw new TypeError('Bootstrap tooltips require Popper.bootstrap (https://popper.js.org)');
       } // private
 
 
@@ -3082,7 +3082,7 @@ var Tooltip = function ($) {
 }($, Popper);
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.1.3): popover.js
+ * Bootstrap (v4.1.3): popover.bootstrap
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -3166,7 +3166,7 @@ var Popover = function ($) {
     };
 
     _proto8.setContent = function setContent() {
-      var $tip = $(this.getTipElement()); // We use append for html objects to maintain js events
+      var $tip = $(this.getTipElement()); // We use append for html objects to maintain bootstrap events
 
       this.setElementContent($tip.find(Selector.TITLE), this.getTitle());
 
@@ -3279,7 +3279,7 @@ var Popover = function ($) {
 }($);
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.1.3): scrollspy.js
+ * Bootstrap (v4.1.3): scrollspy.bootstrap
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -3595,7 +3595,7 @@ var ScrollSpy = function ($) {
 }($);
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.1.3): tab.js
+ * Bootstrap (v4.1.3): tab.bootstrap
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
