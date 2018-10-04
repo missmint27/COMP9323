@@ -89,6 +89,37 @@
                      onmouseover="this.src='../../public/icon/settings-e6e6e6.png'"
                      onmouseout="this.src='../../public/icon/settings-fff.png'"/>
             </div>
+            <div class="b1-search">
+                <div class="search-icon">
+                    <img class="nav-icon" src="../../public/icon/search-fff.png"
+                         onmouseover="this.src='../../public/icon/search-e6e6e6.png'"
+                         onmouseout="this.src='../../public/icon/search-fff.png'"
+                         onclick="searchBar()" style="display: inline-block;float: left;"/>
+                </div>
+                <div id="hidDiv" style="display: none;">
+                    <input type="text" class="b1-searcher" placeholder="e.g. Ella">
+
+                    <input class="b1-advsearch my-button" type="button" value="+ Advanced Search" onclick="advSearch()">
+                </div>
+                <div id="hidAdv" class="b1-divadv" style="display: none;">
+                    <ul class="b1-adv-ul">
+                        <li class="b1-adv-li">
+                            <input type="checkbox" name="advancedsearch" value="title" id="advs1">
+                            <label for="advs1">Title</label>
+                        </li>
+                        <li class="b1-adv-li">
+                            <input type="checkbox" name="advancedsearch" value="author" id="advs2">
+                            <label for="advs2">Author</label>
+                        </li>
+                        <li class="b1-adv-li">
+                            <input type="checkbox" name="advancedsearch" value="Content" id="advs3">
+                            <label for="advs3">Content</label>
+                        </li>
+                    </ul>
+                    <button class="my-button">Search</button>
+
+                </div>
+            </div>
         </div>
 
 

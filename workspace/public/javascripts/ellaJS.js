@@ -1,0 +1,62 @@
+/*This part is for search bar*/
+function searchBar() {
+    var x = document.getElementById("hidDiv");
+    var y = document.getElementById("hidAdv");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        y.style.display = "none";
+        x.style.display = "none";
+    }
+}
+
+function advSearch() {
+    var x = document.getElementById("hidAdv");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+<!--点击换成SHOW COMMENTS-->
+function hideComments() {
+    var button = document.getElementById("comments-btn");
+    var review = document.getElementById("comments");
+    if (review.style.display === "") {
+        review.style.display = "none";
+        button.innerHTML = "SHOW COMMENTS";
+    } else {
+        review.style.display = "";
+        button.innerHTML = "HIDE COMMENTS";
+    }
+}
+
+/*drag and get word*/
+/*select(document, tanchu);
+function select(o, fn){
+    o.onmouseup = function(e){
+        var event = window.event || e;
+        var target = event.srcElement ? event.srcElement : event.target;
+        if (/input|textarea/i.test(target.tagName) && /firefox/i.test(navigator.userAgent)) {
+            //Firefox choose in textarea
+            var staIndex=target.selectionStart;
+            var endIndex=target.selectionEnd;
+            if(staIndex!=endIndex){
+                var sText=target.value.substring(staIndex,endIndex);
+                fn(sText,target);
+            }
+        }
+        else{
+            //get choosen
+            var sText = document.selection == undefined ? document.getSelection().toString():document.selection.createRange().text;
+            if (sText != "") {
+                //return parameters into fn
+                fn(sText, target);
+            }
+        }
+    }
+}
+function tanchu(txt,tar){
+    alert("This is belong to"+tar.tagName+"elements，choose："+txt);
+}*/
+
