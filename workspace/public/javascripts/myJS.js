@@ -11,6 +11,8 @@
     var permission = false;
     var roomId = '5bab7be8ade838281621911a';//需要动态获取roomid
     var userId = '5bb053d0efdfca206dc66b3b';
+    var users = null;
+    var ask_for_permission = null;
     //CodeMirro Editor initialize
     //Need further changes for optimization.
     var editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
@@ -29,6 +31,7 @@
     const dbRefUserList = dbRefObject.child('user_list').child(roomId);
     const dbRefCode = dbRefObject.child('code').child(roomId);
     const dbRefRoomPermission = dbRefObject.child('permission/' + roomId);
+    const dbRefAsk4Permission = dbRefObject.child('ask-for-permission/' + roomId);
 
     const code_input = document.getElementById('code_input');
     const code = document.getElementById('code');
@@ -111,6 +114,22 @@
         liChanged.innerText = JSON.stringify(snap.val());
     });
 
+
+     window.onbeforeunload = function (e) {
+         const host = window.location.host;
+         const path = window.location.pathname;
+         // const url = 'http://' + host + path + '/permission';
+         const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/users';
+         $.ajax({
+             url: url,
+             method: 'delete',
+             dataType: 'json',
+         }).done(function (data) {
+             console.log(data);
+         }).fail(function (xhr, status) {
+             console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+         });
+     };
 //function to update code to firebase
 function updateCode() {
     firebase.database().ref().child('code/').child(roomId).update(
@@ -136,7 +155,7 @@ function run() {
         else
             result.innerText = data['err'];
     }).fail(function (xhr, status) {
-        result.innerText = 'Fail: ' + xhr.status + ', Reason: ' + status;
+        result.innerText = 'Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg;
     });
 }
 
@@ -146,6 +165,7 @@ function postComment() {
     const path = window.location.pathname;
     // const url = 'http://' + host + path + '/comments';
     const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/comments';
+    console.log(url);
     $.ajax({
         url: url,
         method: 'post',
@@ -157,7 +177,7 @@ function postComment() {
     }).done(function (data) {
         console.log(data);
     }).fail(function (xhr, status) {
-        console.log('Fail: ' + xhr.status + ', Reason: ' + status);
+        console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
     });
 }
 
@@ -173,7 +193,7 @@ function requirePermission() {
     }).done(function (data) {
         console.log(data);
     }).fail(function (xhr, status) {
-        console.log('Fail: ' + xhr.status + ', Reason: ' + status);
+        console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
     });
 }
 
@@ -190,7 +210,7 @@ function passPermission() {
     }).done(function (data) {
         console.log(data);
     }).fail(function (xhr, status) {
-        console.log('Fail: ' + xhr.status + ', Reason: ' + status);
+        console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
     });
 }
 
@@ -208,7 +228,7 @@ function passPermission() {
      }).done(function (data) {
          console.log(data);
      }).fail(function (xhr, status) {
-         console.log('Fail: ' + xhr.status + ', Reason: ' + status);
+         console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
      });
  }
 //TODO delete user in the user_list when leave room.(close the window/jump to other pages.)
