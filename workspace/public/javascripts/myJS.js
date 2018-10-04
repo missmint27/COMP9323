@@ -11,6 +11,8 @@
     var permission = false;
     var roomId = '5bab7be8ade838281621911a';//需要动态获取roomid
     var userId = '5bb053d0efdfca206dc66b3b';
+    var users = null;
+    var ask_for_permission = null;
     //CodeMirro Editor initialize
     //Need further changes for optimization.
     var editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
@@ -28,7 +30,8 @@
     const dbRefCommentList = dbRefObject.child('comment_list').child(roomId);
     const dbRefUserList = dbRefObject.child('user_list').child(roomId);
     const dbRefCode = dbRefObject.child('code').child(roomId);
-    const dbRefMe = dbRefUserList.child(userId);
+    const dbRefRoomPermission = dbRefObject.child('permission/' + roomId);
+    const dbRefAsk4Permission = dbRefObject.child('ask-for-permission/' + roomId);
 
     const code_input = document.getElementById('code_input');
     const code = document.getElementById('code');
@@ -37,21 +40,25 @@
 
     //track the permission status.
     //if permission is true, set the editor readOnly to false, theme will be changed as well.
-    dbRefMe.child('permission').on('value', snap => {
-        dbRefCode.once('value', codeSnap => {
-            const content = codeSnap.val();
-            //global var permission
-            permission = snap.val();
-            code_input.value = content['content'];
-            console.log("permission: ", permission);
-            editor.setValue(code_input.value);
-            editor.setOption("readOnly", !permission);
-            if(permission) {
-                editor.setOption("theme", 'darcula');
-            } else {
-                editor.setOption("theme", 'lucario');
-            }
-        });
+    dbRefRoomPermission.on('value', snap => {
+        const permission_holder = snap.val().userId;
+        console.log("permission holder: ", permission_holder);
+        if (permission_holder !== userId && permission === false) {
+        } else {
+            permission = permission_holder === userId;
+            dbRefCode.once('value', codeSnap => {
+                const content = codeSnap.val();
+                //global var permission
+                code_input.value = content['content'];
+                editor.setValue(code_input.value);
+                editor.setOption("readOnly", !permission);
+                if(permission) {
+                    editor.setOption("theme", 'darcula');
+                } else {
+                    editor.setOption("theme", 'lucario');
+                }
+            });
+        }
     });
 
     //initialize code input
@@ -107,6 +114,22 @@
         liChanged.innerText = JSON.stringify(snap.val());
     });
 
+
+     window.onbeforeunload = function (e) {
+         const host = window.location.host;
+         const path = window.location.pathname;
+         // const url = 'http://' + host + path + '/permission';
+         const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/users';
+         $.ajax({
+             url: url,
+             method: 'delete',
+             dataType: 'json',
+         }).done(function (data) {
+             console.log(data);
+         }).fail(function (xhr, status) {
+             console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+         });
+     };
 //function to update code to firebase
 function updateCode() {
     firebase.database().ref().child('code/').child(roomId).update(
@@ -132,7 +155,7 @@ function run() {
         else
             result.innerText = data['err'];
     }).fail(function (xhr, status) {
-        result.innerText = 'Fail: ' + xhr.status + ', Reason: ' + status;
+        result.innerText = 'Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg;
     });
 }
 
@@ -140,7 +163,9 @@ function postComment() {
     const pos = false;
     const host = window.location.host;
     const path = window.location.pathname;
-    const url = 'http://' + host + path + '/comments';
+    // const url = 'http://' + host + path + '/comments';
+    const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/comments';
+    console.log(url);
     $.ajax({
         url: url,
         method: 'post',
@@ -152,9 +177,59 @@ function postComment() {
     }).done(function (data) {
         console.log(data);
     }).fail(function (xhr, status) {
-        console.log('Fail: ' + xhr.status + ', Reason: ' + status);
+        console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
     });
 }
 
+function requirePermission() {
+    const host = window.location.host;
+    const path = window.location.pathname;
+    // const url = 'http://' + host + path + '/permission';
+    const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission';
+    $.ajax({
+        url: url,
+        method: 'put',
+        dataType: 'json',
+    }).done(function (data) {
+        console.log(data);
+    }).fail(function (xhr, status) {
+        console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+    });
+}
+
+function passPermission() {
+    const host = window.location.host;
+    const path = window.location.pathname;
+    const passToId = '5bb053d0efdfca206dc66b3f';
+    // const url = 'http://' + host + path + '/permission';
+    const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
+    $.ajax({
+        url: url,
+        method: 'put',
+        dataType: 'json',
+    }).done(function (data) {
+        console.log(data);
+    }).fail(function (xhr, status) {
+        console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+    });
+}
+
+
+ function resetPermission() {
+     const host = window.location.host;
+     const path = window.location.pathname;
+     const passToId = '5bb053d0efdfca206dc66b3f';
+     // const url = 'http://' + host + path + '/permission';
+     const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
+     $.ajax({
+         url: url,
+         method: 'delete',
+         dataType: 'json',
+     }).done(function (data) {
+         console.log(data);
+     }).fail(function (xhr, status) {
+         console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+     });
+ }
 //TODO delete user in the user_list when leave room.(close the window/jump to other pages.)
 //还需要将classroom1，user1, comment1之类的改成classroomID, userID, commentID

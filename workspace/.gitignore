@@ -1,4 +1,5 @@
 node_modules/
+*.py
 .idea/
 */.settings/
 */.DS_Store
