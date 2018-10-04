@@ -82,7 +82,6 @@ router.put('/:roomId/permission/:userId', middleware.isLoggedIn, function(req, r
    console.log('Passing permission');
    const permissionRef = fb_root.child('permission/' + req.params.roomId);
    const requestingRef = fb_root.child('ask-for-permission/' + req.params.roomId);
-
    async.parallel({
        holder: function (callback) {
            permissionRef.once('value').then(function (snapshot) {
@@ -95,10 +94,7 @@ router.put('/:roomId/permission/:userId', middleware.isLoggedIn, function(req, r
            });
        }
    }, function(err, results) {
-       console.log(results.holder);
-       console.log(req.user.id);
        if(results.holder === req.user.id) {
-           console.log(results.target);
            if(results.target) {
                permissionRef.update( {'userId': req.params.userId} );
                requestingRef.remove();
@@ -110,6 +106,20 @@ router.put('/:roomId/permission/:userId', middleware.isLoggedIn, function(req, r
            res.status('400').json({'msg': "You Don't have permission."});
        }
    })
+});
+
+
+
+//Reset permission, for testing only
+router.delete('/:roomId/permission/:userId', middleware.isLoggedIn, function(req, res, next) {
+    console.log('Resetting permission');
+    const permissionRef = fb_root.child('permission/' + req.params.roomId);
+    const requestingRef = fb_root.child('ask-for-permission/' + req.params.roomId);
+    permissionRef.update( {'userId': req.user.id} );
+    const obj = {};
+    obj[req.params.userId] = true;
+    requestingRef.update( obj );
+    res.json({'msg': "Reset"});
 });
 
 //require for permission

@@ -193,5 +193,23 @@ function passPermission() {
         console.log('Fail: ' + xhr.status + ', Reason: ' + status);
     });
 }
+
+
+ function resetPermission() {
+     const host = window.location.host;
+     const path = window.location.pathname;
+     const passToId = '5bb053d0efdfca206dc66b3f';
+     // const url = 'http://' + host + path + '/permission';
+     const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
+     $.ajax({
+         url: url,
+         method: 'delete',
+         dataType: 'json',
+     }).done(function (data) {
+         console.log(data);
+     }).fail(function (xhr, status) {
+         console.log('Fail: ' + xhr.status + ', Reason: ' + status);
+     });
+ }
 //TODO delete user in the user_list when leave room.(close the window/jump to other pages.)
 //还需要将classroom1，user1, comment1之类的改成classroomID, userID, commentID

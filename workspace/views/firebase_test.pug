@@ -16,6 +16,9 @@ html(lang='en')
     body
         h3="Room ID: " + roomId
         h3="User ID: " + userId
+
+    button.btn.btn-primary(type='submit', id = "btna", onclick='resetPermission()') Reset Permission(for testing):
+
     button.btn.btn-primary(type='submit', id = "btn0", onclick='requirePermission()') Require Permission:
     div.form-group
         label(for='code_input') Code Input:

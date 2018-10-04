@@ -11,16 +11,16 @@ router.get("/", function(req, res, next){
     console.log("mainpage");
     async.parallel({
         coderooms: function(callback) {
-            const url = 'http://' + req.host + '/api/coderooms/';
-            request(url, function (error, response, body) {
+            const url = 'http://' + req.headers.host + '/api/coderooms/';
+            request({url: url, json: true}, function (error, response, body) {
                 if (error) return next(error);
                 callback(null, body);
             });
         },
         user_info: function(callback) {
             if(req.user) {
-                const url = 'http://' + req.host + '/api/users/' + userId;
-                request(url, function (error, response, body) {
+                const url = 'http://' + req.headers.host + '/api/users/' + req.user.id;
+                request({url: url, json: true}, function (error, response, body) {
                     if (error) return next(error);
                     callback(null, body);
                 });
