@@ -21,15 +21,14 @@
         lineNumbers: true,
         // autoMatchBrackets: true,
         readOnly: !permission,                 //set to true if user have the permission.
-        highlightSelectionMatches: {showToken: /\w/, annotateScrollbar: true}
+        // highlightSelectionMatches: {showToken: /\w/, annotateScrollbar: true}
     });
     //when editor's content changed, call updateCode()
     editor.on('change', updateCode);
     editor.getSelectedRange = function() {
-        let test = { from: editor.getCursor(true), to: editor.getCursor(false) };
-        console.log(test);
-        return test;
+        return { from: editor.getCursor(true), to: editor.getCursor(false) };
     };
+
     //dbRefObject 是firebase根目录
     const dbRefObject = firebase.database().ref();
     const dbRefCommentList = dbRefObject.child('comment_list').child(roomId);
@@ -102,11 +101,25 @@
     });
 
     //同步comment list，与user list类似，但是comment可以改，user不行
+    //改成仅当comment 模式的时候显示
     dbRefCommentList.on('child_added', snap => {
         const li = document.createElement('li');
-        li.innerText = JSON.stringify(snap.val(), null, 3);
+        const comment = snap.val();
+        li.innerText = JSON.stringify(comment, null, 3);
         li.id = snap.key;
         comment_list.appendChild(li);
+        if (comment.position) {
+            const pos = comment.position;
+            editor.getDoc().markText({
+                line: pos.from.line,
+                ch:   pos.from.ch
+            }, {
+                line: pos.to.line,
+                ch:   pos.to.ch
+            }, {
+                css: "background-color : #ff7"
+            });
+        }
     });
 
     dbRefCommentList.on('child_removed', snap => {
@@ -168,9 +181,6 @@ function postComment() {
     const host = window.location.host;
     const path = window.location.pathname;
     let   pos = editor.getSelectedRange();
-    console.log("from: line: ", pos.from.line, ", ch: ", pos.from.ch);
-    console.log("to: line: ", pos.to.line, ", ch: ", pos.to.ch);
-
     const url = 'http://' + host + path + '/comments';
     // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/comments';
     console.log(url);
@@ -179,7 +189,16 @@ function postComment() {
         method: 'post',
         dataType: 'json',
         data: {
-            pos: pos,
+            pos: {
+                from: {
+                    ch:pos.from.ch,
+                    line:pos.from.line
+                },
+                to: {
+                    ch:pos.to.ch,
+                    line:pos.to.line
+                }
+            },
             content: document.getElementById('comment_input').value
         }
     }).done(function (data) {
@@ -224,20 +243,21 @@ function passPermission() {
 
 
  function resetPermission() {
-     const host = window.location.host;
-     const path = window.location.pathname;
-     const passToId = '5bb053d0efdfca206dc66b3f';
-     const url = 'http://' + host + path + '/permission';
-     // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
-     $.ajax({
-         url: url,
-         method: 'delete',
-         dataType: 'json',
-     }).done(function (data) {
-         console.log(data);
-     }).fail(function (xhr, status) {
-         console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
-     });
+
+     // const host = window.location.host;
+     // const path = window.location.pathname;
+     // const passToId = '5bb053d0efdfca206dc66b3f';
+     // const url = 'http://' + host + path + '/permission/' + passToId;
+     // // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
+     // $.ajax({
+     //     url: url,
+     //     method: 'delete',
+     //     dataType: 'json',
+     // }).done(function (data) {
+     //     console.log(data);
+     // }).fail(function (xhr, status) {
+     //     console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+     // });
  }
 //TODO delete user in the user_list when leave room.(close the window/jump to other pages.)
 //还需要将classroom1，user1, comment1之类的改成classroomID, userID, commentID
