@@ -25,6 +25,15 @@
     <link rel='stylesheet' href="../../public/javascripts/codemirror/theme/darcula.css">
     <link rel='stylesheet' href="../../public/javascripts/codemirror/theme/lucario.css">
 
+    <script src="../../public/javascripts/codemirror/addon/selection/mark-selection.js"></script>
+    <script src="../../public/javascripts/codemirror/addon/search/searchcursor.js"></script>
+    <style>
+        .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
+        .CodeMirror-selected  { background-color: blue !important; }
+        .CodeMirror-selectedtext { color: white; }
+        .styled-background { background-color: #ff7; }
+    </style>
+
 
 </head>
 <body style="height: 100vh">
@@ -105,7 +114,20 @@
 </nav>
 <div class="block-1">
     <div class="b1-main">
-        <textarea class="form-control" id="code_input" name='code_input'></textarea>
+        <script>
+            var editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
+                lineNumbers: true,
+                styleSelectedText: true
+            });
+            editor.markText({line: 6, ch: 26}, {line: 6, ch: 42}, {className: "styled-background"});
+            editor.getSelectedRange = function () {
+                return  {from:editor.getCursor(true), to:editor.getCursor(false)}
+            }
+        </script>
+        <form style="height: 100%;">
+            <textarea class="form-control" id="code_input" name='code_input'></textarea>
+        </form>
+
         <div id="div1" style="position: absolute;display: none;">
             <button class="my-button b1-popup" id>+</button>
         </div>
