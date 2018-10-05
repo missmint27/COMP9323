@@ -107,7 +107,10 @@
     dbRefCommentList.on('child_added', snap => {
         const li = document.createElement('li');
         const comment = snap.val();
-        li.innerText = JSON.stringify(comment, null, 3);
+        li.innerText = JSON.stringify({
+            author: comment.author,
+            content: comment.content,
+        });
         li.id = snap.key;
         comment_list.appendChild(li);
         if (comment.position) {
@@ -131,7 +134,6 @@
         console.log("Comment removed");
         liToRemove.remove();
         comment_marker.clear();
-
     });
 
     dbRefCommentList.on('child_changed', snap => {
@@ -166,7 +168,6 @@ function run() {
     const result = document.getElementById('result');
     const host = window.location.host;
     const path = window.location.pathname;
-
     const url = 'http://' + host + path + '/run';
     // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/run';
     console.log(url);
@@ -187,8 +188,8 @@ function run() {
 function postComment() {
     const host = window.location.host;
     const path = window.location.pathname;
-    let   pos = editor.getSelectedRange();
-    const url = 'http://' + host + path + '/comments';
+    const pos  = editor.getSelectedRange();
+    const url  = 'http://' + host + path + '/comments';
     // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/comments';
     console.log(url);
     $.ajax({
@@ -266,6 +267,7 @@ function resetPermission() {
  });
 }
 
+//TODO change mode between coding and commenting
 function modeChange() {
     comment_mode = !comment_mode;
 }

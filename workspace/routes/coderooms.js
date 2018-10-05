@@ -7,8 +7,6 @@ var firebase = require('firebase');
 var request = require('request');
 var pythonExecutor = require('../controllers/pythonExecutor');
 const async = require('async');
-//test
-var Type = require('type-of-is');
 var config = {
     apiKey: "AIzaSyDyFnZMXeY2gXJNSZe58tqbOkZX7-5yiDM",
     authDomain: "comp9323-97bb4.firebaseapp.com",
@@ -227,7 +225,6 @@ router.delete("/:roomId/users", middleware.isLoggedIn, function(req, res, next) 
 
 router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next) {
     console.log("post comment.");
-    console.log(Type(req.body.pos.from.line));
     fb_root.child('comment_list/' + req.params.roomId).push({
             authorId: req.user.id,
             author: req.user.username,
