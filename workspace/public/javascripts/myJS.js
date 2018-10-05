@@ -20,11 +20,16 @@
         theme: "darcula",
         lineNumbers: true,
         // autoMatchBrackets: true,
-        readOnly: !permission                 //set to true if user have the permission.
+        readOnly: !permission,                 //set to true if user have the permission.
+        highlightSelectionMatches: {showToken: /\w/, annotateScrollbar: true}
     });
     //when editor's content changed, call updateCode()
     editor.on('change', updateCode);
-
+    editor.getSelectedRange = function() {
+        let test = { from: editor.getCursor(true), to: editor.getCursor(false) };
+        console.log(test);
+        return test;
+    };
     //dbRefObject 是firebase根目录
     const dbRefObject = firebase.database().ref();
     const dbRefCommentList = dbRefObject.child('comment_list').child(roomId);
@@ -160,9 +165,12 @@ function run() {
 }
 
 function postComment() {
-    const pos = false;
     const host = window.location.host;
     const path = window.location.pathname;
+    let   pos = editor.getSelectedRange();
+    console.log("from: line: ", pos.from.line, ", ch: ", pos.from.ch);
+    console.log("to: line: ", pos.to.line, ", ch: ", pos.to.ch);
+
     // const url = 'http://' + host + path + '/comments';
     const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/comments';
     console.log(url);

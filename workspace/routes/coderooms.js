@@ -21,7 +21,7 @@ firebase.initializeApp(config);
 var fb_root = firebase.database().ref();
 
 //testing firebase
-router.get('/test', function(req, res) {
+router.get('/5bab7be8ade838281621911a', function(req, res) {
     let roomId = '5bab7be8ade838281621911a';
     let userId = '5bb053d0efdfca206dc66b3b';
     console.log("Firebase testing...");
