@@ -123,8 +123,8 @@
      window.onbeforeunload = function (e) {
          const host = window.location.host;
          const path = window.location.pathname;
-         // const url = 'http://' + host + path + '/permission';
-         const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/users';
+         const url = 'http://' + host + path + '/permission';
+         // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/users';
          $.ajax({
              url: url,
              method: 'delete',
@@ -147,8 +147,8 @@ function run() {
     const host = window.location.host;
     const path = window.location.pathname;
 
-    // const url = 'http://' + host + path + '/run';
-    const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/run';
+    const url = 'http://' + host + path + '/run';
+    // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/run';
     console.log(url);
     $.ajax({
         url: url,
@@ -171,8 +171,8 @@ function postComment() {
     console.log("from: line: ", pos.from.line, ", ch: ", pos.from.ch);
     console.log("to: line: ", pos.to.line, ", ch: ", pos.to.ch);
 
-    // const url = 'http://' + host + path + '/comments';
-    const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/comments';
+    const url = 'http://' + host + path + '/comments';
+    // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/comments';
     console.log(url);
     $.ajax({
         url: url,
@@ -192,8 +192,8 @@ function postComment() {
 function requirePermission() {
     const host = window.location.host;
     const path = window.location.pathname;
-    // const url = 'http://' + host + path + '/permission';
-    const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission';
+    const url = 'http://' + host + path + '/permission';
+    // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission';
     $.ajax({
         url: url,
         method: 'put',
@@ -209,8 +209,8 @@ function passPermission() {
     const host = window.location.host;
     const path = window.location.pathname;
     const passToId = '5bb053d0efdfca206dc66b3f';
-    // const url = 'http://' + host + path + '/permission';
-    const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
+    const url = 'http://' + host + path + '/permission';
+    // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
     $.ajax({
         url: url,
         method: 'put',
@@ -227,8 +227,8 @@ function passPermission() {
      const host = window.location.host;
      const path = window.location.pathname;
      const passToId = '5bb053d0efdfca206dc66b3f';
-     // const url = 'http://' + host + path + '/permission';
-     const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
+     const url = 'http://' + host + path + '/permission';
+     // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
      $.ajax({
          url: url,
          method: 'delete',
