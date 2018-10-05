@@ -23,6 +23,8 @@
         readOnly: !permission,                 //set to true if user have the permission.
         // highlightSelectionMatches: {showToken: /\w/, annotateScrollbar: true}
     });
+    var comment_dict = {};
+    var comment_mode = false;
     //when editor's content changed, call updateCode()
     editor.on('change', updateCode);
     editor.getSelectedRange = function() {
@@ -110,7 +112,7 @@
         comment_list.appendChild(li);
         if (comment.position) {
             const pos = comment.position;
-            editor.getDoc().markText({
+            let comment_marker = editor.getDoc().markText({
                 line: pos.from.line,
                 ch:   pos.from.ch
             }, {
@@ -119,12 +121,17 @@
             }, {
                 css: "background-color : #ff7"
             });
+            comment_dict[snap.key] = comment_marker;
         }
     });
 
     dbRefCommentList.on('child_removed', snap => {
         const liToRemove = document.getElementById(snap.key);
+        let comment_marker = comment_dict[snap.key];
+        console.log("Comment removed");
         liToRemove.remove();
+        comment_marker.clear();
+
     });
 
     dbRefCommentList.on('child_changed', snap => {
@@ -241,23 +248,26 @@ function passPermission() {
     });
 }
 
+function resetPermission() {
 
- function resetPermission() {
+ const host = window.location.host;
+ const path = window.location.pathname;
+ const passToId = '5bb053d0efdfca206dc66b3f';
+ const url = 'http://' + host + path + '/permission/' + passToId;
+ // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
+ $.ajax({
+     url: url,
+     method: 'delete',
+     dataType: 'json',
+ }).done(function (data) {
+     console.log(data);
+ }).fail(function (xhr, status) {
+     console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+ });
+}
 
-     // const host = window.location.host;
-     // const path = window.location.pathname;
-     // const passToId = '5bb053d0efdfca206dc66b3f';
-     // const url = 'http://' + host + path + '/permission/' + passToId;
-     // // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
-     // $.ajax({
-     //     url: url,
-     //     method: 'delete',
-     //     dataType: 'json',
-     // }).done(function (data) {
-     //     console.log(data);
-     // }).fail(function (xhr, status) {
-     //     console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
-     // });
- }
+function modeChange() {
+    comment_mode = !comment_mode;
+}
 //TODO delete user in the user_list when leave room.(close the window/jump to other pages.)
 //还需要将classroom1，user1, comment1之类的改成classroomID, userID, commentID
