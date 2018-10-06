@@ -4,10 +4,10 @@ var User = require('../models/user');
 var async = require('async');
 module.exports = (app, passport) => {
     router.get('/login', function (req, res) {
-        res.render('login_form', {title: 'Log in', errors: req.flash('error')});
+        res.render('pages/signin.ejs', {title: 'Log in', errors: req.flash('error')});
     });
     router.get('/register', function (req, res) {
-        res.render('login_form', {title: "Sign up"});
+        res.render('pages/signup.ejs', {title: "Sign up"});
     });
     router.post('/login',
         passport.authenticate('local', {
