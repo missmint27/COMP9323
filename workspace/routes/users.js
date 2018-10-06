@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var middleware = require("../middleware/index")
 var User = require('../models/user');
 var async = require('async');
 module.exports = (app, passport) => {
@@ -72,3 +73,23 @@ module.exports = (app, passport) => {
     });
     app.use('/', router);
 };
+
+
+
+router.get("/logout", function(req, res){
+    req.logout();
+    req.flash("success", "LOGGED YOU OUT!");
+    res.redirect("/");
+});
+
+router.get("profile/:id",middleware.isLoggedIn, function (req,res) {
+    User.findById(req.params.id,function(err,foundUser) {
+        if(err){
+            req.redirect("/");
+        }
+        else {
+            res.render("pages/homepages", {user: foundUser});
+        }
+    })
+
+})

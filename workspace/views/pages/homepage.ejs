@@ -26,6 +26,9 @@
            style="font-size:2rem; margin-left:auto; margin-right:auto">
             OURCODES
         </a>
+<%if(currentUser){%>
+        <h1> Welcome + <%=currentUser.username%></h1>
+        <%}%>
 
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
             <img id="logo" src="img/avatar/avatar3.png" class="avatar" alt=""
@@ -66,18 +69,26 @@
                 </div>
             </div>
         </div>
+
+
         <div class="d-none d-lg-block">
+
             <div class="dropup">
+
                 <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img alt="Image" src="icon/user0.png" class="avatar"/>
                 </a>
+                <%if(currentUser){%>
                 <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item">Profile</a>
-                    <a href="#" class="dropdown-item">Log Out</a>
+
+                    <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
+                    <a href="/logout" class="dropdown-item">Log Out</a>
                 </div>
-            </div>
+            <%}%>
+        </div>
         </div>
     </div>
+
     <nav class="nav-bar navbar navbar-expand-lg navbar-dark sticky-top" style="display:none">
 
         <div class="nav-container">
@@ -663,7 +674,7 @@
                                         </button>
                                     </div>
                                     <!--end of modal head-->
-
+                                <form method="post" action="/api/coderooms">
                                     <div class="modal-body">
                                         <div class="tab-content">
                                             <div class="tab-pane fade show active" id="task-add-details" role="tabpanel"
@@ -691,6 +702,7 @@
                                             Create Coderoom
                                         </button>
                                     </div>
+                                </form>
                                 </div>
                             </div>
                         </form>
