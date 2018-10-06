@@ -82,14 +82,32 @@ router.get("/logout", function(req, res){
     res.redirect("/");
 });
 
-router.get("profile/:id",middleware.isLoggedIn, function (req,res) {
+router.get("/profile/:id",middleware.isLoggedIn, function (req,res) {
     User.findById(req.params.id,function(err,foundUser) {
         if(err){
             req.redirect("/");
         }
         else {
-            res.render("pages/homepages", {user: foundUser});
+            res.render("pages/setting.ejs", {user: foundUser});
         }
     })
 
 })
+router.put("/profile/:id",middleware.isLoggedIn,function (req,res) {
+    var newData ={firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email, city: req.body.email, city: req.body.city, birthday:req.body.birthday,  mobile: req.body.mobile};
+    User.findByIdAndUpdate(req.params.id,{$set: newData},function(err,user){
+        if(err){
+            req.flash("error",err.message);
+            res.redirect("back");
+        }
+        else{
+            req.flash("success","successfully updated!!");
+
+            console.log(user);
+            res.redirect("/profile/" + user._id);
+        }
+    })
+
+
+})
+

@@ -5,7 +5,7 @@ var express     = require("express"),
     passport    = require("passport"),
     cookieParser = require("cookie-parser"),
     session = require("express-session"),
-
+    request = require("request"),
     methodOverride = require("method-override"),
     LocalStrategy = require("passport-local"),
     flash        = require("connect-flash"),
