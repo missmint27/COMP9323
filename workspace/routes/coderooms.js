@@ -238,7 +238,8 @@ router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next)
                     line: parseInt(req.body.pos.to.line),
                     ch: parseInt(req.body.pos.to.ch),
                 }
-            }
+            },
+            code: req.body.code
         }
     );
     //TODO err handler?

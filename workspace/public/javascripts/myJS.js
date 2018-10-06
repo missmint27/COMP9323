@@ -91,12 +91,15 @@
     //同步user list, 因为user list是由子elem构成的所以按照子elem来增删（用户进入/离开房间）
     //TODO add a ask-for-permission button
     dbRefUserList.on('child_added', snap => {
-        const li = document.createElement('li');
-        li.innerText = snap.val().username;
-        li.id = snap.key;
-        user_list.appendChild(li);
+        const user = $("<span>").text(snap.val().username);
+        const button = $("<button>").text("Pass Permission").click({passTo: snap.key}, passPermission);
+        const add = $("<li>", {id: snap.key}).append($("<div>", {class: "UserList"}).append(user, button));
+        $("ul[id='user_list']").append(add);
     });
 
+    function test(event) {
+        console.log(event.data.passTo);
+    }
     dbRefUserList.on('child_removed', snap => {
         const liToRemove = document.getElementById(snap.key);
         liToRemove.remove();
@@ -115,16 +118,19 @@
         comment_list.appendChild(li);
         if (comment.position) {
             const pos = comment.position;
-            let comment_marker = editor.getDoc().markText({
-                line: pos.from.line,
-                ch:   pos.from.ch
-            }, {
-                line: pos.to.line,
-                ch:   pos.to.ch
-            }, {
-                css: "background-color : #ff7"
-            });
-            comment_dict[snap.key] = comment_marker;
+            const code = comment.code;
+            if (code === editor.getRange(pos.from, pos.to)) {
+                let comment_marker = editor.getDoc().markText({
+                    line: pos.from.line,
+                    ch: pos.from.ch
+                }, {
+                    line: pos.to.line,
+                    ch: pos.to.ch
+                }, {
+                    css: "background-color : #ff7"
+                });
+                comment_dict[snap.key] = comment_marker;
+            }
         }
     });
 
@@ -145,7 +151,7 @@
      window.onbeforeunload = function (e) {
          const host = window.location.host;
          const path = window.location.pathname;
-         const url = 'http://' + host + path + '/permission';
+         const url = 'http://' + host + path + '/users';
          // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/users';
          $.ajax({
              url: url,
@@ -190,6 +196,7 @@ function postComment() {
     const path = window.location.pathname;
     const pos  = editor.getSelectedRange();
     const url  = 'http://' + host + path + '/comments';
+    const code = editor.getRange(pos.from, pos.to);
     // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/comments';
     console.log(url);
     $.ajax({
@@ -207,6 +214,7 @@ function postComment() {
                     line:pos.to.line
                 }
             },
+            code: code,
             content: document.getElementById('comment_input').value
         }
     }).done(function (data) {
@@ -232,12 +240,12 @@ function requirePermission() {
     });
 }
 
-function passPermission() {
+function passPermission(event) {
     const host = window.location.host;
     const path = window.location.pathname;
-    const passToId = '5bb053d0efdfca206dc66b3f';
+    const passToId = event.data.passTo;
     const url = 'http://' + host + path + '/permission';
-    // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
+    console.log("Pass to: ", passToId);
     $.ajax({
         url: url,
         method: 'put',
