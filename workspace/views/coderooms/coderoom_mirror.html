@@ -6,6 +6,7 @@
     <link rel="icon" href="../../public/icon/website.png" type="image/x-icon">
     <link rel="stylesheet" href="../../public/stylesheets/style.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
 
@@ -27,6 +28,8 @@
 
     <script src="../../public/javascripts/codemirror/addon/selection/mark-selection.js"></script>
     <script src="../../public/javascripts/codemirror/addon/search/searchcursor.js"></script>
+    <script src="../../public/javascripts/codemirror/addon/search/annotatescrollbar.js"></script>
+    <script src="../../public/javascripts/codemirror/addon/search/matchesonscrollbar.js"></script>
     <style>
         .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
         .CodeMirror-selected  { background-color: blue !important; }
@@ -68,7 +71,15 @@
             <div class="nav-circle">
                 <img src="../../public/icon/participant-fff.png" class="circle-icon" id="participant-list"
                      onmouseover="this.src='../../public/icon/participant-4abdac.png'"
-                     onmouseout="this.src='../../public/icon/participant-fff.png'">
+                     onmouseout="this.src='../../public/icon/participant-fff.png'"
+                     onclick="showParticipants()">
+            </div>
+            <div class="nav-participants" id="participants_block" style="display: none">
+                <form>
+                    <ul id='user_list'>
+
+                    </ul>
+                </form>
             </div>
             <div class="nav-bo">
                 <img class="nav-icon" onclick="javascript:location.href='../pages/setting.html'"
@@ -120,17 +131,11 @@
                 styleSelectedText: true
             });
             editor.markText({line: 6, ch: 26}, {line: 6, ch: 42}, {className: "styled-background"});
-            editor.getSelectedRange = function () {
-                return  {from:editor.getCursor(true), to:editor.getCursor(false)}
             }
         </script>
         <form style="height: 100%;">
             <textarea class="form-control" id="code_input" name='code_input'></textarea>
         </form>
-
-        <div id="div1" style="position: absolute;display: none;">
-            <button class="my-button b1-popup" id>+</button>
-        </div>
     </div>
 
     <div class="b1-result">
@@ -145,11 +150,17 @@
 
 <div class="block-2">
     <div class="b2-review">
+        <button class="my-button b2-popup" id="add_comment" onclick="addComments()"><i class="fa fa-plus"></i></button>
+        <div class="b2-comment-block" id="comment_block" style="display: none">
+            <form>
+                <label for='comment_input'>Comment Input:</label>
+                <textarea id="comment_input" class="form-control b2-commenttext" type='text' name='comment_input'></textarea>
+                <br>
+                <button class="my-button btn-warning" type='submit' id = "btn2" onclick="postComment()"> Comment</button>
+            </form>
+        </div>
         <div id="comments">
-            <ul>
-                <li>review 1</li>
-                <li>review 2</li>
-                <li>review 3</li>
+            <ul id="comment_list">
             </ul>
         </div>
     </div>

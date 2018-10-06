@@ -52,6 +52,24 @@ function hideComments() {
     }
 }
 
+//click add comment button to show a block to add comment
+function addComments() {
+    var comment_block = document.getElementById("comment_block");
+    if (comment_block.style.display === "") {
+        comment_block.style.display = "none";
+    } else {
+        comment_block.style.display = "";
+    }
+}
+function showParticipants() {
+    var comment_block = document.getElementById("participants_block");
+    if (comment_block.style.display === "") {
+        comment_block.style.display = "none";
+    } else {
+        comment_block.style.display = "";
+    }
+}
+
 /*drag and get word*/
 /*select(document, tanchu);
 function select(o, fn){
@@ -80,4 +98,6 @@ function select(o, fn){
 function tanchu(txt,tar){
     alert("This is belong to"+tar.tagName+"elements，choose："+txt);
 }*/
+
+
 
