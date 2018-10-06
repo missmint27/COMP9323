@@ -97,13 +97,12 @@
     //同步user list, 因为user list是由子elem构成的所以按照子elem来增删（用户进入/离开房间）
     //TODO add a ask-for-permission button
      dbRefUserList.on('child_added', snap => {
-         const user = $("<span>").text(snap.val().username);
-         // const button = $("<button>").text("Pass Permission").click({passTo: snap.key}, passPermission);
+         const user = $("<span>", {class: "user-name-span"}).text(snap.val().username);
          const add = $("<li>", {id: snap.key}).append($("<div>", {class: "UserList"}).append(user));
          $("ul[id='user_list']").append(add);
      });
 
-        dbRefUserList.on('child_removed', snap => {
+     dbRefUserList.on('child_removed', snap => {
             const liToRemove = document.getElementById(snap.key);
             liToRemove.remove();
         });
@@ -114,14 +113,13 @@
             const request_user = snap.key;
             if (snap.val()) {
              console.log("request", request_user);
-             const button = $("<button>").text("Pass Permission").click({passTo: request_user}, passPermission);
-             const a = "div ul[id=user_list] li[id=" + request_user + "]";
+             const button = $("<button>", {class: "pass-submission-btn"}).text("Pass Permission").click({passTo: request_user}, passPermission);
              $("div ul[id=user_list] li[id=" + request_user + "] div").append(button);
             }
         }
     });
 
-     dbRefAskForPermission.on('child_removed', snap => {
+    dbRefAskForPermission.on('child_removed', snap => {
          if (permission) {
              const request_user = snap.key;
              if (snap.val()) {
@@ -174,7 +172,7 @@
         liChanged.innerText = JSON.stringify(snap.val());
     });
 
-     window.onbeforeunload = function (e) {
+    window.onbeforeunload = function (e) {
          const host = window.location.host;
          const path = window.location.pathname;
          const url = 'http://' + host + path + '/users';
