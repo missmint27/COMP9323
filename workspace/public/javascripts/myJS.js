@@ -12,8 +12,8 @@
     var permission = false;
     var roomId = '5bab7be8ade838281621911a';//需要动态获取roomid
     var userId = '5bb053d0efdfca206dc66b3b';
-    var users = null;
-    var ask_for_permission = null;
+    // var users = null;
+    // var ask_for_permission = null;
     //CodeMirro Editor initialize
     //Need further changes for optimization.
     var editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
@@ -121,6 +121,16 @@
         }
     });
 
+     dbRefAskForPermission.on('child_removed', snap => {
+         if (permission) {
+             const request_user = snap.key;
+             if (snap.val()) {
+                 console.log("request", request_user);
+                 const a = "div ul[id=user_list] li[id=" + request_user + "]";
+                 $("div ul[id=user_list] li[id=" + request_user + "] div button").remove();
+             }
+         }
+     });
     //同步comment list，与user list类似，但是comment可以改，user不行
     //TODO 改成仅当comment 模式的时候显示
     dbRefCommentList.on('child_added', snap => {
