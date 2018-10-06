@@ -98,7 +98,7 @@
     //TODO add a ask-for-permission button
      dbRefUserList.on('child_added', snap => {
          const user = $("<span>", {class: "user-name-span"}).text(snap.val().username);
-         const add = $("<li>", {id: snap.key}).append($("<div>", {class: "UserList"}).append(user));
+         const add = $("<li>", {id: snap.key}).append($("<div>", {class: "user-list"}).append(user));
          $("ul[id='user_list']").append(add);
      });
 
@@ -132,14 +132,14 @@
     //同步comment list，与user list类似，但是comment可以改，user不行
     //TODO 改成仅当comment 模式的时候显示
     dbRefCommentList.on('child_added', snap => {
-        const li = document.createElement('li');
-        const comment = snap.val();
-        li.innerText = JSON.stringify({
-            author: comment.author,
-            content: comment.content,
-        });
-        li.id = snap.key;
-        comment_list.appendChild(li);
+        const comment_obj = snap.val();
+        const avatar    = $("<img>", {class: "avatar img-circle b2-avatar",id: "avatar" + comment_obj.authorId});
+        const user_name = $("<span>", {class: "b2-commentname"}).text(comment_obj.author);
+        const content   = $("<p>", {class: "b2-commentcontent"}).text(comment_obj.content);
+        const up        = $("<div>", {class: "ci-up"}).append(avatar, user_name);
+        const down      = $("<div>", {class: "ci-down"}).append(content);
+        const li = $("<li>", {id: snap.key, class: "comment-item"}).append($("<div>", {class:"ci-div"}).append(up, down));
+        $("ul[id='comment_list']").append(li);
         if (comment.position) {
             const pos = comment.position;
             const code = comment.code;
