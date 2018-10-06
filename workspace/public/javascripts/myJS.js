@@ -8,6 +8,7 @@
         messagingSenderId: "837737259182"
     };
     firebase.initializeApp(config);
+
     var permission = false;
     var roomId = '5bab7be8ade838281621911a';//需要动态获取roomid
     var userId = '5bb053d0efdfca206dc66b3b';
@@ -23,10 +24,13 @@
         readOnly: !permission,                 //set to true if user have the permission.
         // highlightSelectionMatches: {showToken: /\w/, annotateScrollbar: true}
     });
+    //maintaining a global comment dict, it stores the marker of comment in the coding area, using commentId as key
     var comment_dict = {};
+    //TODO when comment code is on, the comment mark should appear, the comment list should show.
     var comment_mode = false;
     //when editor's content changed, call updateCode()
     editor.on('change', updateCode);
+    //return pos: {from: {line:int, ch:int}, to:{line: int, ch: int}}
     editor.getSelectedRange = function() {
         return { from: editor.getCursor(true), to: editor.getCursor(false) };
     };
@@ -37,7 +41,8 @@
     const dbRefUserList = dbRefObject.child('user_list').child(roomId);
     const dbRefCode = dbRefObject.child('code').child(roomId);
     const dbRefRoomPermission = dbRefObject.child('permission/' + roomId);
-    const dbRefAsk4Permission = dbRefObject.child('ask-for-permission/' + roomId);
+    //TODO if user is ask for permission, the button on the user list would appear;
+    const dbRefAskForPermission = dbRefObject.child('ask-for-permission/' + roomId);
 
     const code_input = document.getElementById('code_input');
     const code = document.getElementById('code');
@@ -67,6 +72,7 @@
         }
     });
 
+
     //initialize code input
     dbRefCode.once('value', snap => {
         const content = snap.val();
@@ -90,23 +96,33 @@
 
     //同步user list, 因为user list是由子elem构成的所以按照子elem来增删（用户进入/离开房间）
     //TODO add a ask-for-permission button
-    dbRefUserList.on('child_added', snap => {
-        const user = $("<span>").text(snap.val().username);
-        const button = $("<button>").text("Pass Permission").click({passTo: snap.key}, passPermission);
-        const add = $("<li>", {id: snap.key}).append($("<div>", {class: "UserList"}).append(user, button));
-        $("ul[id='user_list']").append(add);
-    });
+     dbRefUserList.on('child_added', snap => {
+         const user = $("<span>").text(snap.val().username);
+         // const button = $("<button>").text("Pass Permission").click({passTo: snap.key}, passPermission);
+         const add = $("<li>", {id: snap.key}).append($("<div>", {class: "UserList"}).append(user));
+         $("ul[id='user_list']").append(add);
+     });
 
-    function test(event) {
-        console.log(event.data.passTo);
-    }
-    dbRefUserList.on('child_removed', snap => {
-        const liToRemove = document.getElementById(snap.key);
-        liToRemove.remove();
+        dbRefUserList.on('child_removed', snap => {
+            const liToRemove = document.getElementById(snap.key);
+            liToRemove.remove();
+        });
+
+    //Ask for permission need to be after user list, because it needs the elements user list generates.
+    dbRefAskForPermission.on('child_added', snap => {
+        if (permission) {
+            const request_user = snap.key;
+            if (snap.val()) {
+             console.log("request", request_user);
+             const button = $("<button>").text("Pass Permission").click({passTo: request_user}, passPermission);
+             const a = "div ul[id=user_list] li[id=" + request_user + "]";
+             $("div ul[id=user_list] li[id=" + request_user + "] div").append(button);
+            }
+        }
     });
 
     //同步comment list，与user list类似，但是comment可以改，user不行
-    //改成仅当comment 模式的时候显示
+    //TODO 改成仅当comment 模式的时候显示
     dbRefCommentList.on('child_added', snap => {
         const li = document.createElement('li');
         const comment = snap.val();
@@ -142,11 +158,11 @@
         comment_marker.clear();
     });
 
+    //TODO change.
     dbRefCommentList.on('child_changed', snap => {
         const liChanged = document.getElementById(snap.key);
         liChanged.innerText = JSON.stringify(snap.val());
     });
-
 
      window.onbeforeunload = function (e) {
          const host = window.location.host;
@@ -224,11 +240,11 @@ function postComment() {
     });
 }
 
+//change the user's state to ask-for-permission: true
 function requirePermission() {
     const host = window.location.host;
     const path = window.location.pathname;
     const url = 'http://' + host + path + '/permission';
-    // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission';
     $.ajax({
         url: url,
         method: 'put',
@@ -240,6 +256,7 @@ function requirePermission() {
     });
 }
 
+//Bind with user list's button, pass the permission to this user(if you got the permission)
 function passPermission(event) {
     const host = window.location.host;
     const path = window.location.pathname;
@@ -257,22 +274,23 @@ function passPermission(event) {
     });
 }
 
+//TODO Delete after testing.
 function resetPermission() {
 
- const host = window.location.host;
- const path = window.location.pathname;
- const passToId = '5bb053d0efdfca206dc66b3f';
- const url = 'http://' + host + path + '/permission/' + passToId;
- // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
- $.ajax({
+    const host = window.location.host;
+    const path = window.location.pathname;
+    const passToId = '5bb053d0efdfca206dc66b3f';
+    const url = 'http://' + host + path + '/permission/' + passToId;
+    // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
+    $.ajax({
      url: url,
      method: 'delete',
      dataType: 'json',
- }).done(function (data) {
+    }).done(function (data) {
      console.log(data);
- }).fail(function (xhr, status) {
+    }).fail(function (xhr, status) {
      console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
- });
+    });
 }
 
 //TODO change mode between coding and commenting
