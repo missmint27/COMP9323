@@ -175,16 +175,7 @@ input[type=checkbox]:checked + label:before {
     margin-top: 8px;
     margin-left: 2px;
 }
-.nav-participants{
-    position: absolute;
-    background-color: #49c3b1ad;
-    border-radius: 5px;
-    top: 65vh;
-    left: 6vw;
-    z-index: 4;
-    height: 200px;
-    width: 300px;
-}
+
 .nav-bottom{
     margin-top: 380px;
     margin-left: 32%;
@@ -322,6 +313,9 @@ search-icon{
     background-color: #4abdac;
     padding: 5px 5px;
     border-radius: 5px;
+}
+.b2-participants-block{
+    
 }
 .b2-review{
     width: 100%;
