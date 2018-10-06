@@ -7,7 +7,12 @@ var User = require('../models/user');
 var middleware = require("../middleware");
 var request = require('request');
 
-router.get("/", function(req, res, next){
+
+router.get("/",function (req,res,next) {
+    res.render("pages/homepage.ejs");
+})
+
+router.get("/zen/test", function(req, res, next){
     console.log("mainpage");
     async.parallel({
         coderooms: function(callback) {
