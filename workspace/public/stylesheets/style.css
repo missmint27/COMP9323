@@ -325,7 +325,7 @@ search-icon{
 }
 .ci-down{
     display: block;
-    min-height: 30px;
+    min-height: 20px;
     width: 98%;
     padding: 1px 5px;
 }
@@ -350,9 +350,10 @@ search-icon{
 .b2-commentcontent{
     display: block;
     font-weight: 300;
+    min-height: 20px;
     max-height: 80px;
     width: 100%;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 #user_list{
     list-style-type: decimal;

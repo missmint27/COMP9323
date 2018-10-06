@@ -9,6 +9,9 @@ var UserSchema = new mongoose.Schema({
     birthday:{type: Date},
     country:String,
     city:String,
+    firstName:String,
+    lastName:String,
+    postCode:String,
     avatar: String,                     //The url for avatar
     coderoom: {
         type: mongoose.Schema.Types.ObjectId,
