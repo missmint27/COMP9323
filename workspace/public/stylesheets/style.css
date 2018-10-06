@@ -157,27 +157,8 @@ input[type=checkbox]:checked + label:before {
     .nav-follow a:hover, .nav-follow a:focus{
         color: #e6e6e6;
     }
-.nav-circle{
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    border: 2px solid #fff;
-    margin-top: 20px;
-    margin-left: -17px;
-    text-align: center;
-    vertical-align: center;
-}
-.nav-circle:hover, .nav-circle:focus{
-    border: 2px solid #4abdac;
-    background-color: #fff;
-}
-.circle-icon{
-    margin-top: 8px;
-    margin-left: 2px;
-}
-
 .nav-bottom{
-    margin-top: 380px;
+    margin-top: 60vh;
     margin-left: 32%;
 }
 .nav-bo{
