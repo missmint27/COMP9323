@@ -143,7 +143,7 @@
 <div class="block-2">
     <div class="b2-review">
         <button class="my-button b2-popup" id="add_comment" onclick="addComments()"><i class="fa fa-plus"></i></button>
-        <div class="b2-comment-block" id="comment_block" style="display: none">
+        <div class="b2-givecomment" id="comment_block" style="display: none">
             <form>
                 <label for='comment_input'>Comment Input:</label>
                 <textarea id="comment_input" class="form-control b2-commenttext" type='text' name='comment_input'></textarea>
@@ -151,15 +151,13 @@
                 <button class="my-button btn-warning" type='submit' id = "btn2" onclick="postComment()"> Comment</button>
             </form>
         </div>
-        <div id="comments">
+        <div class="b2-comments-block" id="comments">
             <ul id="comment_list">
             </ul>
         </div>
         <div class="b2-participants-block" id="participants_block" style="display: none">
-            <form>
-                <ul id='user_list'>
-                </ul>
-            </form>
+            <ul id='user_list'>
+            </ul>
         </div>
     </div>
     <div class="b2-leave">
