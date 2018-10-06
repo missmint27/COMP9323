@@ -9,13 +9,14 @@ module.exports = (app, passport) => {
     router.get('/register', function (req, res) {
         res.render('pages/signup.ejs', {title: "Sign up"});
     });
-    router.post('/login',
-        passport.authenticate('local', {
-            successRedirect: '/',
-            failureRedirect: '/login',
-            failureFlash: true
-        })
-    );
+    router.post("/login", passport.authenticate("local",
+        {
+            successRedirect: "/",
+            failureRedirect: "/login"
+        }), function(req, res){
+        console.log("sucesss");
+
+    });
     router.post('/register', function (req, res, next) {
         console.log("Username: %s", req.body.username);
         console.log("Password: %s", req.body.password);
