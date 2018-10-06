@@ -7,6 +7,7 @@ var firebase = require('firebase');
 var request = require('request');
 var pythonExecutor = require('../controllers/pythonExecutor');
 const async = require('async');
+const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v1538825655/sujhmatymeuigsghpfby.png';
 var config = {
     apiKey: "AIzaSyDyFnZMXeY2gXJNSZe58tqbOkZX7-5yiDM",
     authDomain: "comp9323-97bb4.firebaseapp.com",
@@ -68,6 +69,7 @@ router.post("/", middleware.isLoggedIn,function(req, res) {
             .update({
                 'username': req.user.username,
                 'url': '/users/' + req.user.id,
+                'avatar': DEFAULT_USER_AVATAR
             });
         fb_root.child('permission/' + coderoom.id).update(
             { "userId" : req.user.id}
@@ -104,9 +106,8 @@ router.get("/:id",function(req, res, next) {
                     .child(req.user.id)
                     .update({
                         'username': req.user.username,
-                        'permission': false,
-                        'ask-for-permission': false,
-                        'url': '/users/' + req.user.id
+                        'url': '/users/' + req.user.id,
+                        'avatar': DEFAULT_USER_AVATAR
                     });
                 callback(null, req.user.id);
             } else { callback(null, null); }
@@ -228,6 +229,7 @@ router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next)
     fb_root.child('comment_list/' + req.params.roomId).push({
             authorId: req.user.id,
             author: req.user.username,
+            avatar: DEFAULT_USER_AVATAR,
             content: req.body.content,
             position: {
                 from: {

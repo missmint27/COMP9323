@@ -2,7 +2,12 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var async = require('async');
+var middleware = require('../middleware');
 module.exports = (app, passport) => {
+    router.get('/logout', middleware.isLoggedIn, function(req, res){
+        req.logout();
+        res.redirect('/');
+    });
     router.get('/login', function (req, res) {
         res.render('pages/signin.ejs', {title: 'Log in', errors: req.flash('error')});
     });

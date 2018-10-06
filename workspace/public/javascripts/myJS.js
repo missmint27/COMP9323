@@ -97,8 +97,10 @@
     //同步user list, 因为user list是由子elem构成的所以按照子elem来增删（用户进入/离开房间）
     //TODO add a ask-for-permission button
      dbRefUserList.on('child_added', snap => {
-         const user = $("<span>", {class: "user-name-span"}).text(snap.val().username);
-         const add = $("<li>", {id: snap.key}).append($("<div>", {class: "user-list"}).append(user));
+         const user_obj = snap.val();
+         const avatar    = $("<img>", {class: "avatar img-circle b2-avatar",id: "user" + snap.key, src: user_obj.avatar, css: ""});
+         const user = $("<span>", {class: "user-name-span"}).text(user_obj.username);
+         const add = $("<li>", {id: snap.key}).append($("<div>", {class: "user-list"}).append(avatar,user));
          $("ul[id='user_list']").append(add);
      });
 
