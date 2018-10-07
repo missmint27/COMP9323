@@ -339,14 +339,6 @@ search-icon{
     margin-top: 5px;
     margin-left: 10px;
 }
-.b2-commentname{
-    font-size: 20px;
-    font-weight: 400;
-    width: 70%;
-    margin-top: 10px;
-    display: block;
-    float: right;
-}
 .b2-commentcontent{
     display: block;
     font-weight: 300;
@@ -355,31 +347,62 @@ search-icon{
     width: 100%;
     overflow-y: scroll;
 }
-#user_list{
-    list-style-type: decimal;
+.b2-commentname, .b2-username{
+    font-size: 20px;
+    font-weight: 400;
+    width: 70%;
+    margin-top: 10px;
+    display: block;
+    float: right;
 }
+
 .b2-participants-block{
+    list-style-type: none;
     font-weight: 300;
-    font-size: 15px;
-    line-height: 2vw;
-    width: 99%;
-    padding-right: 1%;
+    font-size: 16px;
+    width: 100%;
+    margin-left: -20px;
+    word-wrap:break-word;
     overflow: scroll;
 }
-    .b2-participants-block span{
-
-    }
-    .b2-participants-block button{
-        font-weight: 400;
-        font-size: 13px;
-        border: 2px solid #f7b733;
-        background-color: #f7b733;
-        color: #ffffff;
-        border-radius: 5%;
-        height: 3rem;
-        width: 13rem;
-        float: right;
-    }
+#user_list{
+    list-style-type: none;
+    overflow: scroll;
+}
+.user-item{
+    margin-bottom: 5px;
+}
+.ui-div{
+    position: relative;
+    width: 100%;
+    min-height: 50px;
+    border-radius: 5px;
+    background-color: #f6f5f5;
+}
+.ui-up{
+    display: block;
+    height: 50px;
+    width: 100%;
+}
+.ui-down{
+    display: block;
+    min-height: 0;
+    max-height: 38px;
+    width: 98%;
+    padding: 4px 5px;
+}
+.b2-passbutton{
+    font-weight: 400;
+    font-size: 13px;
+    border: 2px solid #f7b733;
+    background-color: #f7b733;
+    color: #ffffff;
+    border-radius: 5%;
+    height: 30px;
+    width: 13rem;
+    padding:0;
+    margin-left: -10px;
+}
 .b2-review{
     width: 100%;
     height: 85%;/*height need to be Responsive*/
