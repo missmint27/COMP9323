@@ -26,7 +26,7 @@
            style="font-size:2rem; margin-left:auto; margin-right:auto">
             OURCODES
         </a>
-<%if(currentUser){%>
+        <%if(currentUser){%>
         <h1> Welcome + <%=currentUser.username%></h1>
         <%}%>
 
@@ -35,7 +35,7 @@
                  style="width:50px;height:50px;margin-left:auto; margin-right:auto">
             <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
                 <a class="nav-sign" href="/login" id="signup">Sign up</a>
-                /
+
                 <a class="nav-sign" href="/register" id="signin">Sign in</a>
             </div>
 
@@ -53,9 +53,9 @@
                 <form>
                     <div class="input-group input-group-dark input-group-round">
                         <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="material-icons">search</i>
-                                    </span>
+                            <span class="input-group-text">
+                                <i class="material-icons">search</i>
+                            </span>
                         </div>
                         <input type="search" class="form-control form-control-dark" placeholder="Search"
                                aria-label="Search app" aria-describedby="search-app">
@@ -84,8 +84,8 @@
                     <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
                     <a href="/logout" class="dropdown-item">Log Out</a>
                 </div>
-            <%}%>
-        </div>
+                <%}%>
+            </div>
         </div>
     </div>
 
@@ -111,8 +111,6 @@
 
 
             <!--click these two buttons show and hide a div of contents-->
-
-
             <div class="nav-bottom">
                 <div class="nav-circle">
                     <img src="icon/folder-fff.png" class="circle-icon" id="project-list"
@@ -167,9 +165,9 @@
                                 <form class="col-md-auto">
                                     <div class="input-group input-group-round">
                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="material-icons">filter_list</i>
-                                                            </span>
+                                        <span class="input-group-text">
+                                            <i class="material-icons">filter_list</i>
+                                        </span>
                                         </div>
                                         <input type="search" class="form-control filter-list-input"
                                                placeholder="Filter tasks" aria-label="Filter Tasks"
@@ -180,84 +178,7 @@
                             <!--end of content list head-->
                             <div class="content-list-body">
                                 <div class="card-list">
-
                                     <div class="card-list-body">
-                                        <div class="card card-task">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-warning" role="progressbar"
-                                                     style="width: 100%"></div>
-                                            </div>
-
-
-
-                                        <div class="card card-task">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-warning" role="progressbar"
-                                                     style="width: 100%"></div>
-                                            </div>
-                                            <% coderoom_list.forEach(function(coderoom){ %>
-                                            <div class="card-body">
-                                                <div class="card-title">
-                                                    <a href="#">
-                                                        <h6 data-filter-by="text"><%= coderoom.name%></h6>
-                                                    </a>
-                                                    <div class="text-small"
-                                                         style="max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap;">
-                                                        <%= coderoom.description%>
-                                                    </div>
-                                                    <p class="text-small" style="margin-top: 1rem;">Author:<%= coderoom.author.username%></p>
-
-                                                </div>
-                                                <div class="card-meta">
-                                                    <ul class="avatars">
-                                                        <li>
-                                                            <a href="#" data-toggle="tooltip" title="Kenny">
-                                                                <img alt="Kenny Tran" class="avatar"
-                                                                     src="icon/user0.png"/>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-
-                                                    <div class="dropdown card-options">
-                                                        <button class="btn-options" type="button"
-                                                                id="task-dropdown-button-1" data-toggle="dropdown"
-                                                                aria-haspopup="true" aria-expanded="false">
-                                                            <i class="material-icons">more_vert</i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item text-danger" href="#">Delete
-                                                                room</a>
-                                                            <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item" href="#">Revoke permission</a>
-                                                        </div>
-                                                    </div>
-                                                    <div><form method="get" action="/api/coderooms/<%=coderoom._id%>">
-                                                        <button type="submit" class="btn btn-outline-primary">Enter
-                                                        </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <% })%>
-                                        </div>
-                                    </div>
-                                </div>
-                                    <!--**********************************************-->
-                                <!--end of content list body-->
-                            </div>
-                            <div class="row content-list-head mt-5">
-                                <div class="col-auto">
-                                    <h3>Other collections</h3>
-                                </div>
-
-                            </div>
-                            <!--end of content list head-->
-                                <!--TODO other collections-->
-                            <div class="content-list-body">
-                                <div class="card-list">
-
-                                    <div class="card-list-body">
-
                                         <div class="card card-task">
                                             <div class="progress">
                                                 <div class="progress-bar bg-warning" role="progressbar"
@@ -304,67 +225,127 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!--</div>-->
                                 </div>
+                                <!--**********************************************-->
+                                <!--end of content list body-->
+                            </div>
 
+
+                            <div class="row content-list-head mt-5">
+                                <div class="col-auto">
+                                    <h3>Other collections</h3>
+                                </div>
+                            </div>
+                            <!--end of content list head-->
+
+                            <div class="content-list-body">
+                                <div class="card-list">
+                                    <div class="card-list-body">
+                                        <% coderoom_list.forEach(function(coderoom){ %>
+                                            <div class="card card-task">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-warning" role="progressbar"
+                                                         style="width: 100%"></div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="card-title">
+                                                        <a href="#">
+                                                            <h6 data-filter-by="text"><%= coderoom.name%></h6>
+                                                        </a>
+                                                        <div class="text-small"
+                                                             style="max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap;">
+                                                            <%= coderoom.description%>
+                                                        </div>
+                                                        <p class="text-small" style="margin-top: 1rem;">Author:<%= coderoom.author.username%></p>
+
+                                                    </div>
+                                                    <div class="card-meta">
+                                                        <ul class="avatars" id=<%=coderoom._id%>>
+                                                        </ul>
+                                                        <div class="dropdown card-options">
+                                                            <button class="btn-options" type="button"
+                                                                    id="task-dropdown-button-1" data-toggle="dropdown"
+                                                                    aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">more_vert</i>
+                                                            </button>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item text-danger" href="#">Delete
+                                                                    room</a>
+                                                                <div class="dropdown-divider"></div>
+                                                                <a class="dropdown-item" href="#">Revoke permission</a>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <form method="get" action="/coderooms/<%=coderoom._id%>">
+                                                                <button type="submit" class="btn btn-outline-primary">Enter
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% })%>
+                                    </div>
+                                </div>
                                 <!--end of content list body-->
                             </div>
                             <!--end of content list-->
-                        </div>
-                        <!--end of tab-->
-                        <div class="modal fade" id="task-add-modal" tabindex="-1" role="dialog"
-                              aria-labelledby="task-add-modal" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">New Coderoom</h5>
-                                        <button type="button" class="close btn btn-round" data-dismiss="modal"
-                                                aria-label="Close">
-                                            <i class="material-icons">close</i>
-                                        </button>
-                                    </div>
-                                    <!--end of modal head-->
-                                <form method="post" action="/api/coderooms">
-                                    <div class="modal-body">
-                                        <div class="tab-content">
-                                            <div class="tab-pane fade show active" id="task-add-details" role="tabpanel"
-                                                 aria-labelledby="task-add-details-tab">
-                                                <h6>General Details</h6>
-                                                <div class="form-group row align-items-center">
-                                                    <label class="col-3">Name</label>
-                                                    <input class="form-control col" type="text" placeholder="Name"
-                                                           name="name"/>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-3">Description</label>
-                                                    <textarea class="form-control col" rows="3"
-                                                              placeholder="Description"
-                                                              name="description"></textarea>
-                                                </div>
-                                                <hr>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end of modal body-->
-
-                                    <div class="modal-footer">
-                                        <button role="button" class="btn btn-primary" type="submit">
-                                            Create Coderoom
-                                        </button>
-                                    </div>
-
-                                </form>
-                                </div>
-                            </div>
                         </div>
                     </div>
+                    <!--end of tab-->
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+<div class="modal fade" id="task-add-modal" tabindex="-1" role="dialog"
+      aria-labelledby="task-add-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Coderoom</h5>
+                <button type="button" class="close btn btn-round" data-dismiss="modal"
+                        aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <!--end of modal head-->
+            <form method="post" action="/coderooms">
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="task-add-details" role="tabpanel"
+                             aria-labelledby="task-add-details-tab">
+                            <h6>General Details</h6>
+                            <div class="form-group row align-items-center">
+                                <label class="col-3">Name</label>
+                                <input class="form-control col" type="text" placeholder="Name"
+                                       name="name"/>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-3">Description</label>
+                                <textarea class="form-control col" rows="3"
+                                          placeholder="Description"
+                                          name="description"></textarea>
+                            </div>
+                            <hr>
 
+                        </div>
+                    </div>
+                </div>
+                <!--end of modal body-->
+                <div class="modal-footer">
+                    <button role="button" class="btn btn-primary" type="submit">
+                        Create Coderoom
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
 <script type="text/javascript" src="javascripts/bootstrap/jquery.min.js"></script>
 <script type="text/javascript" src="javascripts/bootstrap/autosize.min.js"></script>
 <script type="text/javascript" src="javascripts/bootstrap/popper.min.js"></script>
@@ -375,6 +356,8 @@
 <script type="text/javascript" src="javascripts/bootstrap/list.min.js"></script>
 <script type="text/javascript" src="javascripts/bootstrap/bootstrap.js"></script>
 <script type="text/javascript" src="javascripts/bootstrap/theme.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+<script src="/javascripts/homepageJS.js"></script>
 <script type="text/javascript">
     $("#signin").mouseover(function () {
         $("#logo").css("transform", "scaleX(-1)")
@@ -383,7 +366,7 @@
         $("#logo").css("transform", "scaleX(1)")
     });
 </script>
-</body>
+
 <div style="display:none">
     Icons made by
     <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a>

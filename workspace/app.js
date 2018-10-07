@@ -76,7 +76,7 @@ app.use(function(req, res, next){
 userRouter(app, passport);
 app.use("/", renderRoutes);
 // app.use("/", indexRoutes);
-app.use("/api/coderooms", coderoomRoutes);
+app.use("/coderooms", coderoomRoutes);
 
 
 //server configration

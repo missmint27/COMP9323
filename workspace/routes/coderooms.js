@@ -75,7 +75,7 @@ router.post("/", middleware.isLoggedIn,function(req, res) {
             { "userId" : req.user.id}
         );
         console.log(coderoom.id);
-        // res.json("room id: %s created", coderoom.id);
+        res.redirect('/coderooms/' + coderoom.id);
     });
 });
 
@@ -115,10 +115,6 @@ router.get("/:id",function(req, res, next) {
         }
     }, function(err, results) {
         //if user not logged in, user will be null.
-        // res.json({
-        //     coderoom: results.room,
-        //     user: results.user
-        // });
         res.render('coderooms/coderoom_mirror.ejs', {roomId: results.room._id, userId: results.user});
     })
 });

@@ -28,6 +28,8 @@
 
 </head>
 <body style="height: 100vh">
+<div id="roomId" style="display: none"><%=roomId%></div>
+<div id="userId" style="display: none"><%=userId%></div>
 
 <nav class="nav-bar">
     <div class="nav-container">
@@ -122,7 +124,7 @@
             <ul id="comment_list">
             </ul>
         </div>
-        <div class="b2-participants-block" id="participants_block" style="display: none">
+        <div class="b2-participants-block" id="participants_block">
             <ul id='user_list'>
             </ul>
         </div>
@@ -130,8 +132,8 @@
     <div class="b2-leave">
         <div class="b2-permission">
             <h6>Permission:</h6>
-            <p class="have-this-permission">Read</p>
-            <p class="no-permission">Write</p>
+            <p class="have-this-permission" id="read-permission">Read</p>
+            <p class="no-permission" id="write-permission">Write</p>
         </div>
         <button class="my-button btn-danger" style="width: 150px;">LEAVE ROOM</button>
     </div>

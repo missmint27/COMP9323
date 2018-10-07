@@ -38,7 +38,6 @@ module.exports = (app, passport) => {
             if (err) {
                 return next(err);
             }
-            // Successful - redirect to new author record.
             res.redirect('/');
         });
     });
@@ -64,7 +63,7 @@ module.exports = (app, passport) => {
     });
 
     //for short info.
-    router.get('/api/users/:id', function(req, res, next) {
+    router.get('/users/:id/short', function(req, res, next) {
         User.findById(req.params.id).exec(function(err, user) {
             if (err) return next(err);
             const user_info = {
@@ -76,43 +75,63 @@ module.exports = (app, passport) => {
             res.json(user_info);
         })
     });
+
+
+    router.get("/logout", function(req, res){
+        req.logout();
+        req.flash("success", "LOGGED YOU OUT!");
+        res.redirect("/");
+    });
+
+    router.get("/profile/:id",middleware.isLoggedIn, function (req,res) {
+        User.findById(req.params.id,function(err,foundUser) {
+            if(err){
+                req.redirect("/");
+            }
+            else {
+                res.render("pages/setting.ejs", {user: foundUser});
+            }
+        })
+
+    });
+    router.put("/profile/:id",middleware.isLoggedIn,function (req,res) {
+        if(req.user.id === req.params.id) {
+            //TODO partly update
+            var newData = {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                city: req.body.city,
+                birthday: req.body.birthday,
+                mobile: req.body.mobile
+            };
+            User.findByIdAndUpdate(req.params.id, {$set: newData}, function (err, user) {
+                if (err) {
+                    req.flash("error", err.message);
+                    res.redirect("back");
+                }
+                else {
+                    req.flash("success", "successfully updated!!");
+
+                    console.log(user);
+                    res.redirect("/profile/" + user._id);
+                }
+            });
+        }
+    });
+
+    router.put("/users/:id/follow", middleware.isLoggedIn, function(req, res, next) {
+        console.log("follow: ", req.params.id);
+        res.json({'msg': 'follow Not implemented yet.'})
+    });
+
+    router.delete("/users/:id/follow", middleware.isLoggedIn, function(req, res, next) {
+        console.log("defollow: ", req.params.id);
+        res.json({'msg': 'defollow Not implemented yet.'})
+    });
+
+
+
+
     app.use('/', router);
 };
-
-
-
-router.get("/logout", function(req, res){
-    req.logout();
-    req.flash("success", "LOGGED YOU OUT!");
-    res.redirect("/");
-});
-
-router.get("/profile/:id",middleware.isLoggedIn, function (req,res) {
-    User.findById(req.params.id,function(err,foundUser) {
-        if(err){
-            req.redirect("/");
-        }
-        else {
-            res.render("pages/setting.ejs", {user: foundUser});
-        }
-    })
-
-})
-router.put("/profile/:id",middleware.isLoggedIn,function (req,res) {
-    var newData ={firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email, city: req.body.email, city: req.body.city, birthday:req.body.birthday,  mobile: req.body.mobile};
-    User.findByIdAndUpdate(req.params.id,{$set: newData},function(err,user){
-        if(err){
-            req.flash("error",err.message);
-            res.redirect("back");
-        }
-        else{
-            req.flash("success","successfully updated!!");
-
-            console.log(user);
-            res.redirect("/profile/" + user._id);
-        }
-    })
-
-
-})
-

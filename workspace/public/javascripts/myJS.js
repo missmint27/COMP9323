@@ -1,5 +1,5 @@
 //FireBase 设置
-var config = {
+const config = {
     apiKey: "AIzaSyDyFnZMXeY2gXJNSZe58tqbOkZX7-5yiDM",
     authDomain: "comp9323-97bb4.firebaseapp.com",
     databaseURL: "https://comp9323-97bb4.firebaseio.com",
@@ -8,9 +8,23 @@ var config = {
     messagingSenderId: "837737259182"
 };
 firebase.initializeApp(config);
+
+const roomId = document.getElementById("roomId").innerText;
+const userId = document.getElementById("userId").innerText;
+console.log("ROOMID:", roomId);
+console.log("USERID:", userId);
+const code_input = document.getElementById('code_input');
+const comment_list = document.getElementById('comment_list');
+const user_list = document.getElementById('user_list');
+//maintaining a global comment dict, it stores the marker of comment in the coding area, using commentId as key
+let comment_dict = {};
+//change the global comment mode to shift display mode.
+let comment_mode = false;
+let permission = false;
+
 //CodeMirro Editor initialize
 //Need further changes for optimization.
-var editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
+let editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
     mode: "python",
     theme: "darcula",
     lineNumbers: true,
@@ -24,24 +38,6 @@ editor.on('change', updateCode);
 editor.getSelectedRange = function() {
     return { from: editor.getCursor(true), to: editor.getCursor(false) };
 };
-
-var permission = false;
-// const roomId = document.getElementById("roomId");
-// const userId = document.getElementById("userId");
-const code_input = document.getElementById('code_input');
-const comment_list = document.getElementById('comment_list');
-const user_list = document.getElementById('user_list');
-
-var roomId = '5bab7be8ade838281621911a';
-var userId = '5bb053d0efdfca206dc66b3b';
-// var users = null;
-// var ask_for_permission = null;
-
-//maintaining a global comment dict, it stores the marker of comment in the coding area, using commentId as key
-var comment_dict = {};
-//change the global comment mode to shift display mode.
-var comment_mode = false;
-
 
 //dbRefObject is the root directory of firebase
 const dbRefObject = firebase.database().ref();
@@ -158,7 +154,7 @@ dbRefCommentList.on('child_added', snap => {
 
 dbRefCommentList.on('child_removed', snap => {
     const liToRemove = document.getElementById(snap.key);
-    let comment_marker = comment_dict[snap.key];
+    const comment_marker = comment_dict[snap.key];
     console.log("Comment removed");
     liToRemove.remove();
     comment_marker.clear();
@@ -194,9 +190,7 @@ function run() {
     const result = document.getElementById('result');
     const host = window.location.host;
     const path = window.location.pathname;
-    //TODO change
-    // const url = 'http://' + host + path + '/run';
-    const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/run';
+    const url = 'http://' + host + path + '/run';
     console.log(url);
     $.ajax({
         url: url,
@@ -216,7 +210,6 @@ function postComment() {
     const pos  = editor.getSelectedRange();
     const url  = urlGetter() + '/comments';
     const code = editor.getRange(pos.from, pos.to);
-    // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/comments';
     console.log(url);
     $.ajax({
         url: url,
@@ -323,3 +316,4 @@ function urlGetter() {
     const path = window.location.pathname;
     return 'http://' + host + path;
 }
+

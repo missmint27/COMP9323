@@ -5,7 +5,7 @@ module.exports = {
             return next();
         }
         req.flash("error", "You must be signed in to do that!");
-        res.status('400').json({'msg': 'Please Log in'});
+        res.redirect('/login');
     },
     isOwner: function(req, res, next){
         if(req.user){
