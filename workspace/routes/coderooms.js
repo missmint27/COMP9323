@@ -74,7 +74,8 @@ router.post("/", middleware.isLoggedIn,function(req, res) {
         fb_root.child('permission/' + coderoom.id).update(
             { "userId" : req.user.id}
         );
-        res.json("room id: %s created", coderoom.id);
+        console.log(coderoom.id);
+        // res.json("room id: %s created", coderoom.id);
     });
 });
 
