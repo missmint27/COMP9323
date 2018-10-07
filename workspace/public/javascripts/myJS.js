@@ -17,9 +17,15 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
 // autoMatchBrackets: true,
     readOnly: !permission,                 //set to true if user have the permission.
 });
+//when editor's content changed, call updateCode()
+editor.on('change', updateCode);
+
+//return pos: {from: {line:int, ch:int}, to:{line: int, ch: int}}
+editor.getSelectedRange = function() {
+    return { from: editor.getCursor(true), to: editor.getCursor(false) };
+};
 
 var permission = false;
-
 // const roomId = document.getElementById("roomId");
 // const userId = document.getElementById("userId");
 const code_input = document.getElementById('code_input');
@@ -36,13 +42,6 @@ var comment_dict = {};
 //change the global comment mode to shift display mode.
 var comment_mode = false;
 
-//when editor's content changed, call updateCode()
-editor.on('change', updateCode);
-
-//return pos: {from: {line:int, ch:int}, to:{line: int, ch: int}}
-editor.getSelectedRange = function() {
-    return { from: editor.getCursor(true), to: editor.getCursor(false) };
-};
 
 //dbRefObject is the root directory of firebase
 const dbRefObject = firebase.database().ref();
@@ -51,7 +50,6 @@ const dbRefUserList = dbRefObject.child('user_list').child(roomId);
 const dbRefCode = dbRefObject.child('code').child(roomId);
 const dbRefRoomPermission = dbRefObject.child('permission/' + roomId);
 const dbRefAskForPermission = dbRefObject.child('ask-for-permission/' + roomId);
-
 
 
 //track the permission status.
@@ -162,15 +160,13 @@ dbRefCommentList.on('child_removed', snap => {
 });
 
 //TODO change.
-dbRefCommentList.on('child_changed', snap => {
-    const liChanged = document.getElementById(snap.key);
-    liChanged.innerText = JSON.stringify(snap.val());
-});
+// dbRefCommentList.on('child_changed', snap => {
+//     const liChanged = document.getElementById(snap.key);
+//     liChanged.innerText = JSON.stringify(snap.val());
+// });
 
 window.onbeforeunload = function (e) {
-    const host = window.location.host;
-    const path = window.location.pathname;
-    const url = 'http://' + host + path + '/users';
+    const url = urlGetter() + '/users';
     // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/users';
     $.ajax({
         url: url,
@@ -212,10 +208,8 @@ function run() {
 }
 
 function postComment() {
-    const host = window.location.host;
-    const path = window.location.pathname;
     const pos  = editor.getSelectedRange();
-    const url  = 'http://' + host + path + '/comments';
+    const url  = urlGetter() + '/comments';
     const code = editor.getRange(pos.from, pos.to);
     // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/comments';
     console.log(url);
@@ -246,9 +240,7 @@ function postComment() {
 
 //change the user's state to ask-for-permission: true
 function requirePermission() {
-    const host = window.location.host;
-    const path = window.location.pathname;
-    const url = 'http://' + host + path + '/permission';
+    const url = urlGetter() + '/permission';
     $.ajax({
         url: url,
         method: 'put',
@@ -262,10 +254,8 @@ function requirePermission() {
 
 //Bind with user list's button, pass the permission to this user(if you got the permission)
 function passPermission(event) {
-    const host = window.location.host;
-    const path = window.location.pathname;
     const passToId = event.data.passTo;
-    const url = 'http://' + host + path + '/permission';
+    const url = urlGetter() + '/permission/' + passToId;
     console.log("Pass to: ", passToId);
     $.ajax({
         url: url,
@@ -280,10 +270,8 @@ function passPermission(event) {
 
 //TODO Delete after testing.
 function resetPermission() {
-    const host = window.location.host;
-    const path = window.location.pathname;
     const passToId = '5bb053d0efdfca206dc66b3f';
-    const url = 'http://' + host + path + '/permission/' + passToId;
+    const url = urlGetter() + '/permission/' + passToId;
     // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
     $.ajax({
         url: url,
@@ -308,4 +296,10 @@ function modeChange() {
     while(length--) {
         marker_list[length].style.cssText=css;
     }
+}
+
+function urlGetter() {
+    const host = window.location.host;
+    const path = window.location.pathname;
+    return 'http://' + host + path;
 }
