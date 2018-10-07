@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+<head>
+    <title>Classroom</title>
+    <link rel="icon" href="/icon/website.png" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+    <link rel="stylesheet" href="/javascripts/codemirror/lib/codemirror.css">
+    <script type="text/javascript" src="/javascripts/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="/javascripts/codemirror/mode/python/python.js"></script>
+    <link rel='stylesheet' href="/javascripts/codemirror/theme/darcula.css">
+    <link rel='stylesheet' href="/javascripts/codemirror/theme/lucario.css">
+
+    <script src="/javascripts/codemirror/addon/selection/mark-selection.js"></script>
+    <script src="/javascripts/codemirror/addon/search/searchcursor.js"></script>
+    <script src="/javascripts/codemirror/addon/search/annotatescrollbar.js"></script>
+    <script src="/javascripts/codemirror/addon/search/matchesonscrollbar.js"></script>
+    <style>
+        .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
+        .CodeMirror-selected  { background-color: blue !important; }
+        .CodeMirror-selectedtext { color: white; }
+        .styled-background { background-color: #ff7; }
+    </style>
+
+
+</head>
+<body style="height: 100vh">
+
+<nav class="nav-bar">
+    <div class="nav-container">
+        <div class="nav-name">
+            <a href="../pages/homepage.ejs">OurCodes</a>
+        </div>
+
+        <img src="/img/avatar/avatar3.png" class="avatar" alt="">
+        <div class="nav-sign">
+            <div class="nav-menu"><a class="nav-sign" href="../pages/signup.ejs">Sign up</a></div>
+            <div class="nav-slash">/</div>
+            <div class="nav-menu"><a class="nav-sign" href="../pages/signin.ejs">Sign in</a></div>
+        </div>
+        <!--Can be replaced after login-->
+        <div class="nav-username">
+            <span>Please sign in</span>
+        </div>
+
+
+        <!--click these two buttons show and hide a div of contents-->
+
+        <div class="nav-bottom">
+            <div class="nav-bo">
+                <img class="nav-icon" onclick="javascript:location.href='../pages/setting.ejs'"
+                     src="/icon/settings-fff.png"
+                     onmouseover="this.src='/icon/settings-e6e6e6.png'"
+                     onmouseout="this.src='/icon/settings-fff.png'"/>
+            </div>
+            <div class="b1-search">
+                <div class="search-icon">
+                    <img class="nav-icon" src="/icon/search-fff.png"
+                         onmouseover="this.src='/icon/search-e6e6e6.png'"
+                         onmouseout="this.src='/icon/search-fff.png'"
+                         onclick="searchBar()" style="display: inline-block;float: left;"/>
+                </div>
+                <div id="hidDiv" style="display: none;">
+                    <input type="text" class="b1-searcher" placeholder="e.g. Ella">
+
+                    <input class="b1-advsearch my-button" type="button" value="+ Advanced Search" onclick="advSearch()">
+                </div>
+                <div id="hidAdv" class="b1-divadv" style="display: none;">
+                    <ul class="b1-adv-ul">
+                        <li class="b1-adv-li">
+                            <input type="checkbox" name="advancedsearch" value="title" id="advs1">
+                            <label for="advs1">Title</label>
+                        </li>
+                        <li class="b1-adv-li">
+                            <input type="checkbox" name="advancedsearch" value="author" id="advs2">
+                            <label for="advs2">Author</label>
+                        </li>
+                        <li class="b1-adv-li">
+                            <input type="checkbox" name="advancedsearch" value="Content" id="advs3">
+                            <label for="advs3">Content</label>
+                        </li>
+                    </ul>
+                    <button class="my-button">Search</button>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</nav>
+<div class="block-1">
+    <div class="b1-main">
+        <script>
+            var editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
+                lineNumbers: true,
+                styleSelectedText: true
+            });
+            editor.markText({line: 6, ch: 26}, {line: 6, ch: 42}, {className: "styled-background"});
+            }
+        </script>
+        <form style="height: 100%;">
+            <textarea class="form-control" id="code_input" name='code_input'></textarea>
+        </form>
+    </div>
+
+    <div class="b1-result">
+        <div class="b1-button">
+            <button class="my-button btn-warning" style="width: 6rem;" type='submit' id = "btn5" onclick="run()">RUN</button>
+            <button class="my-button btn-warning" type='submit' id = "btn" onclick="change()">CHANGE PERMISSION</button>
+            <button class="my-button btn-warning" id="comments-btn" onclick="hideComments()">HIDE COMMENTS</button>
+        </div>
+        <pre id='result' class="b1-pre"></pre>
+    </div>
+</div>
+
+<div class="block-2">
+    <div class="b2-review">
+        <button class="my-button b2-popup" id="add_comment" onclick="addComments()"><i class="fa fa-plus"></i></button>
+        <div class="b2-givecomment" id="comment_block" style="display: none">
+            <form>
+                <label for='comment_input'>Comment Input:</label>
+                <textarea id="comment_input" class="form-control b2-commenttext" type='text' name='comment_input'></textarea>
+                <br>
+                <button class="my-button btn-warning" type='submit' id = "btn2" onclick="postComment()"> Comment</button>
+            </form>
+        </div>
+        <div class="b2-comments-block" id="comments">
+            <ul id="comment_list">
+                <li class="comment-item" style="display: none">
+                    <div class="ci-div">
+                        <div class="ci-up">
+                            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle b2-avatar" alt="avatar">
+                            <span class="b2-commentname">username1111</span>
+                        </div>
+                        <div class="ci-down">
+                            <p class="b2-commentcontent">
+                                commentcontenttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+                                tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="b2-participants-block" id="participants_block" style="display: none">
+            <ul id='user_list'>
+            </ul>
+        </div>
+    </div>
+    <div class="b2-leave">
+        <div class="b2-permission">
+            <h6>Permission:</h6>
+            <p>Read</p>
+            <p>Write</p>
+        </div>
+        <button class="my-button btn-danger" style="width: 150px;">LEAVE ROOM</button>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript" src="/javascripts/myJS.js"></script>
+<script type="text/javascript" src="/javascripts/ellaJS.js"></script>
+</html>

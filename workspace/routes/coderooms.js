@@ -118,7 +118,7 @@ router.get("/:id",function(req, res, next) {
         //     coderoom: results.room,
         //     user: results.user
         // });
-        res.render('firebase_test', {roomId: results.room._id, userId: results.user});
+        res.render('coderooms/coderoom_mirror.ejs', {roomId: results.room._id, userId: results.user});
     })
 });
 
