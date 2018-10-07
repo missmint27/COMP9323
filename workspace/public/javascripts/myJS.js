@@ -98,9 +98,11 @@ dbRefCode.on('value', snap => {
 dbRefUserList.on('child_added', snap => {
     const user_obj = snap.val();
     const avatar    = $("<img>", {class: "avatar img-circle b2-avatar",id: "user_avatar" + user_obj.authorId, src:user_obj.avatar});
-    const user = $("<span>", {class: "user-name-span"}).text(user_obj.username);
-    const add = $("<li>", {id: snap.key}).append($("<div>", {class: "user-list"}).append(avatar, user));
-    $("ul[id='user_list']").append(add);
+    const user = $("<span>", {class: "b2-username"}).text(user_obj.username);
+    const up        = $("<div>", {class: "ui-up"}).append(avatar, user);
+    const down      = $("<div>", {class: "ui-down"});
+    const li = $("<li>", {id: snap.key, class: "user-item"}).append($("<div>", {class:"ui-div"}).append(up, down));
+    $("ul[id='user_list']").append(li);
 });
 
 dbRefUserList.on('child_removed', snap => {
@@ -108,13 +110,13 @@ dbRefUserList.on('child_removed', snap => {
     liToRemove.remove();
 });
 
-//Ask for permission need to be after user list, because it needs the elements user list generates.
+// Ask for permission need to be after user list, because it needs the elements user list generates.
 dbRefAskForPermission.on('child_added', snap => {
     if (permission) {
         const request_user = snap.key;
         if (snap.val()) {
-            const button = $("<button>", {class: "pass-submission-btn"}).text("Pass Permission").click({passTo: request_user}, passPermission);
-            $("div ul[id=user_list] li[id=" + request_user + "] div").append(button);
+            const button = $("<button>", {class: "b2-passbutton"}).text("Pass Permission").click({passTo: request_user}, passPermission);
+            $("div ul[id=user_list] li[id=" + request_user + "] div[class=ui-div] div[class=ui-down]").append(button);
         }
     }
 });
@@ -130,7 +132,7 @@ dbRefAskForPermission.on('child_removed', snap => {
 //同步comment list，与user list类似，但是comment可以改，user不行
 dbRefCommentList.on('child_added', snap => {
     const comment_obj = snap.val();
-    const avatar    = $("<img>", {class: "avatar img-circle b2-avatar",id: "avatar" + comment_obj.authorId, src:comment_obj.avatar});
+    const avatar    = $("<img>", {class: "avatar img-circle b2-avatar",id: "comment_avatar" + comment_obj.authorId, src:comment_obj.avatar});
     const user_name = $("<span>", {class: "b2-commentname"}).text(comment_obj.author);
     const content   = $("<p>", {class: "b2-commentcontent"}).text(comment_obj.content);
     const up        = $("<div>", {class: "ci-up"}).append(avatar, user_name);
