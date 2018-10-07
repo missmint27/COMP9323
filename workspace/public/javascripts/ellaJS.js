@@ -39,21 +39,7 @@ function advSearch() {
         x.style.display = "none";
     }
 }
-<!--点击换成SHOW COMMENTS-->
-function hideComments() {
-    var button = document.getElementById("comments-btn");
-    var review = document.getElementById("comments");
-    var comment_block = document.getElementById("participants_block");
-    if (review.style.display === "") {
-        review.style.display = "none";
-        comment_block.style.display = "";
-        button.innerHTML = "SHOW COMMENTS";
-    } else {
-        review.style.display = "";
-        comment_block.style.display = "none";
-        button.innerHTML = "HIDE COMMENTS";
-    }
-}
+
 
 //click add comment button to show a block to add comment
 function addComments() {
