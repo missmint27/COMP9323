@@ -57,6 +57,7 @@ const dbRefAskForPermission = dbRefObject.child('ask-for-permission/' + roomId);
 dbRefRoomPermission.on('value', snap => {
     const permission_holder = snap.val().userId;
     console.log("permission holder: ", permission_holder);
+    const permission_write = document.getElementById('write-permission');
     if (permission_holder !== userId && permission === false) {
     } else {
         permission = permission_holder === userId;
@@ -68,8 +69,10 @@ dbRefRoomPermission.on('value', snap => {
             editor.setOption("readOnly", !permission);
             if(permission) {
                 editor.setOption("theme", 'darcula');
+                permission_write.className = "have-this-permission";
             } else {
                 editor.setOption("theme", 'lucario');
+                permission_write.className = "no-permission";
             }
         });
     }
