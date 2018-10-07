@@ -296,8 +296,23 @@ function modeChange() {
     while(length--) {
         marker_list[length].style.cssText=css;
     }
+    hideComments();
 }
 
+function hideComments() {
+    const button = document.getElementById("comments-btn");
+    const comment_block = document.getElementById("comments");
+    const user_block = document.getElementById("participants_block");
+    if (!comment_mode) {
+        comment_block.style.display = "none";
+        user_block.style.display = "";
+        button.innerHTML = "SHOW COMMENTS";
+    } else {
+        comment_block.style.display = "";
+        user_block.style.display = "none";
+        button.innerHTML = "HIDE COMMENTS";
+    }
+}
 function urlGetter() {
     const host = window.location.host;
     const path = window.location.pathname;

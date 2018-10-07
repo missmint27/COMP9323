@@ -103,7 +103,7 @@
         <div class="b1-button">
             <button class="my-button btn-warning" style="width: 6rem;" type='submit' id = "btn5" onclick="run()">RUN</button>
             <button class="my-button btn-warning" type='submit' id = "btn" onclick="change()">CHANGE PERMISSION</button>
-            <button class="my-button btn-warning" id="comments-btn" onclick="hideComments()">HIDE COMMENTS</button>
+            <button class="my-button btn-warning" id="comments-btn" onclick="modeChange()">SHOW COMMENTS</button>
         </div>
         <pre id='result' class="b1-pre"></pre>
     </div>
@@ -120,11 +120,11 @@
                 <button class="my-button btn-warning" type='submit' id = "btn2" onclick="postComment()"> Comment</button>
             </form>
         </div>
-        <div class="b2-comments-block" id="comments">
+        <div class="b2-comments-block" id="comments" style="display: none">
             <ul id="comment_list">
             </ul>
         </div>
-        <div class="b2-participants-block" id="participants_block" style="display: none">
+        <div class="b2-participants-block" id="participants_block">
             <ul id='user_list'>
             </ul>
         </div>
