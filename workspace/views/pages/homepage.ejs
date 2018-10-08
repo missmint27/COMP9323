@@ -27,18 +27,20 @@
             OURCODES
         </a>
         <%if(currentUser){%>
-        <h1> Welcome + <%=currentUser.username%></h1>
+        <h1> Welcome <%=currentUser.username%></h1>
         <%}%>
 
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
-            <img id="logo" src="img/avatar/avatar3.png" class="avatar" alt=""
+            <img id="logo" src="<%=user_info.avatar%>" class="avatar" alt=""
                  style="width:50px;height:50px;margin-left:auto; margin-right:auto">
+
+            <%if(!currentUser){%>
             <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
                 <a class="nav-sign" href="/login" id="signup">Sign up</a>
 
                 <a class="nav-sign" href="/register" id="signin">Sign in</a>
             </div>
-
+            <%}%>
             <div class="nav-bottom text-center" style="margin: 100px auto 0 auto;">
                 <div class="nav-bo">
                     <img class="nav-icon" onclick="javascript:location.href='setting.ejs'"
@@ -62,8 +64,8 @@
                     </div>
                 </form>
                 <div class=" mt-2">
-                    <button class="btn btn-primary btn-block" type="button" id="newContentButton" href="#">
-                        Add Coderoom
+                    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#task-add-modal">
+                        Create Coderoom
                     </button>
 
                 </div>
@@ -74,13 +76,11 @@
         <div class="d-none d-lg-block">
 
             <div class="dropup">
-
                 <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img alt="Image" src="icon/user0.png" class="avatar"/>
                 </a>
                 <%if(currentUser){%>
                 <div class="dropdown-menu">
-
                     <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
                     <a href="/logout" class="dropdown-item">Log Out</a>
                 </div>
@@ -89,78 +89,22 @@
         </div>
     </div>
 
-    <nav class="nav-bar navbar navbar-expand-lg navbar-dark sticky-top" style="display:none">
-
-        <div class="nav-container">
-            <div class="nav-name">
-                <a href="homepage_ui.html">
-                    <img src="/public/img/">
-                </a>
-            </div>
-
-            <img src="img/avatar/avatar3.png" class="avatar" alt="">
-            <div class="nav-sign">
-                <div class="nav-menu"><a class="nav-sign" href="signup.ejs">Sign up</a></div>
-                <div class="nav-slash">/</div>
-                <div class="nav-menu"><a class="nav-sign" href="signin.ejs">Sign in</a></div>
-            </div>
-            <!--Can be replaced after login-->
-            <div class="nav-username">
-                <span>Please sign in</span>
-            </div>
-
-
-            <!--click these two buttons show and hide a div of contents-->
-            <div class="nav-bottom">
-                <div class="nav-circle">
-                    <img src="icon/folder-fff.png" class="circle-icon" id="project-list"
-                         onmouseover="this.src='icon/folder-4abdac.png'"
-                         onmouseout="this.src='icon/folder-fff.png'">
-                    <!--怎么可以一起变呀？-->
-                </div>
-                <div class="nav-circle">
-                    <img src="icon/participant-fff.png" class="circle-icon" id="participant-list"
-                         onmouseover="this.src='icon/participant-4abdac.png'"
-                         onmouseout="this.src='icon/participant-fff.png'">
-                </div>
-                <div class="nav-bo">
-                    <img class="nav-icon" onclick="javascript:location.href='setting.ejs'"
-                         src="icon/settings-fff.png"
-                         onmouseover="this.src='icon/settings-e6e6e6.png'"
-                         onmouseout="this.src='icon/settings-fff.png'"/>
-                </div>
-            </div>
-
-
-        </div>
-    </nav>
     <div class="main-container">
-        <div class="navbar bg-white breadcrumb-bar">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Homepage</a>
-                    </li>
-                </ol>
-            </nav>
-        </div>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-11 col-xl-10">
                     <div class="page-header">
                         <h1>
-                            Create your own coderoom
+                            Start your coding journey
                         </h1>
-                        <p class="lead">Research, ideate and present brand concepts for client consideration</p>
+                        <p class="lead">Sharing let your idea goes deeper</p>
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="tasks" role="tabpanel" aria-labelledby="tasks-tab"
                              data-filter-list="card-list-body">
                             <div class="row content-list-head">
                                 <div class="col-auto">
-                                    <h3>My coderoom</h3>
-                                    <button class="btn btn-round" data-toggle="modal" data-target="#task-add-modal">
-                                        <i class="material-icons">add</i>
-                                    </button>
+                                    <h3>Last CodeRoom</h3>
                                 </div>
                                 <form class="col-md-auto">
                                     <div class="input-group input-group-round">
@@ -187,23 +131,17 @@
                                             <div class="card-body">
                                                 <div class="card-title">
                                                     <a href="#">
-                                                        <h6 data-filter-by="text">TITLE</h6>
+                                                        <h6 data-filter-by="text"><%=prev_coderoom.name%></h6>
                                                     </a>
                                                     <div class="text-small"
                                                          style="max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap;">
-                                                        Description
+                                                        <%=prev_coderoom.description%>
                                                     </div>
-                                                    <p class="text-small" style="margin-top: 1rem;">Author:Ella</p>
+                                                    <p class="text-small" style="margin-top: 1rem;"><%=prev_coderoom.author%></p>
 
                                                 </div>
                                                 <div class="card-meta">
-                                                    <ul class="avatars">
-                                                        <li>
-                                                            <a href="#" data-toggle="tooltip" title="Kenny">
-                                                                <img alt="Kenny Tran" class="avatar"
-                                                                     src="icon/user0.png"/>
-                                                            </a>
-                                                        </li>
+                                                    <ul class="avatars" id=<%=prev_coderoom._id%>>
                                                     </ul>
 
                                                     <div class="dropdown card-options">
@@ -234,7 +172,7 @@
 
                             <div class="row content-list-head mt-5">
                                 <div class="col-auto">
-                                    <h3>Other collections</h3>
+                                    <h3>Popular CodeRooms</h3>
                                 </div>
                             </div>
                             <!--end of content list head-->
@@ -338,7 +276,7 @@
                 <!--end of modal body-->
                 <div class="modal-footer">
                     <button role="button" class="btn btn-primary" type="submit">
-                        Create Coderoom
+                        Create
                     </button>
                 </div>
             </form>
