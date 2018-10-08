@@ -8,24 +8,14 @@
     <link href="/stylesheets/theme.css" rel="stylesheet" type="text/css" media="all"/>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- Optional theme -->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-    	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
     <link rel="stylesheet" href="/javascripts/codemirror/lib/codemirror.css">
     <script type="text/javascript" src="/javascripts/codemirror/lib/codemirror.js"></script>
     <script type="text/javascript" src="/javascripts/codemirror/mode/python/python.js"></script>
     <link rel='stylesheet' href="/javascripts/codemirror/theme/darcula.css">
     <link rel='stylesheet' href="/javascripts/codemirror/theme/lucario.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
 
 </head>
 <div id="roomId" style="display: none"><%=roomId%></div>
@@ -46,11 +36,11 @@
                  style="width:50px;height:50px;margin-left:auto; margin-right:auto">
 
             <%if(!currentUser){%>
-                <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
-                    <a class="nav-sign" href="/login" id="signup">Sign up</a>
+            <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
+                <a class="nav-sign" href="/login" id="signup">Sign up</a>
 
-                    <a class="nav-sign" href="/register" id="signin">Sign in</a>
-                </div>
+                <a class="nav-sign" href="/register" id="signin">Sign in</a>
+            </div>
             <%}%>
             <div class="nav-bottom text-center" style="margin: 100px auto 0 auto;">
                 <div class="nav-bo">
@@ -98,7 +88,7 @@
             </div>
         </div>
     </div>
-    <div id="content" style="height:100vh;width:100%">
+    <div id="content" style="height:100vh; width:calc(100% - 264px)">
         <div class="bg-white breadcrumb-bar" style="padding: 8px 16px; margin-bottom:0px;border-bottom: solid 2px #EEE">
             <nav aria-label="breadcrumb" style="width:100%">
                 <div class="button-group" style="display:inline">
@@ -107,8 +97,14 @@
                         Run
                     </button>
                     <button type="button" class="btn btn-outline-primary" onclick="requirePermission()">
-                        <i class="fa fa-key"></i>
-                        Require Permission</button>
+                        <i class="fa fa-key" style="transform: translateY(5px);"></i>
+                        <div style="display: inline-flex;
+                        white-space: normal;
+                        font-size: small;
+                        transform: translate(-5px,-5px);">
+                        Require Permission
+                        </div>
+                    </button>
                     <!--TODO-->
                     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#user-manage-modal">
                         <i class="fa fa-user"></i>
@@ -124,9 +120,10 @@
                         Leave
                     </button>
                     <!--TODO-->
-                    <div id="permission" style="float:right; display: inline-flex; transform: translateY(7px);">Permission: </div>
-                    <span id="read-permission">Read </span>
-                    <span id="write-permission">Write</span>
+                    <div id="permission" style="float:right; display: inline-flex; transform: translateY(7px);">Permission: 
+                        <span id="read-permission" style="margin:0 5px">Read </span>
+                        <span id="write-permission" style="margin:0 5px">Write</span>
+                    </div>
                 </div>
             </nav>
         </div>
@@ -137,12 +134,12 @@
             <label class="drag-bar-1" style="cursor: n-resize;height:5px;width:100%; z-index:10000;display:flex"></label>
             <div class="b1-result penal-2" style="transform: translateY(-30px);">
                 <pre id='result' class="b1-pre"></pre>
-                <p class="window-result">Result:</p>
+                <p class="window-result" style="padding-left: 30px;">Result:</p>
             </div>
         </div>
         <div class="drag-bar"></div>
 
-        <div id="chat-content" class="content-container" style="height: calc(100vh - 10rem)" >
+        <div id="chat-content" class="content-container" style="height: calc(100vh - 5rem)" >
             <div class="chat-module" data-filter-list="chat-module-body">
 
                 <div class="chat-module-top">

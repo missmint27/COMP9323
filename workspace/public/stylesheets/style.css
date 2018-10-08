@@ -175,7 +175,7 @@ input[type=checkbox]:checked + label:before {
 .block-1{
     padding: 0;
     width: 75%;/*width need to be Responsive*/
-    height: 100vh;
+    height: calc(100% - 71px);
     display: inline-block;
     float: left;
 }
@@ -258,9 +258,9 @@ search-icon{
         margin-left: 5px;
     }
 .b1-result{
-    background-color: #49c3b18c;
+    background-color: #2B2B2B;
     height: 30%;/*height need to be Responsive*/
-    overflow: scroll;
+    color: #A9B7C6;
 }
 .b1-pre{
     margin-top: 30px;
