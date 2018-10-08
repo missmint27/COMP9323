@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+<head>
+    <title>Classroom</title>
+    <link rel="icon" href="/icon/website.png" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="/stylesheets/theme.css" rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+    <link rel="stylesheet" href="/javascripts/codemirror/lib/codemirror.css">
+    <script type="text/javascript" src="/javascripts/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="/javascripts/codemirror/mode/python/python.js"></script>
+    <link rel='stylesheet' href="/javascripts/codemirror/theme/darcula.css">
+    <link rel='stylesheet' href="/javascripts/codemirror/theme/lucario.css">
+
+</head>
+<div id="roomId" style="display: none"><%=roomId%></div>
+<div id="userId" style="display: none"><%=userId%></div>
+<body>
+<div class="layout layout-nav-side">
+    <div class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #4abdac">
+        <a class="navbar-brand text-center" href="index.html"
+           style="font-size:2rem; margin-left:auto; margin-right:auto">
+            OURCODES
+        </a>
+        <%if(currentUser){%>
+        <h1> Welcome <%=currentUser.username%></h1>
+        <%}%>
+
+        <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
+            <img id="logo" src="<%=user_info.avatar%>" class="avatar" alt=""
+                 style="width:50px;height:50px;margin-left:auto; margin-right:auto">
+
+            <%if(!currentUser){%>
+                <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
+                    <a class="nav-sign" href="/login" id="signup">Sign up</a>
+
+                    <a class="nav-sign" href="/register" id="signin">Sign in</a>
+                </div>
+            <%}%>
+            <div class="nav-bottom text-center" style="margin: 100px auto 0 auto;">
+                <div class="nav-bo">
+                    <img class="nav-icon" onclick="javascript:location.href='setting.ejs'"
+                         src="/icon/settings-fff.png"
+                         onmouseover="this.src='/icon/settings-e6e6e6.png'"
+                         onmouseout="this.src='/icon/settings-fff.png'"/>
+                </div>
+            </div>
+            <hr>
+
+            <div>
+                <form>
+                    <div class="input-group input-group-dark input-group-round">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">search</i>
+                            </span>
+                        </div>
+                        <input type="search" class="form-control form-control-dark" placeholder="Search"
+                               aria-label="Search app" aria-describedby="search-app">
+                    </div>
+                </form>
+                <div class=" mt-2">
+                    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#task-add-modal">
+                        Create Coderoom
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="d-none d-lg-block">
+
+            <div class="dropup">
+                <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img alt="Image" src="/icon/user0.png" class="avatar"/>
+                </a>
+                <%if(currentUser){%>
+                <div class="dropdown-menu">
+                    <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
+                    <a href="/logout" class="dropdown-item">Log Out</a>
+                </div>
+                <%}%>
+            </div>
+        </div>
+    </div>
+    <div id="content" style="height:100vh;width:100%">
+        <div class="bg-white breadcrumb-bar" style="padding: 8px 16px; margin-bottom:0px;border-bottom: solid 2px #EEE">
+            <nav aria-label="breadcrumb" style="width:100%">
+                <div class="button-group" style="display:inline">
+                    <button type="button" class="btn btn-outline-primary" onclick="run()">
+                        <i class="fa fa-play"></i>
+                        Run
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" onclick="requirePermission()">
+                        <i class="fa fa-key"></i>
+                        Require Permission</button>
+                    <!--TODO-->
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#user-manage-modal">
+                        <i class="fa fa-user"></i>
+                        User list
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" id="comment-btn" onclick="modeChange()">
+                        <i class="fa fa-comment"></i>
+                        Comment
+                    </button>
+                    <!--TODO-->
+                    <button type="button" class="btn btn-outline-danger">
+                        <i class="fa fa-sign-out"></i>
+                        Leave
+                    </button>
+                    <!--TODO-->
+                    <div id="permission" style="float:right; display: inline-flex; transform: translateY(7px);">Permission: </div>
+                    <span id="read-permission">Read </span>
+                    <span id="write-permission">Write</span>
+                </div>
+            </nav>
+        </div>
+        <div id="code-content" class="block-1 dragbox">
+            <div class="b1-main panel-1">
+                <textarea class="form-control" id="code_input" name='code_input'></textarea>
+            </div>
+            <label class="drag-bar-1" style="cursor: n-resize;height:5px;width:100%; z-index:10000;display:flex"></label>
+            <div class="b1-result penal-2" style="transform: translateY(-30px);">
+                <pre id='result' class="b1-pre"></pre>
+                <p class="window-result">Result:</p>
+            </div>
+        </div>
+        <div class="drag-bar"></div>
+
+        <div id="chat-content" class="content-container" style="height: calc(100vh - 10rem)" >
+            <div class="chat-module" data-filter-list="chat-module-body">
+
+                <div class="chat-module-top">
+                    <div id="chat-box" class="chat-module-body">
+                    </div>
+                </div>
+
+                <div class="chat-module-bottom">
+                    <form class="chat-form" style="margin-bottom:1em;">
+                        <textarea id="chat-message" class="form-control" placeholder="Type message" rows="1"></textarea>
+                    </form>
+                    <button id="chat-submit" class="btn btn-primary" type="button" onclick="postComment()">
+                        Submit
+                    </button>
+                </div>
+
+                <div class="modal fade" id="user-manage-modal" tabindex="-1" role="dialog" aria-labelledby="user-manage-modal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">User list</h5>
+
+                            </div>
+                            <!--end of modal head-->
+                            <div class="modal-body">
+                                <!--TODO user list-->
+                                <div class="users-manage" data-filter-list="form-group-users">
+                                    <div id="user-group" class="form-group-users">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end of modal body-->
+                            <div class="modal-footer">
+                                <!--<button role="button" class="btn btn-primary" type="submit">-->
+                                    <!--Done-->
+                                <!--</button>-->
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/javascripts/myJS2.js"></script>
+<script type="text/javascript" src="/javascripts/ellaJS.js"></script>
+<script type="text/javascript" src="/javascripts/coderoom.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/jquery.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/autosize.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/popper.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/prism.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/draggable.bundle.legacy.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/swap-animation.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/dropzone.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/list.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/bootstrap.js"></script>
+<!--<script type="text/javascript" src="/javascripts/bootstrap/theme.js"></script>-->
+</html>

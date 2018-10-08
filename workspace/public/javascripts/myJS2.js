@@ -11,8 +11,6 @@ firebase.initializeApp(config);
 
 const roomId = document.getElementById("roomId").innerText;
 const userId = document.getElementById("userId").innerText;
-console.log("ROOMID:", roomId);
-console.log("USERID:", userId);
 const code_input = document.getElementById('code_input');
 //maintaining a global comment dict, it stores the marker of comment in the coding area, using commentId as key
 let comment_dict = {};
@@ -91,12 +89,12 @@ dbRefCode.on('value', snap => {
 //同步user list, 因为user list是由子elem构成的所以按照子elem来增删（用户进入/离开房间）
 dbRefUserList.on('child_added', snap => {
     const user_obj = snap.val();
-    const avatar    = $("<img>", {class: "avatar img-circle b2-avatar",id: "user_avatar" + user_obj.authorId, src:user_obj.avatar});
-    const user = $("<span>", {class: "b2-username"}).text(user_obj.username);
-    const up        = $("<div>", {class: "ui-up"}).append(avatar, user);
-    const down      = $("<div>", {class: "ui-down"});
-    const li = $("<li>", {id: snap.key, class: "user-item"}).append($("<div>", {class:"ui-div"}).append(up, down));
-    $("ul[id='user_list']").append(li);
+    const avatar   = $("<img>", {alt: user_obj.username, class: "avatar mr-2",id: "user_avatar" + user_obj.authorId, src:user_obj.avatar});
+    const user     = $("<span>", {class: "h6 mb-0", "data-filter-by": "text"}).text(user_obj.username);
+    const add = $("<div>", {id: snap.key, class: "custom-control custom-checkbox"})
+        .append($("<div>", {class:"d-flex align-items-center", id: user_obj.userId}).append(avatar, user));
+    $("div[id='user-group']").append(add);
+
 });
 
 dbRefUserList.on('child_removed', snap => {
@@ -109,8 +107,8 @@ dbRefAskForPermission.on('child_added', snap => {
     if (permission) {
         const request_user = snap.key;
         if (snap.val()) {
-            const button = $("<button>", {class: "b2-passbutton"}).text("Pass Permission").click({passTo: request_user}, passPermission);
-            $("div ul[id=user_list] li[id=" + request_user + "] div[class=ui-div] div[class=ui-down]").append(button);
+            const button = $("<button>", {class: "b2-passbutton", style: "display: inline;"}).text("Pass Permission").click({passTo: request_user}, passPermission);
+            $("div[id=" + request_user + "] div[class='d-flex align-items-center']").append(button);
         }
     }
 });
@@ -126,13 +124,17 @@ dbRefAskForPermission.on('child_removed', snap => {
 //同步comment list，与user list类似，但是comment可以改，user不行
 dbRefCommentList.on('child_added', snap => {
     const comment_obj = snap.val();
-    const avatar    = $("<img>", {class: "avatar img-circle b2-avatar",id: "comment_avatar" + comment_obj.authorId, src:comment_obj.avatar});
-    const user_name = $("<span>", {class: "b2-commentname"}).text(comment_obj.author);
-    const content   = $("<p>", {class: "b2-commentcontent"}).text(comment_obj.content);
-    const up        = $("<div>", {class: "ci-up"}).append(avatar, user_name);
-    const down      = $("<div>", {class: "ci-down"}).append(content);
-    const li = $("<li>", {id: snap.key, class: "comment-item"}).append($("<div>", {class:"ci-div"}).append(up, down));
-    $("ul[id='comment_list']").append(li);
+    const img    = $("<img>", {
+        alt: comment_obj.author,
+        class: "avatar",
+        id: "comment_avatar" + comment_obj.authorId,
+        src:comment_obj.avatar});
+    const title = $("<div>", {class: "chat-item-title"})
+        .append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(comment_obj.author));
+    const body  = $("<div>", {class: "chat-item-body", 'data-filter-by':"text"}).text(comment_obj.content);
+    const item = $("<div>", {class: "media-body"}).append(title, body);
+    const add = $("<div>", {id: snap.key, class: "media chat-item"}).append(img, item);
+    $("div[id='chat-box']").append(add);
     if (comment_obj.position) {
         const pos = comment_obj.position;
         const code = comment_obj.code;
@@ -225,7 +227,7 @@ function postComment() {
                 }
             },
             code: code,
-            content: document.getElementById('comment_input').value
+            content: document.getElementById('chat-message').value
         }
     }).done(function (data) {
         console.log(data);

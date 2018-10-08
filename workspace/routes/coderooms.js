@@ -8,6 +8,7 @@ var request = require('request');
 var pythonExecutor = require('../controllers/pythonExecutor');
 const async = require('async');
 const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v1538825655/sujhmatymeuigsghpfby.png';
+
 var config = {
     apiKey: "AIzaSyDyFnZMXeY2gXJNSZe58tqbOkZX7-5yiDM",
     authDomain: "comp9323-97bb4.firebaseapp.com",
@@ -27,7 +28,7 @@ router.get('/5bab7be8ade838281621911a', function(req, res) {
     console.log("Firebase testing...");
     console.log("TEST ON ROOM ID: ", roomId);
     console.log("TEST ON USER ID: ", roomId);
-    res.render('firebase_test', {roomId: roomId, userId: userId});
+    res.render('coderooms/coderoom2.ejs', {roomId: roomId, userId: userId, user_info: {avatar: DEFAULT_USER_AVATAR}});
 });
 
 //functioning

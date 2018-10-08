@@ -6,7 +6,7 @@ var async = require('async');
 var User = require('../models/user');
 var middleware = require("../middleware");
 var request = require('request');
-
+const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v1538825655/sujhmatymeuigsghpfby.png';
 
 router.get("/",function (req,res,next) {
     async.parallel({
@@ -25,11 +25,15 @@ router.get("/",function (req,res,next) {
                     callback(null, body);
                 });
             } else {
-                callback(null, null);
+                callback(null, {avatar: DEFAULT_USER_AVATAR});
             }
         }
     }, function(err, results) {
-        res.render("pages/homepage.ejs",{coderoom_list: results.coderooms, user_info: results.user_info});
+        res.render("pages/homepage.ejs",{
+            prev_coderoom: {name: "test", author:"test", description: "test", _id: "5bab7be8ade838281621911a"},
+            coderoom_list: results.coderooms,
+            user_info: results.user_info
+        });
     })
 });
 
