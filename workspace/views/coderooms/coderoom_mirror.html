@@ -5,6 +5,7 @@
     <title>Classroom</title>
     <link rel="icon" href="../../public/icon/website.png" type="image/x-icon">
     <link rel="stylesheet" href="../../public/stylesheets/style.css">
+    <link href="../../public/stylesheets/theme.css" rel="stylesheet" type="text/css" media="all"/>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -26,10 +27,89 @@
     <link rel='stylesheet' href="../../public/javascripts/codemirror/theme/darcula.css">
     <link rel='stylesheet' href="../../public/javascripts/codemirror/theme/lucario.css">
 
-</head>
-<body style="height: 100vh">
+    <script src="../../public/javascripts/codemirror/addon/selection/mark-selection.js"></script>
+    <script src="../../public/javascripts/codemirror/addon/search/searchcursor.js"></script>
+    <script src="../../public/javascripts/codemirror/addon/search/annotatescrollbar.js"></script>
+    <script src="../../public/javascripts/codemirror/addon/search/matchesonscrollbar.js"></script>
+    <style>
+        .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
+        .CodeMirror-selected  { background-color: blue !important; }
+        .CodeMirror-selectedtext { color: white; }
+        .styled-background { background-color: #ff7; }
+    </style>
 
-<nav class="nav-bar">
+
+</head>
+<body>
+    <div class="layout layout-nav-side">
+            <div class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #4abdac">
+                    <a class="navbar-brand text-center" href="index.html"
+                       style="font-size:2rem; margin-left:auto; margin-right:auto">
+                        OURCODES
+                    </a>
+           
+                    <h1> Welcome </h1>
+                    
+            
+                    <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
+                        <img id="logo" src="img/avatar/avatar3.png" class="avatar" alt=""
+                             style="width:50px;height:50px;margin-left:auto; margin-right:auto">
+                        <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
+                            <a class="nav-sign" href="/login" id="signup">Sign up</a>
+                            /
+                            <a class="nav-sign" href="/register" id="signin">Sign in</a>
+                        </div>
+            
+                        <div class="nav-bottom text-center" style="margin: 100px auto 0 auto;">
+                            <div class="nav-bo">
+                                <img class="nav-icon" onclick="javascript:location.href='setting.ejs'"
+                                     src="icon/settings-fff.png"
+                                     onmouseover="this.src='icon/settings-e6e6e6.png'"
+                                     onmouseout="this.src='icon/settings-fff.png'"/>
+                            </div>
+                        </div>
+                        <hr>
+            
+                        <div>
+                            <form>
+                                <div class="input-group input-group-dark input-group-round">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">search</i>
+                                                </span>
+                                    </div>
+                                    <input type="search" class="form-control form-control-dark" placeholder="Search"
+                                           aria-label="Search app" aria-describedby="search-app">
+                                </div>
+                            </form>
+                            <div class=" mt-2">
+                                <button class="btn btn-primary btn-block" type="button" id="newContentButton" href="#">
+                                    Add Coderoom
+                                </button>
+            
+                            </div>
+                        </div>
+                    </div>
+            
+            
+                    <div class="d-none d-lg-block">
+            
+                        <div class="dropup">
+            
+                            <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img alt="Image" src="icon/user0.png" class="avatar"/>
+                            </a>
+                            
+                            <div class="dropdown-menu">
+            
+                                <a href="/profile/%=currentUser.id%>" class="dropdown-item">Profile</a>
+                                <a href="/logout" class="dropdown-item">Log Out</a>
+                            </div>
+                        
+                    </div>
+                    </div>
+                </div>
+<nav class="nav-bar" style="display:none;">
     <div class="nav-container">
         <div class="nav-name">
             <a href="../pages/homepage.ejs">OurCodes</a>
@@ -51,7 +131,7 @@
 
         <div class="nav-bottom">
             <div class="nav-bo">
-                <img class="nav-icon" onclick="javascript:location.href='../pages/setting.html'"
+                <img class="nav-icon" onclick="javascript:location.href='../pages/setting.ejs'"
                      src="../../public/icon/settings-fff.png"
                      onmouseover="this.src='../../public/icon/settings-e6e6e6.png'"
                      onmouseout="this.src='../../public/icon/settings-fff.png'"/>
@@ -92,24 +172,61 @@
 
     </div>
 </nav>
-<div class="block-1">
-    <div class="b1-main">
+<div id="content" style="height:100vh;width:100%">
+        <div class="bg-white breadcrumb-bar" style="padding: 8px 16px; margin-bottom:0px;border-bottom: solid 2px #EEE">
+                <nav aria-label="breadcrumb" style="width:100%">
+                    <div class="button-group" style="display:inline">
+                        <button type="button" class="btn btn-outline-primary">
+                             <i class="fa fa-play"></i>
+                            Run
+                        </button>
+                        <button type="button" class="btn btn-outline-primary">
+                                <i class="fa fa-key"></i>
+                                Permission</button>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#user-manage-modal">
+                                <i class="fa fa-user"></i>
+                                User list
+                            </button>
+                        <button type="button" class="btn btn-outline-primary" id="comment-btn">
+                            <i class="fa fa-comment"></i>
+                            Comment
+                        </button>
+                        <button type="button" class="btn btn-outline-danger">
+                            <i class="fa fa-sign-out"></i>
+                            Leave
+                        </button>
+                    
+                    <div id="permission" style="float:right; display: inline-flex; transform: translateY(7px);">Permission: Read Write</div>
+                </div>
+                </nav>
+            </div>
+<div id="code-content" class="block-1 dragbox">
+    <div class="b1-main panel-1">
+        <script>
+            var editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
+                lineNumbers: true,
+                styleSelectedText: true
+            });
+            editor.markText({line: 6, ch: 26}, {line: 6, ch: 42}, {className: "styled-background"});
+            
+        </script>
         <form style="height: 100%;">
             <textarea class="form-control" id="code_input" name='code_input'></textarea>
         </form>
     </div>
-
-    <div class="b1-result">
-        <div class="b1-button">
+    <label class="drag-bar-1" style="cursor: n-resize;height:5px;width:100%; z-index:10000;display:flex"></label>
+    <div class="b1-result penal-2" style="transform: translateY(-30px);">
+        <div class="b1-button" style="display:none;">
             <button class="my-button btn-warning" style="width: 6rem;" type='submit' id = "btn5" onclick="run()">RUN</button>
             <button class="my-button btn-warning" type='submit' id = "btn" onclick="change()">CHANGE PERMISSION</button>
-            <button class="my-button btn-warning" id="comments-btn" onclick="modeChange()">SHOW COMMENTS</button>
+            <button class="my-button btn-warning" id="comments-btn" onclick="hideComments()">HIDE COMMENTS</button>
         </div>
         <pre id='result' class="b1-pre"></pre>
+        <span class="window-result">Result:</span>
     </div>
 </div>
-
-<div class="block-2">
+<div class="drag-bar"></div>
+<div class="block-2 panel-3" style="display:none">
     <div class="b2-review">
         <button class="my-button b2-popup" id="add_comment" onclick="addComments()"><i class="fa fa-plus"></i></button>
         <div class="b2-givecomment" id="comment_block" style="display: none">
@@ -120,11 +237,24 @@
                 <button class="my-button btn-warning" type='submit' id = "btn2" onclick="postComment()"> Comment</button>
             </form>
         </div>
-        <div class="b2-comments-block" id="comments" style="display: none">
+        <div class="b2-comments-block" id="comments">
             <ul id="comment_list">
+                <li class="comment-item" style="display: none">
+                    <div class="ci-div">
+                        <div class="ci-up">
+                            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle b2-avatar" alt="avatar">
+                            <span class="b2-commentname">username1111</span>
+                        </div>
+                        <div class="ci-down">
+                            <p class="b2-commentcontent">
+                                commentcontenttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+                                tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt</p>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
-        <div class="b2-participants-block" id="participants_block">
+        <div class="b2-participants-block" id="participants_block" style="display: none">
             <ul id='user_list'>
             </ul>
         </div>
@@ -132,14 +262,321 @@
     <div class="b2-leave">
         <div class="b2-permission">
             <h6>Permission:</h6>
-            <p class="have-this-permission">Read</p>
-            <p class="no-permission">Write</p>
+            <p>Read</p>
+            <p>Write</p>
         </div>
         <button class="my-button btn-danger" style="width: 150px;">LEAVE ROOM</button>
     </div>
-
 </div>
+<div id="chat-content" class="content-container" style="height: calc(100vh - 10rem);">
+        <div class="chat-module" data-filter-list="chat-module-body">
+                <div class="chat-module-top">
+                    
+                    <div id="chat-box" class="chat-module-body">
+
+
+                        <div class="media chat-item">
+                            <img alt="Claire" src="../../public/icon/user0.png" class="avatar" />
+                            <div class="media-body">
+                                <div class="chat-item-title">
+                                    <span class="chat-item-author" data-filter-by="text">Claire</span>
+                                    
+                                </div>
+                                <div class="chat-item-body" data-filter-by="text">
+                                    <p>Hey guys, just kicking things off here in the chat window. Hope you&#39;re all ready to tackle this great project. Let&#39;s smash some Brand Concept &amp; Design!</p>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="media chat-item">
+                            <img alt="Peggy" src="../../public/icon/user0.png" class="avatar" />
+                            <div class="media-body">
+                                <div class="chat-item-title">
+                                    <span class="chat-item-author" data-filter-by="text">Peggy</span>
+                                    
+                                </div>
+                                <div class="chat-item-body" data-filter-by="text">
+                                    <p>Nice one
+                                    </p>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="media chat-item">
+                            <img alt="Marcus" src="../../public/icon/user0.png" class="avatar" />
+                            <div class="media-body">
+                                <div class="chat-item-title">
+                                    <span class="chat-item-author" data-filter-by="text">Marcus</span>
+                                   
+                                </div>
+                                <div class="chat-item-body" data-filter-by="text">
+                                    <p>Roger that boss! </p>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="media chat-item">
+                            <img alt="Claire" src="../../public/icon/user0.png" class="avatar" />
+                            <div class="media-body">
+                                <div class="chat-item-title">
+                                    <span class="chat-item-author" data-filter-by="text">Claire</span>
+                                 
+                                </div>
+                                <div class="chat-item-body" data-filter-by="text">
+                                    <p>Can&#39;t wait! <a href="#">@David</a> how are we coming along with the <a href="#">Client Objective Meeting</a>?</p>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="media chat-item">
+                            <img alt="Sally" src="../../public/icon/user0.png" class="avatar" />
+                            <div class="media-body">
+                                <div class="chat-item-title">
+                                    <span class="chat-item-author" data-filter-by="text">Sally</span>
+                                </div>
+                                <div class="chat-item-body" data-filter-by="text">
+                                    <p>Great start guys, I&#39;ve added some notes to the task. We may need to make some adjustments to the last couple of items - but no biggie!</p>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="media chat-item">
+                            <img alt="Peggy" src="../../public/icon/user0.png" class="avatar" />
+                            <div class="media-body">
+                                <div class="chat-item-title">
+                                    <span class="chat-item-author" data-filter-by="text">Peggy</span>
+                                    
+                                </div>
+                                <div class="chat-item-body" data-filter-by="text">
+                                    <p>Well done <a href="#">@all</a>. See you all at 2 for the kick-off meeting. &#x1f91C;</p>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="chat-module-bottom">
+                    <form class="chat-form" style="margin-bottom:1em;">
+                        <textarea id="chat-message" class="form-control" placeholder="Type message" rows="1"></textarea>
+                        
+                        
+                    </form>
+                    <button id="chat-submit" class="btn btn-primary" type="button">
+                            Submit
+                    </button>
+                </div>
+                <form class="modal fade" id="user-manage-modal" tabindex="-1" role="dialog" aria-labelledby="user-manage-modal" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">User list</h5>
+                                    
+                                </div>
+                                <!--end of modal head-->
+                                <div class="modal-body">
+                                    <div class="users-manage" data-filter-list="form-group-users">
+                                        <div class="mb-3">
+                                            <ul class="avatars text-center">
+
+                                                <li>
+                                                    <img alt="Claire Connors" src="../../public/icon/user0.png" class="avatar" data-toggle="tooltip" data-title="Claire Connors" />
+                                                </li>
+
+                                                <li>
+                                                    <img alt="Marcus Simmons" src="../../public/icon/user0.png" class="avatar" data-toggle="tooltip" data-title="Marcus Simmons" />
+                                                </li>
+
+                                                <li>
+                                                    <img alt="Peggy Brown" src="../../public/icon/user0.png" class="avatar" data-toggle="tooltip" data-title="Peggy Brown" />
+                                                </li>
+
+                                                <li>
+                                                    <img alt="Harry Xai" src="../../public/icon/user0.png" class="avatar" data-toggle="tooltip" data-title="Harry Xai" />
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="form-group-users">
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="user-manage-1" checked>
+                                                <label class="custom-control-label" for="user-manage-1">
+                                                    <div class="d-flex align-items-center">
+                                                        <img alt="Claire Connors" src="../../public/icon/user0.png" class="avatar mr-2" />
+                                                        <span class="h6 mb-0" data-filter-by="text">Claire Connors</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="user-manage-2" checked>
+                                                <label class="custom-control-label" for="user-manage-2">
+                                                    <div class="d-flex align-items-center">
+                                                        <img alt="Marcus Simmons" src="../../public/icon/user0.png" class="avatar mr-2" />
+                                                        <span class="h6 mb-0" data-filter-by="text">Marcus Simmons</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="user-manage-3" checked>
+                                                <label class="custom-control-label" for="user-manage-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <img alt="Peggy Brown" src="../../public/icon/user0.png" class="avatar mr-2" />
+                                                        <span class="h6 mb-0" data-filter-by="text">Peggy Brown</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="user-manage-4" checked>
+                                                <label class="custom-control-label" for="user-manage-4">
+                                                    <div class="d-flex align-items-center">
+                                                        <img alt="Harry Xai" src="../../public/icon/user0.png" class="avatar mr-2" />
+                                                        <span class="h6 mb-0" data-filter-by="text">Harry Xai</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="user-manage-5">
+                                                <label class="custom-control-label" for="user-manage-5">
+                                                    <div class="d-flex align-items-center">
+                                                        <img alt="Sally Harper" src="../../public/icon/user0.png" class="avatar mr-2" />
+                                                        <span class="h6 mb-0" data-filter-by="text">Sally Harper</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="user-manage-6">
+                                                <label class="custom-control-label" for="user-manage-6">
+                                                    <div class="d-flex align-items-center">
+                                                        <img alt="Ravi Singh" src="../../public/icon/user0.png" class="avatar mr-2" />
+                                                        <span class="h6 mb-0" data-filter-by="text">Ravi Singh</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="user-manage-7">
+                                                <label class="custom-control-label" for="user-manage-7">
+                                                    <div class="d-flex align-items-center">
+                                                        <img alt="Kristina Van Der Stroem" src="../../public/icon/user0.png" class="avatar mr-2" />
+                                                        <span class="h6 mb-0" data-filter-by="text">Kristina Van Der Stroem</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="user-manage-8">
+                                                <label class="custom-control-label" for="user-manage-8">
+                                                    <div class="d-flex align-items-center">
+                                                        <img alt="David Whittaker" src="../../public/icon/user0.png" class="avatar mr-2" />
+                                                        <span class="h6 mb-0" data-filter-by="text">David Whittaker</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="user-manage-9">
+                                                <label class="custom-control-label" for="user-manage-9">
+                                                    <div class="d-flex align-items-center">
+                                                        <img alt="Kerri-Anne Banks" src="../../public/icon/user0.png" class="avatar mr-2" />
+                                                        <span class="h6 mb-0" data-filter-by="text">Kerri-Anne Banks</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="user-manage-10">
+                                                <label class="custom-control-label" for="user-manage-10">
+                                                    <div class="d-flex align-items-center">
+                                                        <img alt="Masimba Sibanda" src="../../public/icon/user0.png" class="avatar mr-2" />
+                                                        <span class="h6 mb-0" data-filter-by="text">Masimba Sibanda</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="user-manage-11">
+                                                <label class="custom-control-label" for="user-manage-11">
+                                                    <div class="d-flex align-items-center">
+                                                        <img alt="Krishna Bajaj" src="../../public/icon/user0.png" class="avatar mr-2" />
+                                                        <span class="h6 mb-0" data-filter-by="text">Krishna Bajaj</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="user-manage-12">
+                                                <label class="custom-control-label" for="user-manage-12">
+                                                    <div class="d-flex align-items-center">
+                                                        <img alt="Kenny Tran" src="../../public/icon/user0.png" class="avatar mr-2" />
+                                                        <span class="h6 mb-0" data-filter-by="text">Kenny Tran</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end of modal body-->
+                                <div class="modal-footer">
+                                    <button role="button" class="btn btn-primary" type="submit">
+                                        Done
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+            </div>
+</div>
+</div>
+    </div>
 </body>
 <script type="text/javascript" src="../../public/javascripts/myJS.js"></script>
 <script type="text/javascript" src="../../public/javascripts/ellaJS.js"></script>
+<script type="text/javascript" src="../../public/javascripts/coderoom.js"></script>
+<script type="text/javascript" src="../../public/javascripts/bootstrap/jquery.min.js"></script>
+<script type="text/javascript" src="../../public/javascripts/bootstrap/autosize.min.js"></script>
+<script type="text/javascript" src="../../public/javascripts/bootstrap/popper.min.js"></script>
+<script type="text/javascript" src="../../public/javascripts/bootstrap/prism.js"></script>
+<script type="text/javascript" src="../../public/javascripts/bootstrap/draggable.bundle.legacy.js"></script>
+<script type="text/javascript" src="../../public/javascripts/bootstrap/swap-animation.js"></script>
+<script type="text/javascript" src="../../public/javascripts/bootstrap/dropzone.min.js"></script>
+<script type="text/javascript" src="../../public/javascripts/bootstrap/list.min.js"></script>
+<script type="text/javascript" src="../../public/javascripts/bootstrap/bootstrap.js"></script>
+<script type="text/javascript" src="../../public/javascripts/bootstrap/theme.js"></script>
+<script type="text/javascript">
 </html>
