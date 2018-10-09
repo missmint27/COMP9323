@@ -198,10 +198,7 @@ function run() {
         method: 'get',
         dataType: 'json'
     }).done(function (data) {
-        if (data['output'])
-            result.innerText = data['output'];
-        else
-            result.innerText = data['err'];
+            result.innerText = data['output'] + '\n' + data['err'];
     }).fail(function (xhr, status) {
         result.innerText = 'Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg;
     });
@@ -295,23 +292,24 @@ function modeChange() {
     while(length--) {
         marker_list[length].style.cssText=css;
     }
-    // hideComments();
+    hideComments();
 }
 
-// function hideComments() {
-//     const button = document.getElementById("comments-btn");
-//     const comment_block = document.getElementById("comments");
-//     const user_block = document.getElementById("participants_block");
-//     if (!comment_mode) {
-//         comment_block.style.display = "none";
-//         user_block.style.display = "";
-//         button.innerHTML = "SHOW COMMENTS";
-//     } else {
-//         comment_block.style.display = "";
-//         user_block.style.display = "none";
-//         button.innerHTML = "HIDE COMMENTS";
-//     }
-// }
+function hideComments() {
+    const button = document.getElementById("comment-btn").lastChild;
+    const comment_block = document.getElementById("chat-content");
+    const user_block = document.getElementById("participants_block");
+    const code_window = document.getElementById("code-content");
+    if (!comment_mode) {
+        comment_block.style.display = "none";
+        button.textContent = " Show Comments";
+        code_window.style.width = "100%";
+    } else {
+        comment_block.style.display = "";
+        button.textContent  = " Hide Comments";
+        code_window.style.width = "75%";
+    }
+}
 function urlGetter() {
     const host = window.location.host;
     const path = window.location.pathname;
