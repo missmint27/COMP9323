@@ -28,7 +28,8 @@
             OURCODES
         </a>
         <%if(currentUser){%>
-        <h1> Welcome <%=currentUser.username%></h1>
+        <div class="navbar-brand text-center" href="index.html"
+             style="font-size:1rem; margin-top: -3em; margin-left:auto; margin-right:auto" cnavbar-brand text-center> Welcome <%=currentUser.username%></div>
         <%}%>
 
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
@@ -37,9 +38,9 @@
 
             <%if(!currentUser){%>
             <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
-                <a class="nav-sign" href="/login" id="signup">Sign up</a>
+                <a class="nav-sign" href="/register" id="signup">Sign up</a>
 
-                <a class="nav-sign" href="/register" id="signin">Sign in</a>
+                <a class="nav-sign" href="/login" id="signin">Sign in</a>
             </div>
             <%}%>
             <div class="nav-bottom text-center" style="margin: 100px auto 0 auto;">
