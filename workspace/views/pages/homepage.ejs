@@ -37,6 +37,7 @@
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
             <img id="logo" src="<%=user_info.avatar%>" class="avatar" alt=""
                  style="width:50px;height:50px;margin-left:auto; margin-right:auto">
+
             <%if(!currentUser){%>
             <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
                 <a class="nav-sign" href="/register" id="signup">Sign up</a>
@@ -193,7 +194,7 @@
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="card-title">
-                                                        <a href="/coderooms/<%=coderoom._id%>">
+                                                        <a href="#">
                                                             <h6 data-filter-by="text"><%= coderoom.name%></h6>
                                                         </a>
                                                         <div class="text-small"
@@ -213,9 +214,9 @@
                                                                 <i class="material-icons">more_vert</i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                <!--TODO-->
-                                                                <a class="dropdown-item text-danger" href="/coderooms/<%=coderoom._id%>">Delete
-                                                                    room</a>
+                                                                <form method="post" action="/coderooms/<%=coderoom._id%>?_method=delete">
+                                                                <button type="submit"class="dropdown-item text-danger" >Delete
+                                                                    room</button></form>
                                                                 <div class="dropdown-divider"></div>
                                                                 <a class="dropdown-item" href="#">Revoke permission</a>
                                                             </div>

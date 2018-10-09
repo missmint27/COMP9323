@@ -189,12 +189,12 @@ router.get("/:id/run",function(req, res, next) {
 });
 
 // delete coderoom by its id
-router.delete("/:id",middleware.isOwner, function(req, res, next) {
+router.delete("/:id", function(req, res, next) {
     console.log("Delete coderoom");
     //TODO owner of coderoom can do this
     Coderoom.findByIdAndRemove(req.params.id).exec(function(err, coderoom) {
         if (err) { return next(err); }
-        res.json({Message: "Deleted!"});
+        console.log("deleted");
     });
     // delete all coderoom entries in fireabse.
     fb_root.child('comment_list/' + req.params.roomId).remove();
@@ -202,7 +202,7 @@ router.delete("/:id",middleware.isOwner, function(req, res, next) {
     fb_root.child('code/' + req.params.roomId).remove();
     fb_root.child('permission/' + req.params.roomId).remove();
     fb_root.child('user_list/' + req.params.roomId).remove();
-    res.status('200').json({'msg': 'coderoom ' + req.params.id + ' deleted'})
+    // res.status('200').json({'msg': 'coderoom ' + req.params.id + ' deleted'})
 });
 
 //delete user under this room
@@ -221,7 +221,8 @@ router.delete("/:roomId/users", middleware.isLoggedIn, function(req, res, next) 
 // //
 // //             }
 // //     });
-    res.status('200').json({'msg': 'user ' + req.user.id + ' deleted'});
+//     res.status('200').json({'msg': 'user ' + req.user.id + ' deleted'});
+    res.redirect("/");
 });
 
 router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next) {
