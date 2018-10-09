@@ -30,7 +30,7 @@ router.get("/",function (req,res,next) {
         }
     }, function(err, results) {
         res.render("pages/homepage.ejs",{
-            prev_coderoom: {name: "test", author:"test", description: "test", _id: "5bab7be8ade838281621911a"},
+            prev_coderoom: {name: "test", author: "test", description: "test", _id: "5bab7be8ade838281621911a"},
             coderoom_list: results.coderooms,
             user_info: results.user_info
         });
