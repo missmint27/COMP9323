@@ -98,7 +98,9 @@ router.get("/:id",function(req, res, next) {
         },
         //put user into the user list under the coderoom
         user: function(callback) {
+
             if (req.user) {
+                console.log(req.user);
                 //TODO change to if not user.
                 User.findByIdAndUpdate(req.user.id,
                     {coderoom: {_id:req.params.id}}, {new:true}, function(err, user) {
@@ -109,7 +111,7 @@ router.get("/:id",function(req, res, next) {
                     .update({
                         'username': req.user.username,
                         'url': '/users/' + req.user.id,
-                        'avatar': DEFAULT_USER_AVATAR
+                        'avatar': req.user.avatar
                     });
                 callback(null, req.user.id);
             } else { callback(null, {avatar: DEFAULT_USER_AVATAR, _id: null}); }
@@ -227,7 +229,7 @@ router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next)
     fb_root.child('comment_list/' + req.params.roomId).push({
             authorId: req.user.id,
             author: req.user.username,
-            avatar: DEFAULT_USER_AVATAR,
+            avatar: req.user.avatar,
             content: req.body.content,
             position: {
                 from: {
