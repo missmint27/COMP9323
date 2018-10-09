@@ -19,7 +19,7 @@
 
 </head>
 <div id="roomId" style="display: none"><%=roomId%></div>
-<div id="userId" style="display: none"><%=userId%></div>
+<div id="userId" style="display: none"><%=user._id%></div>
 <body>
 <div class="layout layout-nav-side">
     <div class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #4abdac">
@@ -28,18 +28,19 @@
             OURCODES
         </a>
         <%if(currentUser){%>
-        <h1> Welcome <%=currentUser.username%></h1>
+        <div class="navbar-brand text-center" href="index.html"
+             style="font-size:1rem; margin-top: -3em; margin-left:auto; margin-right:auto" cnavbar-brand text-center> Welcome <%=currentUser.username%></div>
         <%}%>
 
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
-            <img id="logo" src="<%=user_info.avatar%>" class="avatar" alt=""
+            <img id="logo" src="<%=user.avatar%>" class="avatar" alt=""
                  style="width:50px;height:50px;margin-left:auto; margin-right:auto">
 
             <%if(!currentUser){%>
             <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
-                <a class="nav-sign" href="/login" id="signup">Sign up</a>
+                <a class="nav-sign" href="/register" id="signup">Sign up</a>
 
-                <a class="nav-sign" href="/register" id="signin">Sign in</a>
+                <a class="nav-sign" href="/login" id="signin">Sign in</a>
             </div>
             <%}%>
             <div class="nav-bottom text-center" style="margin: 100px auto 0 auto;">

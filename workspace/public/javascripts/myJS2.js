@@ -135,6 +135,7 @@ dbRefCommentList.on('child_added', snap => {
     const item = $("<div>", {class: "media-body"}).append(title, body);
     const add = $("<div>", {id: snap.key, class: "media chat-item"}).append(img, item);
     $("div[id='chat-box']").append(add);
+
     if (comment_obj.position) {
         const pos = comment_obj.position;
         const code = comment_obj.code;

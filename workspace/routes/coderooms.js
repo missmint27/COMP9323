@@ -21,15 +21,15 @@ firebase.initializeApp(config);
 //firebase root directory
 var fb_root = firebase.database().ref();
 
-//testing firebase
-router.get('/5bab7be8ade838281621911a', function(req, res) {
-    let roomId = '5bab7be8ade838281621911a';
-    let userId = '5bb053d0efdfca206dc66b3b';
-    console.log("Firebase testing...");
-    console.log("TEST ON ROOM ID: ", roomId);
-    console.log("TEST ON USER ID: ", roomId);
-    res.render('coderooms/coderoom2.ejs', {roomId: roomId, userId: userId, user_info: {avatar: DEFAULT_USER_AVATAR}});
-});
+// //testing firebase
+// router.get('/5bab7be8ade838281621911a', function(req, res) {
+//     let roomId = '5bab7be8ade838281621911a';
+//     let userId = '5bb053d0efdfca206dc66b3b';
+//     console.log("Firebase testing...");
+//     console.log("TEST ON ROOM ID: ", roomId);
+//     console.log("TEST ON USER ID: ", roomId);
+//     res.render('coderooms/coderoom2.ejs', {roomId: roomId, userId: userId, user_info: {avatar: DEFAULT_USER_AVATAR}});
+// });
 
 //functioning
 router.get("/", function(req, res, next) {
@@ -112,11 +112,11 @@ router.get("/:id",function(req, res, next) {
                         'avatar': DEFAULT_USER_AVATAR
                     });
                 callback(null, req.user.id);
-            } else { callback(null, null); }
+            } else { callback(null, {avatar: DEFAULT_USER_AVATAR, _id: null}); }
         }
     }, function(err, results) {
         //if user not logged in, user will be null.
-        res.render('coderooms/coderoom_mirror.ejs', {roomId: results.room._id, userId: results.user});
+        res.render('coderooms/coderoom2.ejs', {roomId: results.room._id, user: results.user});
     })
 });
 
@@ -187,12 +187,12 @@ router.get("/:id/run",function(req, res, next) {
 });
 
 // delete coderoom by its id
-router.delete("/:id",middleware.isOwner, function(req, res, next) {
+router.delete("/:id", function(req, res, next) {
     console.log("Delete coderoom");
     //TODO owner of coderoom can do this
     Coderoom.findByIdAndRemove(req.params.id).exec(function(err, coderoom) {
         if (err) { return next(err); }
-        res.json({Message: "Deleted!"});
+        console.log("deleted");
     });
     // delete all coderoom entries in fireabse.
     fb_root.child('comment_list/' + req.params.roomId).remove();
@@ -200,17 +200,17 @@ router.delete("/:id",middleware.isOwner, function(req, res, next) {
     fb_root.child('code/' + req.params.roomId).remove();
     fb_root.child('permission/' + req.params.roomId).remove();
     fb_root.child('user_list/' + req.params.roomId).remove();
-    res.status('200').json({'msg': 'coderoom ' + req.params.id + ' deleted'})
+    // res.status('200').json({'msg': 'coderoom ' + req.params.id + ' deleted'})
 });
 
 //delete user under this room
 router.delete("/:roomId/users", middleware.isLoggedIn, function(req, res, next) {
     console.log("Delete user in this coderoom, userId: ", req.user.id);
 //
-//     let obj = {};
-//     obj[req.user.id] = false;
-//     fb_root.child('user_list/' + req.params.roomId).child(req.user.id).remove();
-//     fb_root.child('ask-for-permission/' + req.params.roomId).update(obj);
+    let obj = {};
+    obj[req.user.id] = false;
+    fb_root.child('user_list/' + req.params.roomId).child(req.user.id).remove();
+    fb_root.child('ask-for-permission/' + req.params.roomId).update(obj);
 //
 // //TODO if the user is holding the permission.
 // //     fb_root.child('permission/' + req.params.roomId)
@@ -219,7 +219,8 @@ router.delete("/:roomId/users", middleware.isLoggedIn, function(req, res, next) 
 // //
 // //             }
 // //     });
-    res.status('200').json({'msg': 'user ' + req.user.id + ' deleted'});
+//     res.status('200').json({'msg': 'user ' + req.user.id + ' deleted'});
+    res.redirect("/");
 });
 
 router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next) {
