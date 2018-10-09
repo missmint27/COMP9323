@@ -113,7 +113,7 @@ router.get("/:id",function(req, res, next) {
                         'url': '/users/' + req.user.id,
                         'avatar': req.user.avatar
                     });
-                callback(null, req.user.id);
+                callback(null, req.user);
             } else { callback(null, {avatar: DEFAULT_USER_AVATAR, _id: null}); }
         }
     }, function(err, results) {
@@ -213,6 +213,10 @@ router.delete("/:roomId/users", middleware.isLoggedIn, function(req, res, next) 
     obj[req.user.id] = false;
     fb_root.child('user_list/' + req.params.roomId).child(req.user.id).remove();
     fb_root.child('ask-for-permission/' + req.params.roomId).update(obj);
+    User.findByIdAndUpdate(req.user.id, {coderoom: req.params.roomId}, {new: true}, function(err, user) {
+        if(err) console.log(err);
+        console.log(user);
+    });
 //
 // //TODO if the user is holding the permission.
 // //     fb_root.child('permission/' + req.params.roomId)

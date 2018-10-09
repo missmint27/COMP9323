@@ -9,7 +9,7 @@ module.exports = (res, roomID, code) => {
         if(err) {console.log(err);}
         else { console.log("WriteFile Finished."); }
     });
-    let process = spawn('python3',[runCommand]);
+    let process = spawn('python',[runCommand]);
     process.stdout.on('data', function(data) {
         if (data) { res.json({output: data.toString()}); }
     });
