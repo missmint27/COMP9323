@@ -21,15 +21,15 @@ firebase.initializeApp(config);
 //firebase root directory
 var fb_root = firebase.database().ref();
 
-//testing firebase
-router.get('/5bab7be8ade838281621911a', function(req, res) {
-    let roomId = '5bab7be8ade838281621911a';
-    let userId = '5bb053d0efdfca206dc66b3b';
-    console.log("Firebase testing...");
-    console.log("TEST ON ROOM ID: ", roomId);
-    console.log("TEST ON USER ID: ", roomId);
-    res.render('coderooms/coderoom2.ejs', {roomId: roomId, userId: userId, user_info: {avatar: DEFAULT_USER_AVATAR}});
-});
+// //testing firebase
+// router.get('/5bab7be8ade838281621911a', function(req, res) {
+//     let roomId = '5bab7be8ade838281621911a';
+//     let userId = '5bb053d0efdfca206dc66b3b';
+//     console.log("Firebase testing...");
+//     console.log("TEST ON ROOM ID: ", roomId);
+//     console.log("TEST ON USER ID: ", roomId);
+//     res.render('coderooms/coderoom2.ejs', {roomId: roomId, userId: userId, user_info: {avatar: DEFAULT_USER_AVATAR}});
+// });
 
 //functioning
 router.get("/", function(req, res, next) {
@@ -116,7 +116,7 @@ router.get("/:id",function(req, res, next) {
         }
     }, function(err, results) {
         //if user not logged in, user will be null.
-        res.render('coderooms/coderoom_mirror.ejs', {roomId: results.room._id, userId: results.user});
+        res.render('coderooms/coderoom2.ejs', {roomId: results.room._id, userId: results.user});
     })
 });
 
@@ -207,10 +207,10 @@ router.delete("/:id",middleware.isOwner, function(req, res, next) {
 router.delete("/:roomId/users", middleware.isLoggedIn, function(req, res, next) {
     console.log("Delete user in this coderoom, userId: ", req.user.id);
 //
-//     let obj = {};
-//     obj[req.user.id] = false;
-//     fb_root.child('user_list/' + req.params.roomId).child(req.user.id).remove();
-//     fb_root.child('ask-for-permission/' + req.params.roomId).update(obj);
+    let obj = {};
+    obj[req.user.id] = false;
+    fb_root.child('user_list/' + req.params.roomId).child(req.user.id).remove();
+    fb_root.child('ask-for-permission/' + req.params.roomId).update(obj);
 //
 // //TODO if the user is holding the permission.
 // //     fb_root.child('permission/' + req.params.roomId)
