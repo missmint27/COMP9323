@@ -19,7 +19,7 @@
 
 </head>
 <div id="roomId" style="display: none"><%=roomId%></div>
-<div id="userId" style="display: none"><%=userId%></div>
+<div id="userId" style="display: none"><%=user._id%></div>
 <body>
 <div class="layout layout-nav-side">
     <div class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #4abdac">
@@ -32,7 +32,7 @@
         <%}%>
 
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
-            <img id="logo" src="<%=user_info.avatar%>" class="avatar" alt=""
+            <img id="logo" src="<%=user.avatar%>" class="avatar" alt=""
                  style="width:50px;height:50px;margin-left:auto; margin-right:auto">
 
             <%if(!currentUser){%>
@@ -133,14 +133,13 @@
             </div>
             <label class="drag-bar-1" style="cursor: n-resize;height:5px;width:100%; z-index:10000;display:flex"></label>
             <div class="b1-result penal-2" style="transform: translateY(-30px);">
-                <pre id='result' class="b1-pre"></pre>
-                <p class="window-result" style="padding-left: 30px;">Result:</p>
+                <pre id='result' class="b1-pre" style=" color: white"></pre>
             </div>
         </div>
         <div class="drag-bar"></div>
 
-        <div id="chat-content" class="content-container" style="height: calc(100vh - 5rem)" >
-            <div class="chat-module" data-filter-list="chat-module-body">
+        <div id="chat-content" class="content-container" style="height: calc(100vh - 5rem);">
+            <div class="chat-module" data-filter-list="chat-module-body"">
 
                 <div class="chat-module-top">
                     <div id="chat-box" class="chat-module-body">

@@ -112,11 +112,11 @@ router.get("/:id",function(req, res, next) {
                         'avatar': DEFAULT_USER_AVATAR
                     });
                 callback(null, req.user.id);
-            } else { callback(null, null); }
+            } else { callback(null, {avatar: DEFAULT_USER_AVATAR, _id: null}); }
         }
     }, function(err, results) {
         //if user not logged in, user will be null.
-        res.render('coderooms/coderoom2.ejs', {roomId: results.room._id, userId: results.user});
+        res.render('coderooms/coderoom2.ejs', {roomId: results.room._id, user: results.user});
     })
 });
 
