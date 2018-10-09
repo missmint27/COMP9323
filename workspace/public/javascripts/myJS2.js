@@ -298,17 +298,18 @@ function modeChange() {
 }
 
 function hideComments() {
-    const button = document.getElementById("comments-btn");
-    const comment_block = document.getElementById("comments");
+    const button = document.getElementById("comment-btn").lastChild;
+    const comment_block = document.getElementById("chat-content");
     const user_block = document.getElementById("participants_block");
+    const code_window = document.getElementById("code-content");
     if (!comment_mode) {
         comment_block.style.display = "none";
-        user_block.style.display = "";
-        button.innerHTML = "SHOW COMMENTS";
+        button.textContent = " Show Comments";
+        code_window.style.width = "100%";
     } else {
         comment_block.style.display = "";
-        user_block.style.display = "none";
-        button.innerHTML = "HIDE COMMENTS";
+        button.textContent  = " Hide Comments";
+        code_window.style.width = "75%";
     }
 }
 function urlGetter() {

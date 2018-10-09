@@ -263,7 +263,7 @@ search-icon{
     color: #A9B7C6;
 }
 .b1-pre{
-    margin-top: 30px;
+    padding-left: 30px;
     color:#fff;
     background-color: transparent;
     border: 1px solid transparent;
@@ -825,4 +825,10 @@ search-icon{
     float: left;
     color:#666666;
     overflow: scroll;
+}
+
+
+.button-group button {
+    width:12em;
+    margin-right:10px;
 }
