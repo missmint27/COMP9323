@@ -203,6 +203,7 @@ router.delete("/:id", function(req, res, next) {
     fb_root.child('permission/' + req.params.roomId).remove();
     fb_root.child('user_list/' + req.params.roomId).remove();
     // res.status('200').json({'msg': 'coderoom ' + req.params.id + ' deleted'})
+    res.redirect('/');
 });
 
 //delete user under this room
