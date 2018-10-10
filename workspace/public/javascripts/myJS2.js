@@ -297,7 +297,7 @@ function modeChange() {
 }
 
 function hideComments() {
-    const button = document.getElementById("comment-btn").lastChild;
+    const button = document.getElementById("comment-text");
     const comment_block = document.getElementById("chat-content");
     const user_block = document.getElementById("participants_block");
     const code_window = document.getElementById("code-content");
