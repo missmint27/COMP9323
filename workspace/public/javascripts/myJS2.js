@@ -198,6 +198,7 @@ function run() {
         method: 'get',
         dataType: 'json'
     }).done(function (data) {
+        // TODO
             result.innerText = data['output'] + '\n' + data['err'];
     }).fail(function (xhr, status) {
         result.innerText = 'Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg;
