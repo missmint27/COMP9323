@@ -6659,8 +6659,8 @@ h3 + .btn-round, h5 + .btn-round {
     margin-bottom: 0; }
 
 .chat-item {
-  font-size: 1.3rem;
-  line-height: 1.5rem; }
+  font-size: 1rem;
+  line-height: 1.2rem; }
   .chat-item .chat-item-title {
     display: flex;
     justify-content: space-between;
@@ -6700,7 +6700,7 @@ h3 + .btn-round, h5 + .btn-round {
   .chat-module .chat-module-body {
     width: 100%;
     position: absolute;
-    top: 4rem;
+    top: 2rem;
     height: calc(100% - 4rem);
     overflow-y: scroll;
     padding-right: 1.5rem;
@@ -6751,19 +6751,19 @@ h3 + .btn-round, h5 + .btn-round {
 
 .layout-nav-side .content-container > .chat-module, .layout-sidebar .content-container > .chat-module {
   overflow: hidden;
-  padding: 1.5rem; }
+  padding: 1rem; }
   .layout-nav-side .content-container > .chat-module .chat-module-body, .layout-sidebar .content-container > .chat-module .chat-module-body {
     width: 100%;
     padding-right: 0; }
   .layout-nav-side .content-container > .chat-module .chat-item, .layout-sidebar .content-container > .chat-module .chat-item {
-    padding-bottom: 1.5rem; }
+    padding-bottom: 1rem; }
     .layout-nav-side .content-container > .chat-module .chat-item:not(:last-child), .layout-sidebar .content-container > .chat-module .chat-item:not(:last-child) {
       border-bottom: 1px solid #E9EEF2; }
     .layout-nav-side .content-container > .chat-module .chat-item .media-body, .layout-sidebar .content-container > .chat-module .chat-item .media-body {
       padding: 0;
       background: none; }
     .layout-nav-side .content-container > .chat-module .chat-item + .chat-item, .layout-sidebar .content-container > .chat-module .chat-item + .chat-item {
-      margin-top: 1.5rem; }
+      margin-top: 1rem; }
   .layout-nav-side .content-container > .chat-module .chat-module-bottom, .layout-sidebar .content-container > .chat-module .chat-module-bottom {
     background: #F7F9FA; }
 

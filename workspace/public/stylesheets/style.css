@@ -116,7 +116,7 @@ input[type=checkbox]:checked + label:before {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    margin-left: 16%;
+    margin-left: 5%;
     margin-bottom: 10px;
 }
 .nav-username{
@@ -174,7 +174,7 @@ input[type=checkbox]:checked + label:before {
 /*         code room             */
 .block-1{
     padding: 0;
-    width: 75%;/*width need to be Responsive*/
+    width: 80%;/*width need to be Responsive*/
     height: calc(100% - 71px);
     display: inline-block;
     float: left;
