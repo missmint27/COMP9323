@@ -19,7 +19,7 @@
 
 </head>
 <div id="roomId" style="display: none"><%=roomId%></div>
-<div id="userId" style="display: none"><%=user.id%></div>
+<div id="userId" style="display: none"><%=user._id%></div>
 <body>
 <div class="layout layout-nav-side">
     <div class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #4abdac">
@@ -28,8 +28,7 @@
             OURCODES
         </a>
         <%if(currentUser){%>
-        <div class="navbar-brand text-center" href="index.html"
-             style="font-size:1rem; margin-top: -3em; margin-left:auto; margin-right:auto" cnavbar-brand text-center> Welcome <%=currentUser.username%></div>
+        <h1> Welcome <%=currentUser.username%></h1>
         <%}%>
 
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
@@ -38,9 +37,9 @@
 
             <%if(!currentUser){%>
             <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
-                <a class="nav-sign" href="/register" id="signup">Sign up</a>
+                <a class="nav-sign" href="/login" id="signup">Sign up</a>
 
-                <a class="nav-sign" href="/login" id="signin">Sign in</a>
+                <a class="nav-sign" href="/register" id="signin">Sign in</a>
             </div>
             <%}%>
             <div class="nav-bottom text-center" style="margin: 100px auto 0 auto;">
@@ -98,10 +97,11 @@
                         Run
                     </button>
                     <button type="button" class="btn btn-outline-primary" onclick="requirePermission()">
-                        <i class="fa fa-key"></i>
+                        <i class="fa fa-key" style="transform: translateY(5px);"></i>
                         <div style="display: inline-flex;
                         white-space: normal;
-                        font-size:small;">
+                        font-size: small;
+                        transform: translate(-5px,-5px);">
                         Require Permission
                         </div>
                     </button>
@@ -111,11 +111,8 @@
                         User list
                     </button>
                     <button type="button" class="btn btn-outline-primary" id="comment-btn" onclick="modeChange()">
-                        <i class="fa fa-comment"> </i>
-                        <div id="comment-text" style="display: inline-flex;
-                        white-space: normal; font-size:small;">
-                        Show Comments
-                        </div>
+                        <i class="fa fa-comment"></i>
+                        Comment
                     </button>
                     <!--TODO-->
                     <button type="button" class="btn btn-outline-danger">
@@ -130,21 +127,21 @@
                 </div>
             </nav>
         </div>
-        <div id="code-content" class="block-1 dragbox" style="width:100%;">
+        <div id="code-content" class="block-1 dragbox">
             <div class="b1-main panel-1">
                 <textarea class="form-control" id="code_input" name='code_input'></textarea>
             </div>
             <label class="drag-bar-1" style="cursor: n-resize;height:5px;width:100%; z-index:10000;display:flex"></label>
-            <div class="b1-result penal-2" style="transform: translateY(-8px);">
-                <pre id='result' class="b1-pre" style="color: white"></pre>
+            <div class="b1-result penal-2" style="transform: translateY(-30px);">
+                <pre id='result' class="b1-pre" style=" color: white"></pre>
             </div>
         </div>
         <div class="drag-bar"></div>
 
-        <div id="chat-content" class="content-container" style="display:none;height: calc(100vh - 5rem)" >
-            <div class="chat-module" data-filter-list="chat-module-body">
+        <div id="chat-content" class="content-container" style="height: calc(100vh - 5rem);">
+            <div class="chat-module" data-filter-list="chat-module-body"">
 
-                <div id= "comments" class="chat-module-top">
+                <div class="chat-module-top">
                     <div id="chat-box" class="chat-module-body">
                     </div>
                 </div>
@@ -158,34 +155,33 @@
                     </button>
                 </div>
 
-                
-            </div>
-        </div>
-        <div class="modal fade" id="user-manage-modal" tabindex="-1" role="dialog" aria-labelledby="user-manage-modal" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">User list</h5>
+                <div class="modal fade" id="user-manage-modal" tabindex="-1" role="dialog" aria-labelledby="user-manage-modal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">User list</h5>
 
-                    </div>
-                    <!--end of modal head-->
-                    <div class="modal-body">
-                        <!--TODO user list-->
-                        <div class="users-manage" data-filter-list="form-group-users">
-                            <div id="user-group" class="form-group-users">
+                            </div>
+                            <!--end of modal head-->
+                            <div class="modal-body">
+                                <!--TODO user list-->
+                                <div class="users-manage" data-filter-list="form-group-users">
+                                    <div id="user-group" class="form-group-users">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end of modal body-->
+                            <div class="modal-footer">
+                                <!--<button role="button" class="btn btn-primary" type="submit">-->
+                                    <!--Done-->
+                                <!--</button>-->
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+                                    <i class="material-icons">close</i>
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <!--end of modal body-->
-                    <div class="modal-footer">
-                        <!--<button role="button" class="btn btn-primary" type="submit">-->
-                            <!--Done-->
-                        <!--</button>-->
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
-                            <i class="material-icons">close</i>
-                        </button>
-                    </div>
-                </div>
+                </>
             </div>
         </div>
     </div>
