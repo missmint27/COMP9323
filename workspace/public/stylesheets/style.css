@@ -447,7 +447,7 @@ search-icon{
     float: left;
 }
 .chat-item-up{
-    display: block;
+    display: flex;
     width: 100%;
 }
     .chat-item-up .avatar{
@@ -457,7 +457,7 @@ search-icon{
         display: inline-block;
     }
 .chat-item-down{
-    display: block;
+    display: flex;
     width:100%;
 }
 
@@ -837,4 +837,26 @@ search-icon{
     float: left;
     color:#666666;
     overflow: scroll;
+}
+
+/* chat */
+
+.media-body {
+    margin-left: 5px;
+    padding: 8px 0!important; 
+}
+
+.chat-item-reply {
+    height: auto;
+    border-radius: 0 5px 5px 0;
+}
+
+.chat-item-input {
+    max-width: 200px;
+    border-radius: 5px;
+    border: 1px solid #E9EEF2;
+}
+
+.chat-item-down {
+    padding: 10px 20px;
 }

@@ -3606,7 +3606,6 @@ input[type="button"].btn-block {
           animation: progress-bar-stripes 1s linear infinite; }
 
 .media {
-  display: flex;
   align-items: flex-start; }
 
 .media-body {
