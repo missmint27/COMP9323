@@ -446,7 +446,20 @@ search-icon{
     display: inline-block;
     float: left;
 }
-
+.chat-item-up{
+    display: block;
+    width: 100%;
+}
+    .chat-item-up .avatar{
+        display: inline-block;
+    }
+    .chat-item-up .media-body{
+        display: inline-block;
+    }
+.chat-item-down{
+    display: block;
+    width:100%;
+}
 
 
 
