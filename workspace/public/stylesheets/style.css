@@ -109,15 +109,18 @@ input[type=checkbox]:checked + label:before {
     }
 
 .avatar{
-    width: 50px;
-    height: 50px;
+    width: 54px;
+    height: 54px;
     display: block;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    margin-left: 5%;
-    margin-bottom: 10px;
+    /* margin-left: 5%; */
+    margin-left:  5px;
+    margin-right: 5px;
+    float: left;
+
 }
 .nav-username{
     margin-bottom: 10%;
@@ -457,13 +460,26 @@ search-icon{
     .chat-item-up .media-body{
         display: inline-block;
     }
-.chat-item-down{
-    display: block;
-    width:100%;
+.chat-item-down {
+    display: flex;
+    width: 100%;
+    margin-top: 4px;
 }
 
+.chat-item-down input {
+    font-size: 0.8em;
+    width: 85%;
+    height: 100%;
+ }
 
-
+.chat-item-down button {
+    height: 100%;
+    margin-left: 2px;
+    font-size: 0.8em;
+    text-align: center;
+    padding-left: 3%;
+    width: 15%;
+}
 /******************************************/
 /*         Sign in and sign up         */
 .block-3{

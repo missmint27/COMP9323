@@ -134,10 +134,12 @@ dbRefCommentList.on('child_added', snap => {
     const body  = $("<div>", {class: "chat-item-body", 'data-filter-by':"text"}).text(comment_obj.content);
     const item = $("<div>", {class: "media-body"}).append(title, body);
     const reply_up = $("<div>", {class: "chat-item-up"}).append(img, item);
-    const reply_input = $("<input>",{class:"chat-item-input"});
-    const reply_button = $("<button>", {class:"chat-item-reply"}).text("Reply");
-    const reply_down = $("<div>", {class: "chat-item-down"}).append(reply_input, reply_button)
-    const add = $("<div>", {id: snap.key, class: "media chat-item"}).append(reply_up,reply_down);
+    const reply_input = $("<input>",{class:"chat-item-input form-control"});
+    const reply_button = $("<button>", {class:"chat-item-reply btn btn-success btn-small"}).text("");
+    const button_content = $("<i>", {class: "fa fa-paper-plane"});
+    reply_button.append(button_content);
+    const reply_down = $("<div>", {class: "chat-item-down"}).append(reply_input, reply_button);
+    const add = $("<div>", {id: snap.key, class: "chat-item"}).append(reply_up, reply_down);
     $("div[id='chat-box']").append(add);
 
     if (comment_obj.position) {

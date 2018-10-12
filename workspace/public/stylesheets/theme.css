@@ -6667,11 +6667,15 @@ h3 + .btn-round, h5 + .btn-round {
     margin-bottom: 0.375rem; }
   .chat-item .chat-item-author {
     color: #212529;
-    font-weight: 500; }
+    font-weight: bold; }
+  .chat-item .chat-item-body {
+    font-size: 0.8em;
+    margin-top: 0;
+  }
   .chat-item .chat-item-body *:last-child {
     margin-bottom: 0; }
   .chat-item .chat-item-body img {
-    max-width: 80%;
+    max-width: 85%;
     display: block; }
   .chat-item .chat-item-body p img {
     margin: 0.75rem 0; }
@@ -6769,7 +6773,10 @@ h3 + .btn-round, h5 + .btn-round {
 
 @media (max-width: 991.98px) {
   .layout-sidebar .content-container > .chat-module {
-    height: calc(100vh - 7.1875rem); } }
+    height: calc(100vh - 7.1875rem);
+    width: 100%;
+  }
+}
 
 /** Chat Team Sidebar **/
 .chat-team-sidebar {
@@ -7612,7 +7619,8 @@ label[class*='col'] {
 
 @media (max-width: 991.98px) {
   .nav-tabs + .tab-content {
-    margin-top: 0.75rem; } }
+    margin-top: 0.75rem; }
+}
 
 @media (min-width: 992px) {
   .nav-tabs.flex-lg-column .nav-item + .nav-item {
