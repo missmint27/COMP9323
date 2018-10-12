@@ -130,16 +130,7 @@ module.exports = (app, passport) => {
         res.json({'msg': 'defollow Not implemented yet.'})
     });
 
-    router.put("/users/:id/avatar", function(req, res, next) {
-        console.log(req.body.avatar);
-        console.log("updating avatar", req.params.id);
-        const update = {avatar: req.body.avatar};
-        User.findByIdAndUpdate(req.params.id, update, {new: true}, function(err, user) {
-            if(err) console.log("err");
-            console.log("Updated.");
-            res.json({'msg': 'updated'});
-        })
-    });
+
 
 
     app.use('/', router);
