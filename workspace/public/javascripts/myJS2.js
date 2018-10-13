@@ -124,6 +124,9 @@ dbRefAskForPermission.on('child_removed', snap => {
 //同步comment list，与user list类似，但是comment可以改，user不行
 dbRefCommentList.on('child_added', snap => {
     const comment_obj = snap.val();
+    const likeordislike = $("<div class=\"chat-item-likeordis\">" +
+        "<div class=\"chat-item-like\"><i class=\"up\"></i></div>" +
+        "<div class=\"chat-item-dislike\"><i class=\"down\"></i><div></div>");
     const img    = $("<img>", {
         alt: comment_obj.author,
         class: "avatar",
@@ -133,7 +136,7 @@ dbRefCommentList.on('child_added', snap => {
         .append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(comment_obj.author));
     const body  = $("<div>", {class: "chat-item-body", 'data-filter-by':"text"}).text(comment_obj.content);
     const item = $("<div>", {class: "media-body"}).append(title, body);
-    const reply_up = $("<div>", {class: "chat-item-up"}).append(img, item);
+    const reply_up = $("<div>", {class: "chat-item-up"}).append(likeordislike,img, item);
     const reply_input = $("<input>",{class:"chat-item-input form-control"});
     const reply_button = $("<button>", {class:"chat-item-reply btn btn-success btn-small"}).text("");
     const button_content = $("<i>", {class: "fa fa-paper-plane"});
@@ -321,4 +324,3 @@ function urlGetter() {
     const path = window.location.pathname;
     return 'http://' + host + path;
 }
-
