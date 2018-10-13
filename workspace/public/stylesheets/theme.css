@@ -6759,7 +6759,8 @@ h3 + .btn-round, h5 + .btn-round {
     width: 100%;
     padding-right: 0; }
   .layout-nav-side .content-container > .chat-module .chat-item, .layout-sidebar .content-container > .chat-module .chat-item {
-    padding-bottom: 1rem; }
+    padding-bottom: 1rem;
+    padding-left: 3px;}
     .layout-nav-side .content-container > .chat-module .chat-item:not(:last-child), .layout-sidebar .content-container > .chat-module .chat-item:not(:last-child) {
       border-bottom: 1px solid #E9EEF2; }
     .layout-nav-side .content-container > .chat-module .chat-item .media-body, .layout-sidebar .content-container > .chat-module .chat-item .media-body {
