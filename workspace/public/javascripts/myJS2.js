@@ -126,7 +126,7 @@ dbRefCommentList.on('child_added', snap => {
     const comment_obj = snap.val();
     const likeordislike = $("<div class=\"chat-item-likeordis\">" +
         "<div class=\"chat-item-like\"><i class=\"up\"></i></div>" +
-        "<div class=\"chat-item-dislike\"><i class=\"down\"></i><div></div>");
+        "<div class=\"chat-item-dislike\"><i class=\"down\"></i></div></div>");
     const img    = $("<img>", {
         alt: comment_obj.author,
         class: "avatar",

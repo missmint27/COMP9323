@@ -855,7 +855,7 @@ search-icon{
     color:#666666;
     overflow: scroll;
 }
-/*Like dislike*/
+/*Like dislike in comment part*/
 .up {
     transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
@@ -883,6 +883,30 @@ search-icon{
     padding: 3px;
 }
 .chat-item-like .chat-item-dislike{
+    display: block;
+    width: 100%;
+}
+/*like or dislike in homepage part*/
+.card-likeordislike{
+    position: relative;
+    margin-right: 1rem;
+    width: 7px;
+    z-index: 100;
+
+}
+.card-likeordislike i {
+    border: solid #4abdac;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+.card-likeordislike i:hover {
+    border: solid #f7b733;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+.card-like .card-likenum .card-dislike{
     display: block;
     width: 100%;
 }
