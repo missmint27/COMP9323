@@ -10,8 +10,8 @@ module.exports = {
     isOwner: function(req, res, next){
         if(req.user){
             Coderoom.findById(req.params.id, function(err, found_coderoom){
-               if(found_coderoom.permitted_user.id.equals(req.user.id)
-                   || found_coderoom.author.id.equals(req.user.id)
+               // if(found_coderoom.permitted_user.id.equals(req.user.id)
+                   if(found_coderoom.author.id.equals(req.user.id)
                    || req.user.isAdmin){
                    next();
                } else {

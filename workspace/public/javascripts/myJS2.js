@@ -143,7 +143,7 @@ dbRefCommentList.on('child_added', snap => {
         .append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(comment_obj.author));
     const body  = $("<div>", {class: "chat-item-body", 'data-filter-by':"text"}).text(comment_obj.content);
     const item = $("<div>", {class: "media-body"}).append(title, body);
-    const reply_up = $("<div>", {class: "chat-item-up"}).append(likeordislike,score_ob,img, item);
+    const reply_up = $("<div>", {class: "chat-item-up"}).append(likeordislike,img, item);
     const reply_input = $("<input>",{class:"chat-item-input form-control"});
     const reply_button = $("<button>", {class:"chat-item-reply btn btn-success btn-small"}).text("");
     const button_content = $("<i>", {class: "fa fa-paper-plane"});

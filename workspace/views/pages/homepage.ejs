@@ -225,8 +225,10 @@
                                                                 <i class="material-icons">more_vert</i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item text-danger" href="#">Delete
-                                                                    room</a>
+                                                                <form method="post" action="/coderooms/<%=coderoom._id%>?_method=DELETE">
+                                                                <button type="submit" class="dropdown-item text-danger" >Delete
+                                                                    room</>
+                                                                </form>
                                                                 <div class="dropdown-divider"></div>
                                                                 <a class="dropdown-item" href="#">Revoke permission</a>
                                                             </div>

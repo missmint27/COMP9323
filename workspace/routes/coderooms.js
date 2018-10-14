@@ -49,12 +49,14 @@ router.post("/", middleware.isLoggedIn,function(req, res) {
             author:{
                 id: req.user.id,
                 username: req.user.username
-            }
+            },
+            upvote:0,
+            downvote:0
         });
     coderoom.save(function(err) {
         if (err) { return next(err); }
         fb_root.child('code/').child(coderoom.id).update(
-            {'content': "print(\"Hello World\")"}
+            {'content': "print(\"Hello World\")","upvote":0, "downvote":0}
         );
         fb_root.child('user_list/' + coderoom.id).child(req.user.id)
             .update({
@@ -69,6 +71,23 @@ router.post("/", middleware.isLoggedIn,function(req, res) {
         res.redirect('/coderooms/' + coderoom.id);
     });
 });
+
+router.put('/:roomId', function(req, res, next) {
+    console.log("modify coderoom.");
+    // eval(require("locus"));
+    // fb_root.child(req.params.)
+    console.log(req.params);
+    fb_root.child("code").child(req.params.roomId).once('value')
+        .then(function (snapshot) {
+            console.log("here");
+            fb_root.child("code").child(req.params.roomId)
+                .update({"upvote":req.body.upvote, "downvote": req.body.downvote});
+            res.status('200').json({'msg': 'coderoom upvote.'});
+        });
+    //TODO err handler?
+});
+
+
 
 //functioning
 // get coderoom by its id
