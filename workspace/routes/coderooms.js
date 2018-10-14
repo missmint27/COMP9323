@@ -219,6 +219,8 @@ router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next)
             author: req.user.username,
             avatar: DEFAULT_USER_AVATAR,
             content: req.body.content,
+            upvote: req.body.upvote,
+            downvote: req.body.downvote,
             position: {
                 from: {
                     line: parseInt(req.body.pos.from.line),
@@ -236,20 +238,42 @@ router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next)
     res.status('200').json({'msg': 'Comment created.'});
 });
 
-router.put('/:roomId/comments/:commentId', middleware.isLoggedIn, function(req, res, next) {
+router.get("/:roomId/comments/vote/:commentId",function (req,res) {
+    console.log("get here");
+})
+
+
+
+router.put('/:roomId/comments/:commentId', function(req, res, next) {
     console.log("modify comment.");
     fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).once('value')
         .then(function (snapshot) {
-            if (snapshot.authorId !== req.user.id) {
-                res.status('400').json({'msg': "You can't modify other's comment"});
-                return;
-            }
+            // if (snapshot.authorId !== req.user.id) {
+            //     res.status('400').json({'msg': "You can't modify other's comment"});
+            //     return;
+            // }
+            console.log("here");
             fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId)
-                .update({"content": req.body.content});
+                .update({"content": req.body.content,"upvote":req.body.upvote, "downvote": req.body.downvote});
             res.status('200').json({'msg': 'Comment created.'});
         });
     //TODO err handler?
 });
+
+
+router.put('/:roomId/comments/vote/:commentId',function(req, res) {
+    console.log("modify upvote.");
+    fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).once('value')
+        .then(function (snapshot) {
+            console.log("here");
+            fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId)
+                .update({"upvote":req.body.upvote, "downvote": req.body.downvote});
+            res.status('200').json({'msg': 'Comment created.'});
+        });
+    //TODO err handler?
+});
+
+
 
 
 module.exports = router;

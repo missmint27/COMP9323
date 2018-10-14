@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var coderoomSchema = new mongoose.Schema({
     name: String,
     upvote: Number,
-    downVote: Number,
+    downvote: Number,
     rank: Number,
     description: String,
 

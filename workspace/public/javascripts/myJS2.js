@@ -124,9 +124,16 @@ dbRefAskForPermission.on('child_removed', snap => {
 //同步comment list，与user list类似，但是comment可以改，user不行
 dbRefCommentList.on('child_added', snap => {
     const comment_obj = snap.val();
+    var score = parseInt(comment_obj.upvote) - parseInt(comment_obj.downvote);
+    score = score.toString();
+    //this is the score
     const likeordislike = $("<div class=\"chat-item-likeordis\">" +
         "<div class=\"chat-item-like\"><i class=\"up\"></i></div>" +
+
         "<div class=\"chat-item-dislike\"><i class=\"down\"></i></div></div>");
+
+    console.log(comment_obj.upvote);
+    console.log(comment_obj.downvote);
     const img    = $("<img>", {
         alt: comment_obj.author,
         class: "avatar",
@@ -136,11 +143,12 @@ dbRefCommentList.on('child_added', snap => {
         .append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(comment_obj.author));
     const body  = $("<div>", {class: "chat-item-body", 'data-filter-by':"text"}).text(comment_obj.content);
     const item = $("<div>", {class: "media-body"}).append(title, body);
-    const reply_up = $("<div>", {class: "chat-item-up"}).append(likeordislike,img, item);
+    const reply_up = $("<div>", {class: "chat-item-up"}).append(likeordislike,score_ob,img, item);
     const reply_input = $("<input>",{class:"chat-item-input form-control"});
     const reply_button = $("<button>", {class:"chat-item-reply btn btn-success btn-small"}).text("");
     const button_content = $("<i>", {class: "fa fa-paper-plane"});
     reply_button.append(button_content);
+
     const reply_down = $("<div>", {class: "chat-item-down"}).append(reply_input, reply_button);
     const add = $("<div>", {id: snap.key, class: "chat-item"}).append(reply_up, reply_down);
     $("div[id='chat-box']").append(add);
@@ -160,7 +168,58 @@ dbRefCommentList.on('child_added', snap => {
             });
         }
     }
+
+    var ele = document.getElementById(snap.key);
+    var ele1 = ele.getElementsByClassName("up");
+    ele1[0].addEventListener("click",function (ev) { upvote(snap.key, comment_obj.upvote,comment_obj.downvote);});
+
+
+    var ele_down = document.getElementById(snap.key);
+    var ele_down_1 = ele_down.getElementsByClassName("down");
+    ele_down_1[0].addEventListener("click",function (evt) { downvote(snap.key, comment_obj.upvote, comment_obj.downvote)});
 });
+
+function upvote(path,upvote,downvote) {
+    const url  = urlGetter() + '/comments/'+"vote/" + path;
+    console.log(upvote);
+    console.log(downvote);
+    console.log(url);
+    upvote = parseInt(upvote);
+    upvote += 1
+    upvote = upvote.toString();
+    $.ajax({
+        url: url,
+        method:'put',
+        data:{
+            upvote:upvote,
+            downvote:downvote
+        }
+       }).done(function (data) {
+            console.log(data);
+        }).fail(function (xhr, status) {
+        console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+        })
+    }
+
+
+function downvote(path, upvote,downvote) {
+
+    const url = urlGetter() + "/comments/" +"vote/" + path;
+    downvote = parseInt(downvote);
+    downvote -= 1
+    downvote = downvote.toString();
+
+    $.ajax({
+        url: url,
+        method:'put',
+        data:{
+            upvote:upvote,
+            downvote: downvote}
+        }).done(function (data) {
+            console.log(data)}).fail(function (xhr, status){
+        console.log(xhr.status);
+    })}
+
 
 dbRefCommentList.on('child_removed', snap => {
     const liToRemove = document.getElementById(snap.key);
@@ -234,6 +293,8 @@ function postComment() {
                     line:pos.to.line
                 }
             },
+            upvote:0,
+            downvote:0,
             code: code,
             content: document.getElementById('chat-message').value
         }
