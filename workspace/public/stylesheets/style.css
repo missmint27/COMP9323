@@ -132,7 +132,7 @@ input[type=checkbox]:checked + label:before {
 .nav-sign{
     font-size: 14px;
     width: 100%;
-    margin-bottom:30px;
+    margin-bottom:20px;
 }
     .nav-sign a{
         color: #ffffff;
@@ -160,19 +160,27 @@ input[type=checkbox]:checked + label:before {
     .nav-follow a:hover, .nav-follow a:focus{
         color: #e6e6e6;
     }
-.nav-bottom{
-    margin-top: 60vh;
-    margin-left: 32%;
-}
 .nav-bo{
     width: 100%;
-    margin-top: 20px;
     margin-left: -3px;
 }
 .nav-icon{
     background-repeat: no-repeat;
     cursor: pointer;
 }
+.coderoom-desc{
+    color:#fff;
+    font-size: 20px;
+    font-weight: 300;
+    width: 100%;
+    height: 30vh;
+}
+    .coderoom-desc p{
+        width: 100%;
+        height: 100%;
+        overflow-y: scroll;
+        word-break: break-word;
+    }
 /*----------------------------------*/
 /*         code room             */
 .block-1{
