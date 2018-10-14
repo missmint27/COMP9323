@@ -129,7 +129,7 @@ dbRefCommentList.on('child_added', snap => {
     //this is the score
     const likeordislike = $("<div class=\"chat-item-likeordis\">" +
         "<div class=\"chat-item-like\"><i class=\"up\"></i></div>" +
-
+        "<div class=\"chat-likenum\"><p>3</p></div> "+
         "<div class=\"chat-item-dislike\"><i class=\"down\"></i></div></div>");
 
     console.log(comment_obj.upvote);
