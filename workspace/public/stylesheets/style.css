@@ -890,7 +890,7 @@ search-icon{
     display: inline-block;
     padding: 3px;
 }
-.chat-item-like .chat-item-dislike{
+.chat-item-like .chat-item-dislike .chat-likenum{
     display: block;
     width: 100%;
 }
