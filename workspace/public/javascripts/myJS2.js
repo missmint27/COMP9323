@@ -121,9 +121,11 @@ dbRefAskForPermission.on('child_removed', snap => {
         }
     }
 });
+
 //同步comment list，与user list类似，但是comment可以改，user不行
 dbRefCommentList.on('child_added', snap => {
     const comment_obj = snap.val();
+    console.log(comment_obj);
     var score = parseInt(comment_obj.upvote) - parseInt(comment_obj.downvote);
     score = score.toString();
     //this is the score
@@ -168,22 +170,47 @@ dbRefCommentList.on('child_added', snap => {
             });
         }
     }
-
+ //this is for upvote and downvote
     var ele = document.getElementById(snap.key);
     var ele1 = ele.getElementsByClassName("up");
     ele1[0].addEventListener("click",function (ev) { upvote(snap.key, comment_obj.upvote,comment_obj.downvote);});
 
-
     var ele_down = document.getElementById(snap.key);
     var ele_down_1 = ele_down.getElementsByClassName("down");
     ele_down_1[0].addEventListener("click",function (evt) { downvote(snap.key, comment_obj.upvote, comment_obj.downvote)});
+
+    // this is for subcomment
+    var text_class =  document.getElementsByClassName("chat-item-input form-control")
+    var text = text_class[text_class.length - 1].value;
+    var button_class = document.getElementsByClassName("chat-item-reply btn btn-success btn-small");
+    button_class[button_class.length - 1].addEventListener("click",function () {
+            comment_submit(snap.key)
+
+    }) ;
+
 });
+function comment_submit(path) {
+    const url = urlGetter() + "/comments/" + "inside/" + path
+    var d1 = document.getElementById(path);
+    var text =  d1.getElementsByClassName("chat-item-input form-control")[0].value
+    console.log(text);
+    $.ajax({
+        url:url,
+        method:"post",
+        data:{
+            comment: text,
+        }
+    }).done(function () {
+        console.log("comments inside comments");
+
+    }).fail(function (xhr, status) {
+        console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+    })
+
+}
 
 function upvote(path,upvote,downvote) {
     const url  = urlGetter() + '/comments/'+"vote/" + path;
-    console.log(upvote);
-    console.log(downvote);
-    console.log(url);
     upvote = parseInt(upvote);
     upvote += 1
     upvote = upvote.toString();
@@ -197,7 +224,7 @@ function upvote(path,upvote,downvote) {
        }).done(function (data) {
             console.log(data);
         }).fail(function (xhr, status) {
-        console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+            console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
         })
     }
 

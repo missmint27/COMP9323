@@ -250,17 +250,38 @@ router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next)
                     ch: parseInt(req.body.pos.to.ch),
                 }
             },
-            code: req.body.code
+            code: req.body.code,
+            subcomments:{}
         }
     );
     //TODO err handler?
     res.status('200').json({'msg': 'Comment created.'});
 });
 
-router.get("/:roomId/comments/vote/:commentId",function (req,res) {
-    console.log("get here");
-})
 
+
+//this is for subcomment
+router.post("/:roomId/comments/inside/:commentId", middleware.isLoggedIn,function (req,res,next) {
+    console.log("you get there man");
+    console.log(req.params);
+    fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).once('value').then(function (value) {
+        console.log("way much beeter");
+        console.log(req.user);
+
+        var fb_subomments = fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).push();
+        var sub_comments = fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).child("subcomments");
+        var key = fb_subomments.getKey();
+        var subcomments = {};
+        var temp_comment = {};
+        temp_comment["subauthor"] = req.user.username;
+        temp_comment["subid"] = req.user.id;
+        temp_comment["subcomment"] = req.body.comment;
+        subcomments[key] = temp_comment
+        sub_comments.update(subcomments);
+        console.log("much much better")
+    })
+
+})
 
 
 router.put('/:roomId/comments/:commentId', function(req, res, next) {
@@ -278,7 +299,6 @@ router.put('/:roomId/comments/:commentId', function(req, res, next) {
         });
     //TODO err handler?
 });
-
 
 router.put('/:roomId/comments/vote/:commentId',function(req, res) {
     console.log("modify upvote.");
