@@ -126,6 +126,7 @@ dbRefAskForPermission.on('child_removed', snap => {
 dbRefCommentList.on('child_added', snap => {
     const comment_obj = snap.val();
     console.log(comment_obj);
+
     var score = parseInt(comment_obj.upvote) - parseInt(comment_obj.downvote);
     score = score.toString();
     //this is the score
@@ -141,10 +142,25 @@ dbRefCommentList.on('child_added', snap => {
         class: "avatar",
         id: "comment_avatar" + comment_obj.authorId,
         src:comment_obj.avatar});
+    comments = {};
+    var subcomments = comment_obj.subcomments;
+
+
     const title = $("<div>", {class: "chat-item-title"})
         .append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(comment_obj.author));
     const body  = $("<div>", {class: "chat-item-body", 'data-filter-by':"text"}).text(comment_obj.content);
+
+
     const item = $("<div>", {class: "media-body"}).append(title, body);
+    for(var i in subcomments){
+        var subauthor = subcomments[i].subauthor;
+        var comment = subcomments[i].subcomment;
+        var subid = subcomments[i].subid;
+        const sub_author = $("<div>",{class:"chat-item-subauthor"}).text(subauthor);
+        const subcomment = $("<div>",{class:"chat-item-subcomment"}).text(comment);
+        item.append(sub_author, subcomment);
+
+    }
     const reply_up = $("<div>", {class: "chat-item-up"}).append(likeordislike,img, item);
     const reply_input = $("<input>",{class:"chat-item-input form-control"});
     const reply_button = $("<button>", {class:"chat-item-reply btn btn-success btn-small"}).text("");
