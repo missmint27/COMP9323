@@ -121,11 +121,11 @@ router.get("/:id",function(req, res, next) {
                         'avatar': req.user.avatar
                     });
                 callback(null, req.user);
-            } else { callback(null, {username: 'anonymous user',avatar: DEFAULT_USER_AVATAR, _id: null}); }
+            } else { callback(null, {username: 'anonymous user', avatar: DEFAULT_USER_AVATAR, _id: null}); }
         }
     }, function(err, results) {
         //if user not logged in, user will be null.
-        console.log("USER: ", results.user);
+        console.log("USER INSIDE: ", results.user);
         res.render('coderooms/coderoom2.ejs', {
             coderoom: {
                 name: results.room.name,
@@ -133,19 +133,9 @@ router.get("/:id",function(req, res, next) {
                 description: results.room.description,
             }, user: {
                 username: results.user.username,
-                id: results.user._id,
+                id: results.user.id,
                 avatar: results.user.avatar
             }});
-        // console.log({
-        //     name: results.room.name,
-        //     id: results.room._id,
-        //     description: results.room.description,
-        // });
-        // console.log({
-        //     username: results.user.username,
-        //     id: results.user._id,
-        //     avatar: results.user.avatar
-        // })
     })
 });
 
