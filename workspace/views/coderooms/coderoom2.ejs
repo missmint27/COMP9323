@@ -18,45 +18,39 @@
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" ref="stylesheet">
 </head>
-<div id="roomId" style="display: none"><%=roomId%></div>
-<div id="userId" style="display: none"><%=user._id%></div>
+<div id="roomId" style="display: none"><%=coderoom.id%></div>
+<div id="userId" style="display: none"><%=user.id%></div>
 <body>
 <div class="layout layout-nav-side">
     <div class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #4abdac">
-        <a class="navbar-brand text-center" href="index.html"
+        <a class="navbar-brand text-center" href="/"
            style="font-size:2rem; margin-left:auto; margin-right:auto">
             OURCODES
         </a>
-        <%if(currentUser){%>
-        <div class="navbar-brand text-center" href="homepage.ejs"
-             style="font-size:1rem; margin-top: -3em; margin-left:auto; margin-right:auto" cnavbar-brand text-center> Welcome <%=currentUser.username%></div>
-        <%}%>
-
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
-            <img id="logo" src="<%=user.avatar%>" class="avatar" alt=""
-                 style="width:50px;height:50px;margin-left:auto; margin-right:auto">
-
             <%if(!currentUser){%>
-            <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
-                <a class="nav-sign" href="/register" id="signup">Sign up</a>
+                <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
+                    <a class="nav-sign" href="/register" id="signup">Sign up</a>
 
-                <a class="nav-sign" href="/login" id="signin">Sign in</a>
-            </div>
-            <%}%>
-            <div class="coderoom-desc">
-                <p>cdacdcdqcdqcdqvdqvqdcdqcdqcd
-                CDQCDQvfwgvwvgeravfeavfeqvfeq
-                favfavwavfwqvfvfjdjjdjjdjdjdjjdjdjdsaveagre agreqvfavfafwhdhdhdhdh
-                fhfhfhfhhfhfhfhfh</p>
-            </div>
-            <div class="nav-bottom text-center" style="margin: 30px auto 0 auto;">
-                <div class="nav-bo">
-                    <img class="nav-icon" onclick="javascript:location.href='setting.ejs'"
-                         src="/icon/settings-fff.png"
-                         onmouseover="this.src='/icon/settings-e6e6e6.png'"
-                         onmouseout="this.src='/icon/settings-fff.png'"/>
+                    <a class="nav-sign" href="/login" id="signin">Sign in</a>
                 </div>
+            <%}%>
+            <div class="coderoom-title">
+                <p><%=coderoom.name%></p>
             </div>
+            <div class="coderoom-desc">
+                <p><%=coderoom.description%></p>
+            </div>
+            <%if(currentUser){%>
+                <div class="nav-bottom text-center" style="margin: 30px auto 0 auto;">
+                    <div class="nav-bo">
+                        <img class="nav-icon" onclick="javascript:location.href='setting.ejs'"
+                             src="/icon/settings-fff.png"
+                             onmouseover="this.src='/icon/settings-e6e6e6.png'"
+                             onmouseout="this.src='/icon/settings-fff.png'"/>
+                    </div>
+                </div>
+            <%}%>
             <hr>
 
             <div>
@@ -81,16 +75,21 @@
         </div>
 
         <div class="d-none d-lg-block">
-
             <div class="dropup">
-                <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img alt="Image" src="/icon/user0.png" class="avatar"/>
-                </a>
                 <%if(currentUser){%>
-                <div class="dropdown-menu">
-                    <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
-                    <a href="/logout" class="dropdown-item">Log Out</a>
-                </div>
+                    <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
+                             style="width:50px;height:50px;margin-left:auto; margin-right:auto">
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
+                        <a href="/logout" class="dropdown-item">Log Out</a>
+                    </div>
+                <%} else {%>
+                    <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img id="logo" src="/icon/anonymous.png" class="avatar" alt=""
+                             style="width:50px;height:50px;margin-left:auto; margin-right:auto">
+                    </a>
                 <%}%>
             </div>
         </div>
@@ -121,11 +120,10 @@
                         <i class="fa fa-comment"></i>
                         Comment
                     </button>
-                    <!--TODO-->
-                    <button type="button" class="btn btn-outline-danger">
+                    <a href="/"><button type="button" class="btn btn-outline-danger">
                         <i class="fa fa-sign-out"></i>
                         Leave
-                    </button>
+                    </button></a>
                     <!--TODO-->
                     <div id="permission" style="float:right; display: inline-flex; transform: translateY(7px);">Permission: 
                         <span id="read-permission" style="margin:0 5px">Read </span>

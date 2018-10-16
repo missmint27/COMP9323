@@ -32,29 +32,29 @@ for(let i = 0; i < avatar_list.length; i++) {
 
 
 
-var like_list = $(".card-like");
-var dislike_list = $(".card-dislike");
-
-//add listener
-
-
-for(var i in like_list){
-
-    var array = like_list[i].parentNode.nextElementSibling.children[0].action.split("/");
-    var dest = array[array.length - 1];
-    const dbRefCode = dbRefObject.child('code').child(dest);
-    var up_number = null;
-    var down_number = null;
-    dbRefCode.on("value",snap => {
-        up_number = snap.val().upvote;
-        down_number = snap.val().downvote;
-        console.log("up",up_number);
-
-    });
-
-    like_list[i].addEventListener("click",function(){upvote(dest, up_number,down_number)});
-    dislike_list[i].addEventListener("click", function(){downvote(dest,up_number,down_number)});;
-}
+// var like_list = $(".card-like");
+// var dislike_list = $(".card-dislike");
+//
+// //add listener
+//
+//
+// for(var i in like_list){
+//
+//     var array = like_list[i].parentNode.nextElementSibling.children[0].action.split("/");
+//     var dest = array[array.length - 1];
+//     const dbRefCode = dbRefObject.child('code').child(dest);
+//     var up_number = null;
+//     var down_number = null;
+//     dbRefCode.on("value",snap => {
+//         up_number = snap.val().upvote;
+//         down_number = snap.val().downvote;
+//         console.log("up",up_number);
+//
+//     });
+//
+//     like_list[i].addEventListener("click",function(){upvote(dest, up_number,down_number)});
+//     dislike_list[i].addEventListener("click", function(){downvote(dest,up_number,down_number)});;
+// }
 
 
 function upvote(dest,up_number,down_number) {

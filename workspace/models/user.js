@@ -17,6 +17,13 @@ var UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Coderoom"
     },
+    // TODO may needed
+    myrooms: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Coderoom"
+            }
+    ],
     following:[
         {
             id: {

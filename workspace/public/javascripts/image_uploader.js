@@ -1,7 +1,7 @@
 //need this: <script src="https://unpkg.com/axios/dist/axios.min.js"></script> and jquery
 var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/db1kyoeue/image/upload';
 var CLOUDINARY_UPLOAD_PRESET = 'zdcuntzg';
-var fileUpload = document.getElementById('1');
+var fileUpload = document.getElementById('image_uploader');
 
 fileUpload.addEventListener('change', function(event) {
     let file = event.target.files[0];

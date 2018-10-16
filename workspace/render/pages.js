@@ -25,29 +25,36 @@ router.get("/",function (req,res,next) {
                     callback(null, body);
                 });
             } else {
-                callback(null, {avatar: DEFAULT_USER_AVATAR});
+                callback(null, null);
             }
         }
     }, function(err, results) {
-        res.render("pages/homepage.ejs",{
-            prev_coderoom: {name: "test", author:"test", description: "test", _id: "5bab7be8ade838281621911a"},
-            coderoom_list: results.coderooms,
-            user_info: results.user_info
-        });
+        const length = results.coderooms.length;
+        let i = 0, found = false;
+        console.log(results.user_info);
+        if (!results.user_info) {
+            res.render("pages/homepage.ejs",{
+                prev_coderoom: null,
+                coderoom_list: results.coderooms,
+                user_info: results.user_info
+            });
+            return;
+        }
+        while (i<length && found === false) {
+            if (results.coderooms[i]['_id'] === results.user_info.coderoom) {
+                res.render("pages/homepage.ejs",{
+                    prev_coderoom: results.coderooms[i],
+                    coderoom_list: results.coderooms,
+                    user_info: results.user_info
+                });
+                found = true;
+            }
+            i++;
+        }
+        console.log(results.coderooms);
     })
 });
 
-// router.get("/coderooms/:id", function(req, res, next) {
-//     console.log('url: ', req.url);
-//     console.log('host: ', req.headers.host);
-//     console.log("Coderoom id: ", req.params.id);
-//     res.send("Coderoom id: " +  req.params.id);
-// });
-
-router.get("/profiles/:id", function(req, res, next) {
-    console.log("User id: ", req.params.id);
-    res.send("User id: " + req.params.id);
-})
 module.exports = router;
 
 

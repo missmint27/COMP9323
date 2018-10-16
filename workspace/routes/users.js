@@ -18,7 +18,7 @@ module.exports = (app, passport) => {
     router.post("/login", passport.authenticate("local",
         {
             successRedirect: "/",
-            failureRedirect: "/login"
+            failureRedirect: "/login",
         }), function(req, res){
         console.log("sucesss");
 
@@ -62,39 +62,29 @@ module.exports = (app, passport) => {
         //TODO get the full info.
     });
 
-    //for short info.
-    router.get('/users/:id/short', function(req, res, next) {
-        User.findById(req.params.id).exec(function(err, user) {
-            if (err) return next(err);
-            const user_info = {
-                username:   user.username,
-                userId:     user._id,
-                avatar:     user.avatar,
-                coderoom:   user.coderoom
-            };
-            res.json(user_info);
-        })
-    });
-
-
     router.get("/logout", function(req, res){
         req.logout();
         req.flash("success", "LOGGED YOU OUT!");
         res.redirect("/");
     });
 
-    router.get("/profile/:id",middleware.isLoggedIn, function (req,res) {
+    router.get("/profiles/:id", function (req,res) {
         User.findById(req.params.id,function(err,foundUser) {
             if(err){
                 req.redirect("/");
             }
-            else {
+            if (req.user) {
+                if (req.user.id === req.params.id) {
+                    //TODO should return something different
+                    res.render("pages/setting.ejs", {user: foundUser});
+                }
+            } else {
                 res.render("pages/setting.ejs", {user: foundUser});
             }
         })
-
     });
-    router.put("/profile/:id",middleware.isLoggedIn,function (req,res) {
+
+    router.put("/profiles/:id",middleware.isLoggedIn,function (req,res) {
         if(req.user.id === req.params.id) {
             //TODO partly update
             var newData = {
@@ -105,6 +95,7 @@ module.exports = (app, passport) => {
                 birthday: req.body.birthday,
                 mobile: req.body.mobile
             };
+
             User.findByIdAndUpdate(req.params.id, {$set: newData}, function (err, user) {
                 if (err) {
                     req.flash("error", err.message);
@@ -129,7 +120,6 @@ module.exports = (app, passport) => {
         console.log("defollow: ", req.params.id);
         res.json({'msg': 'defollow Not implemented yet.'})
     });
-
 
 
 

@@ -29,7 +29,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('views', path.join(__dirname, 'views'));
-app.set("view engine", "pug");
+app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(cookieParser('secret'));
@@ -74,8 +74,8 @@ app.use(function(req, res, next){
 
 //Routers configration
 userRouter(app, passport);
+
 app.use("/", renderRoutes);
-// app.use("/", indexRoutes);
 app.use("/coderooms", coderoomRoutes);
 
 

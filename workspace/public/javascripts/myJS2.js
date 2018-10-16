@@ -18,6 +18,8 @@ let comment_dict = {};
 let comment_mode = false;
 let permission = false;
 
+console.log("userID: ", userId);
+console.log("roomID: ", roomId);
 //CodeMirro Editor initialize
 //Need further changes for optimization.
 let editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
@@ -163,7 +165,7 @@ dbRefCommentList.on('child_added', snap => {
     }
     const reply_up = $("<div>", {class: "chat-item-up"}).append(likeordislike,img, item);
     const reply_input = $("<input>",{class:"chat-item-input form-control"});
-    const reply_button = $("<button>", {class:"chat-item-reply btn btn-success btn-small"}).text("");
+    const reply_button = $("<button>", {class:"chat-item-reply btn btn-primary btn-small"}).text("");
     const button_content = $("<i>", {class: "fa fa-paper-plane"});
     reply_button.append(button_content);
 
@@ -198,7 +200,7 @@ dbRefCommentList.on('child_added', snap => {
     // this is for subcomment
     var text_class =  document.getElementsByClassName("chat-item-input form-control")
     var text = text_class[text_class.length - 1].value;
-    var button_class = document.getElementsByClassName("chat-item-reply btn btn-success btn-small");
+    var button_class = document.getElementsByClassName("chat-item-reply btn btn-primary btn-small");
     button_class[button_class.length - 1].addEventListener("click",function () {
             comment_submit(snap.key)
 
@@ -309,8 +311,13 @@ function run() {
         method: 'get',
         dataType: 'json'
     }).done(function (data) {
-        // TODO
-            result.innerText = data['output'] + '\n' + data['err'];
+        result.innerText = null;
+        if (data['output']) {
+            result.innerText += data['output']
+        }
+        if (data['err']) {
+            result.innerText += data['err'];
+        }
     }).fail(function (xhr, status) {
         result.innerText = 'Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg;
     });
