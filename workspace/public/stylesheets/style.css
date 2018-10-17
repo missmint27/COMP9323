@@ -185,7 +185,7 @@ input[type=checkbox]:checked + label:before {
 /*         code room             */
 .block-1{
     padding: 0;
-    width: 80%;/*width need to be Responsive*/
+    width: 76%;/*width need to be Responsive*/
     height: calc(100% - 71px);
     display: inline-block;
     float: left;
@@ -467,7 +467,36 @@ search-icon{
     }
     .chat-item-up .media-body{
         display: inline-block;
+        width: 70%;
     }
+.chat-item-mid{
+    display: block;
+    width: 100%;
+    margin-top: 4px;
+}
+.chat-item-subreply{
+    width: 100%;
+    height: 2rem;
+    display: block;
+    background-color: #f7b7331c;
+    margin-bottom: 3px;
+    padding: 2px 4px;
+    border-radius: 0.5rem;
+}
+.chat-item-subauthor{
+    display: inline-block;
+    width: 20%;
+    color: #212529;
+    font-weight: bold;
+}
+.chat-item-subcomment{
+    display: inline-block;
+    width: calc(100% - 20% - 7px);
+    margin-left: 7px;
+    color:#404040;
+    font-size:0.9rem;
+    cursor: pointer;
+}
 .chat-item-down {
     display: flex;
     width: 100%;
@@ -873,11 +902,8 @@ search-icon{
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
 }
-.chat-item-likeordis{
-    display: inline-block;
-    float: left;
-    width: 7px;
-}
+
+/*
 .chat-item-likeordis i {
     border: solid #4abdac;
     border-width: 0 3px 3px 0;
@@ -889,6 +915,17 @@ search-icon{
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 3px;
+}*/
+.chat-item-likeordis{
+    display: inline-block;
+}
+.chat-item-thumbs {
+    cursor: pointer;
+    user-select: none;
+}
+
+.chat-item-thumbs:hover {
+    color: #f7b733;
 }
 .chat-item-like .chat-item-dislike .chat-likenum{
     display: block;

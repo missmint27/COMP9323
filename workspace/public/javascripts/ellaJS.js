@@ -52,34 +52,7 @@ function addComments() {
 }
 
 
-/*drag and get word*/
-/*select(document, tanchu);
-function select(o, fn){
-    o.onmouseup = function(e){
-        var event = window.event || e;
-        var target = event.srcElement ? event.srcElement : event.target;
-        if (/input|textarea/i.test(target.tagName) && /firefox/i.test(navigator.userAgent)) {
-            //Firefox choose in textarea
-            var staIndex=target.selectionStart;
-            var endIndex=target.selectionEnd;
-            if(staIndex!=endIndex){
-                var sText=target.value.substring(staIndex,endIndex);
-                fn(sText,target);
-            }
-        }
-        else{
-            //get choosen
-            var sText = document.selection == undefined ? document.getSelection().toString():document.selection.createRange().text;
-            if (sText != "") {
-                //return parameters into fn
-                fn(sText, target);
-            }
-        }
-    }
-}
-function tanchu(txt,tar){
-    alert("This is belong to"+tar.tagName+"elements，choose："+txt);
-}*/
+
 
 
 

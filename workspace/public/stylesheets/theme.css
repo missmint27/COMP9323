@@ -1730,11 +1730,13 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.5); }
 
 .btn-warning {
-  color: #212529;
+  /*color: #212529;*/
+  color: #ffffff;
   background-color: #ffc107;
   border-color: #ffc107; }
   .btn-warning:hover {
-    color: #212529;
+    /*color: #212529;*/
+    color: #ffffff;
     background-color: #e0a800;
     border-color: #d39e00; }
   .btn-warning:focus, .btn-warning.focus {
@@ -1822,14 +1824,18 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5); }
 
 .btn-outline-primary {
-  color: #007bff;
   background-color: transparent;
   background-image: none;
-  border-color: #007bff; }
+  /*color: #007bff;*/
+  /*border-color: #007bff; }*/
+  color: #4abdac;
+  border-color: #4abdac;}
   .btn-outline-primary:hover {
     color: #fff;
-    background-color: #007bff;
-    border-color: #007bff; }
+    /*background-color: #007bff;*/
+    /*border-color: #007bff; }*/
+  background-color: #4abdac;
+  border-color: #4abdac;}
   .btn-outline-primary:focus, .btn-outline-primary.focus {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); }
   .btn-outline-primary.disabled, .btn-outline-primary:disabled {
@@ -6668,8 +6674,10 @@ h3 + .btn-round, h5 + .btn-round {
     color: #212529;
     font-weight: bold; }
   .chat-item .chat-item-body {
-    font-size: 0.8em;
+    font-size: 0.9em;
     margin-top: 0;
+    cursor: pointer;
+    color: #404040;
   }
   .chat-item .chat-item-body *:last-child {
     margin-bottom: 0; }
@@ -7483,7 +7491,8 @@ label[class*='col'] {
     padding: 1.25rem 2.25rem; } }
 
 .modal-header {
-  background: #007bff;
+  /*background: #007bff;*/
+  background: #4abdac;
   color: #fff;
   align-items: center;
   padding: 1rem 1.5rem; }
