@@ -954,3 +954,14 @@ search-icon{
     display: block;
     width: 100%;
 }
+/*reply modal*/
+.modal-replyblock{
+    width: 100%;
+}
+.modal-replyarea{
+    width: 100%;
+    height: 8rem;
+    resize: none;
+    overflow-y: scroll;
+    word-break: break-word;
+}
