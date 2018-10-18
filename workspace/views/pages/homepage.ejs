@@ -120,18 +120,6 @@
                                 <div class="col-auto">
                                     <h3>My CodeRooms</h3>
                                 </div>
-                                <form class="col-md-auto">
-                                    <div class="input-group input-group-round">
-                                        <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="material-icons">filter_list</i>
-                                        </span>
-                                        </div>
-                                        <input type="search" class="form-control filter-list-input"
-                                               placeholder="Filter tasks" aria-label="Filter Tasks"
-                                               aria-describedby="filter-tasks">
-                                    </div>
-                                </form>
                             </div>
                             <!--end of content list head-->
 
@@ -180,14 +168,8 @@
                                                     </div>
                                                     <!--TODO Should be only numbers-->
                                                     <div class="card-likeordislike">
-                                                        <div class="card-like">
-                                                            <i class="up"></i>
-                                                        </div>
                                                         <div class="card-likenum">
                                                             <p>3</p>
-                                                        </div>
-                                                        <div class="card-dislike">
-                                                            <i class="down"></i>
                                                         </div>
                                                     </div>
                                                     <!--TODO Should be only numbers-->
@@ -219,6 +201,18 @@
                                 <div class="col-auto">
                                     <h3>Popular CodeRooms</h3>
                                 </div>
+                                <form class="col-md-auto">
+                                    <div class="input-group input-group-round">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">filter_list</i>
+                                        </span>
+                                        </div>
+                                        <input type="search" class="form-control filter-list-input"
+                                               placeholder="Filter tasks" aria-label="Filter Tasks"
+                                               aria-describedby="filter-tasks">
+                                    </div>
+                                </form>
                             </div>
                             <!--end of content list head-->
 
@@ -246,22 +240,9 @@
                                                     <div class="card-meta">
                                                         <ul class="avatars" id=<%=coderoom._id%>>
                                                         </ul>
-                                                        <div class="dropdown card-options">
-                                                            <button class="btn-options" type="button"
-                                                                    id="task-dropdown-button-1" data-toggle="dropdown"
-                                                                    aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">more_vert</i>
-                                                            </button>
-                                                        </div>
                                                         <div class="card-likeordislike">
-                                                            <div class="card-like">
-                                                                <i class="up"></i>
-                                                            </div>
                                                             <div class="card-likenum">
                                                                 <p>3</p>
-                                                            </div>
-                                                            <div class="card-dislike">
-                                                                <i class="down"></i>
                                                             </div>
                                                         </div>
                                                         <div>

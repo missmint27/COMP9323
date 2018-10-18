@@ -88,7 +88,7 @@ dbRefCode.on('value', snap => {
         editor.setValue(code_input.value);
 });
 
-//同步user list, 因为user list是由子elem构成的所以按照子elem来增删（用户进入/离开房间）
+
 dbRefUserList.on('child_added', snap => {
     const user_obj = snap.val();
     const avatar   = $("<img>", {alt: user_obj.username, class: "avatar mr-2",id: "user_avatar" + user_obj.authorId, src:user_obj.avatar});
@@ -124,7 +124,6 @@ dbRefAskForPermission.on('child_removed', snap => {
     }
 });
 
-//同步comment list，与user list类似，但是comment可以改，user不行
 dbRefCommentList.on('child_added', snap => {
     const comment_obj = snap.val();
     console.log(comment_obj);
@@ -233,7 +232,7 @@ function comment_submit(path) {
 function upvote(path,upvote,downvote) {
     const url  = urlGetter() + '/comments/'+"vote/" + path;
     upvote = parseInt(upvote);
-    upvote += 1
+    upvote += 1;
     upvote = upvote.toString();
     $.ajax({
         url: url,
@@ -285,7 +284,6 @@ dbRefCommentList.on('child_removed', snap => {
 
 window.onbeforeunload = function (e) {
     const url = urlGetter() + '/users';
-    // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/users';
     $.ajax({
         url: url,
         method: 'delete',
@@ -392,7 +390,6 @@ function passPermission(event) {
 function resetPermission() {
     const passToId = '5bb053d0efdfca206dc66b3f';
     const url = urlGetter() + '/permission/' + passToId;
-    // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
     $.ajax({
         url: url,
         method: 'delete',
@@ -411,7 +408,7 @@ function modeChange() {
     let length = marker_list.length;
     let css = null;
     if (comment_mode) {
-        css = "background-color : #ff7"
+        css = "background-color : #ff7";
     }
     while(length--) {
         marker_list[length].style.cssText=css;
@@ -420,17 +417,15 @@ function modeChange() {
 }
 
 function hideComments() {
-    const button = document.getElementById("comments-btn");
-    const comment_block = document.getElementById("comments");
-    const user_block = document.getElementById("participants_block");
+    let code_content=document.getElementById('code-content');
+    let chat_content=document.getElementById('chat-content');
+    // const user_block = document.getElementById("participants_block");
     if (!comment_mode) {
-        comment_block.style.display = "none";
-        user_block.style.display = "";
-        button.innerHTML = "SHOW COMMENTS";
+        code_content.style.cssText = 'width: 97%;';
+        chat_content.style.cssText = 'height: calc(100vh - 5rem); display: none;';
     } else {
-        comment_block.style.display = "";
-        user_block.style.display = "none";
-        button.innerHTML = "HIDE COMMENTS";
+        code_content.style.cssText = 'width: 75%;';
+        chat_content.style.cssText = 'height: calc(100vh - 5rem); display: block;';
     }
 }
 function urlGetter() {
