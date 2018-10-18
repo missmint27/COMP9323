@@ -2,8 +2,16 @@ var mongoose = require("mongoose");
 
 var coderoomSchema = new mongoose.Schema({
     name: String,
-    upvote: Number,
-    downvote: Number,
+    upvote: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        unique : true
+    }],
+    downvote: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        unique : true
+    }],
     rank: Number,
     description: String,
 

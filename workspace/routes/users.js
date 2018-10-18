@@ -81,43 +81,53 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
     });
 
     router.get("/profiles/:id", function (req,res) {
-        User.findById(req.params.id,function(err,foundUser) {
-            if(err){
-                req.redirect("/");
+        User.findById(req.params.id, function(err, user) {
+            if(err){ return next(err); }
+            if (req.user && req.user.id === req.params.id) {
+                res.render('pages/setting.ejs', {me: req.user, user: user});
+            } else {
+                res.render('pages/profile.ejs', {me: req.user, user: user});
             }
-            var flag = true;
-            var another_user_flag = false;
-            if (req.user) {
-                    console.log(req.user);
-                    console.log(req.params.id);
-                if (req.user.id === req.params.id) {
-                    console.log(req.user);
-
-                    flag = false;
-
-                    //TODO should return something different
-                    res.render("pages/setting.ejs", {user: foundUser,flag:flag,another_user_flag:another_user_flag});
-                }
-                else {
-                    another_user_flag = true;
-                    User.findById(req.user.id, function (err, foundUser_V2) {
-                        if(err){
-                            req.redirect("/");
-                        }
-                        else{
-                            res.render("pages/setting.ejs", {user: foundUser,another_user: another_user,flag:flag, another_user_flag:another_user_flag});
-
-                        }
-
-                    })
-                }
-            }
-            else{
-                res.render("pages/setting.ejs",{user:foundUser, flag:flag,another_user_flag:another_user_flag});
-            }
-
         })
     });
+    // router.get("/profiles/:id", function (req,res) {
+    //     User.findById(req.params.id,function(err,foundUser) {
+    //         if(err){
+    //             req.redirect("/");
+    //         }
+    //         var flag = true;
+    //         var another_user_flag = false;
+    //         if (req.user) {
+    //                 console.log(req.user);
+    //                 console.log(req.params.id);
+    //             if (req.user.id === req.params.id) {
+    //                 console.log(req.user);
+    //
+    //                 flag = false;
+    //
+    //                 //TODO should return something different
+    //                 res.render("pages/setting.ejs", {user: foundUser,flag:flag,another_user_flag:another_user_flag});
+    //             }
+    //             else {
+    //                 another_user_flag = true;
+    //                 User.findById(req.user.id, function (err, foundUser_V2) {
+    //                     if(err){
+    //                         res.redirect("/");
+    //                     }
+    //                     else{
+    //                         res.render("pages/setting.ejs", {user: foundUser,another_user: another_user,flag:flag, another_user_flag:another_user_flag});
+    //
+    //                     }
+    //
+    //                 })
+    //             }
+    //         }
+    //         else{
+    //             res.render("pages/setting.ejs",{user:foundUser, flag:flag,another_user_flag:another_user_flag});
+    //         }
+    //
+    //     })
+    // });
 
     router.put("/profiles/:id",middleware.isLoggedIn,function (req,res) {
         if(req.user.id === req.params.id) {
@@ -147,16 +157,43 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
     });
 
     router.put("/users/:id/follow", middleware.isLoggedIn, function(req, res, next) {
-        console.log("follow: ", req.params.id);
-        res.json({'msg': 'follow Not implemented yet.'})
+        console.log("User: "+ req.user.id + "is trying to follow: ", req.params.id);
+
+        // update the followee
+        User.findByIdAndUpdate(req.params.id,
+            {$addToSet: {follower: {"_id": req.user.id, 'avatar': req.user.avatar, 'username': req.user.username}}},
+            {new:true},
+            function(err, followee) {
+                if(err) {console.log(err);return next(err);}
+                console.log(followee);
+                //TODO ugly
+                User.findByIdAndUpdate(req.user.id,
+                    {$addToSet: {following: {"_id": req.params.id, 'avatar': followee['avatar'], 'username': followee['username']}}},
+                    {new:true}, function(err, follower) {
+                        if(err) {console.log(err);return next(err);}
+                        console.log(follower);
+                    });
+        });
+        // update the follower
+
+        res.json({'msg': 'followed user: ' + req.params.id})
     });
 
     router.delete("/users/:id/follow", middleware.isLoggedIn, function(req, res, next) {
-        console.log("defollow: ", req.params.id);
-        res.json({'msg': 'defollow Not implemented yet.'})
+        console.log("User: "+ req.user.id + "is trying to defollow: ", req.params.id);
+        // update the follower
+        //TODO basic info about the followee
+        User.findByIdAndUpdate(req.user.id, {$pull: {following: {"_id": req.params.id}}}, {new:true}, function(err, user) {
+            if(err) {console.log(err);return next(err);}
+            console.log(user);
+        });
+        // update the followee
+        User.findByIdAndUpdate(req.params.id, {$pull: {follower: {"_id": req.user.id}}}, {new:true}, function(err, user) {
+            if(err) {console.log(err);return next(err);}
+            console.log(user);
+        });
+        res.json({'msg': 'defollowed user: ' + req.params.id})
     });
-
-
 
     app.use('/', router);
 };

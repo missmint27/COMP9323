@@ -39,7 +39,6 @@ router.get("/search",function(req, res) {
     })
 });
 
-//functioning
 //create new coderoom，
 router.post("/", middleware.isLoggedIn,function(req, res) {
     console.log(req.user);
@@ -86,9 +85,6 @@ router.put('/:roomId', function(req, res, next) {
     //TODO err handler?
 });
 
-
-
-//functioning
 // get coderoom by its id
 router.get("/:id",function(req, res, next) {
     console.log("show coderoom by id");
@@ -224,12 +220,6 @@ router.delete("/:id",middleware.isLoggedIn, function(req, res, next) {
     res.redirect('/');
 });
 
-// router.get("/:id/test", function(req, res, next) {
-//     console.log("test coderoom");
-//     fb_root.child('comment_list/' + req.params.roomId).update({'test2': '?'});
-//     res.send('aaa');
-// });
-
 //delete user under this room
 router.delete("/:roomId/users", function(req, res, next) {
     if (!req.user) {
@@ -354,6 +344,33 @@ router.put('/:roomId/comments/downvote/:path',middleware.isLoggedIn, function(re
     //TODO err handler?
 });
 
+
+
+router.get('/:roomId/upvote',middleware.isLoggedIn, function(req, res,next) {
+    console.log("modify room upvote.");
+    Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {upvote: {"_id": id}}}, {new:true}, function(err, coderoom) {
+        if(err) {console.log(err);return next(err);}
+        console.log(coderoom);
+    });
+    Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {downvote: {"_id": id}}}, {new:true}, function(err, coderoom) {
+        if(err) {console.log(err);return next(err);}
+        console.log(coderoom);
+    });
+    res.json({'msg': 'Upvoted!'});
+});
+
+router.put('/:roomId/downvote',middleware.isLoggedIn, function(req, res) {
+    console.log("modify room downvote.");
+    Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {downvote: {"_id": id}}}, {new:true}, function(err, coderoom) {
+        if(err) {console.log(err);return next(err);}
+        console.log(coderoom);
+    });
+    Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {upvote: {"_id": id}}}, {new:true}, function(err, coderoom) {
+        if(err) {console.log(err);return next(err);}
+        console.log(coderoom);
+    });
+    res.json({'msg': 'Downvoted!'});
+});
 
 
 module.exports = router;
