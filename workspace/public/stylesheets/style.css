@@ -903,7 +903,6 @@ search-icon{
     -webkit-transform: rotate(45deg);
 }
 
-/*
 .chat-item-likeordis i {
     border: solid #4abdac;
     border-width: 0 3px 3px 0;
@@ -915,18 +914,18 @@ search-icon{
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 3px;
-}*/
+}
 .chat-item-likeordis{
     display: inline-block;
 }
-.chat-item-thumbs {
-    cursor: pointer;
-    user-select: none;
-}
+/*.chat-item-thumbs {*/
+    /*cursor: pointer;*/
+    /*user-select: none;*/
+/*}*/
 
-.chat-item-thumbs:hover {
-    color: #f7b733;
-}
+/*.chat-item-thumbs:hover {*/
+    /*color: #f7b733;*/
+/*}*/
 .chat-item-like .chat-item-dislike .chat-likenum{
     display: block;
     width: 100%;
