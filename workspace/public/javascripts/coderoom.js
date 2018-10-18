@@ -26,7 +26,7 @@ $(function() {
                     clickY = e.pageY;
                     
                     //判断拖动的第几个按钮
-                    if (index == 3) {
+                    if (index == 0) {
                         //第一个拖动按钮左边不出界
                         if (clickY > topOffset) {
                             dragBtn.css('top', clickY - 7 - topOffset + 'px');
@@ -39,13 +39,13 @@ $(function() {
                         }
                     }
                     
-                    if (clickY > (topOffset + wrapHeight - 125)) {
+                    if (clickY > (topOffset + wrapHeight - 50)) {
                         
                         dragBtn.css('top', parseFloat((wrapHeight - 11) + 'px'));
                         
                         dragBtn.prev().height(topOffset + wrapHeight - 125 + 'px');
                         console.log(clickY, wrapHeight, topOffset, dragBtn.prev().height());
-                        dragBtn.next().height(topOffset + wrapHeight - dragBtn.prev().height() + 'px');
+                        dragBtn.next().height(topOffset + wrapHeight - dragBtn.prev().height() - 66 + 'px');
                     }
                 }
             });

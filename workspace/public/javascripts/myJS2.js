@@ -417,17 +417,11 @@ function modeChange() {
 }
 
 function hideComments() {
-    const button = document.getElementById("comments-btn");
-    const comment_block = document.getElementById("comments");
-    const user_block = document.getElementById("participants_block");
+    const button = document.getElementById("comment-btn-text");
     if (!comment_mode) {
-        comment_block.style.display = "none";
-        user_block.style.display = "";
-        button.innerHTML = "SHOW COMMENTS";
+        button.innerHTML = "Show Comments";
     } else {
-        comment_block.style.display = "";
-        user_block.style.display = "none";
-        button.innerHTML = "HIDE COMMENTS";
+        button.innerHTML = "Hide Comments";
     }
 }
 function urlGetter() {

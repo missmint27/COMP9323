@@ -114,11 +114,16 @@
                     <!--TODO-->
                     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#user-manage-modal">
                         <i class="fa fa-user"></i>
-                        User list
+                        User List
                     </button>
                     <button type="button" class="btn btn-outline-primary" id="comment-btn" onclick="modeChange()">
-                        <i class="fa fa-comment"></i>
-                        Comment
+                        <i class="fa fa-comment" style="transform: translateY(5px);"></i>
+                        <div id="comment-btn-text" style="display: inline-flex;
+                        white-space: normal;
+                        font-size: small;
+                        transform: translate(-5px,-5px);">
+                        Show Comments
+                        </div>
                     </button>
                     <a href="/"><button type="button" class="btn btn-outline-danger">
                         <i class="fa fa-sign-out"></i>
@@ -132,7 +137,7 @@
                 </div>
             </nav>
         </div>
-        <div id="code-content" class="block-1 dragbox">
+        <div id="code-content" class="block-1 dragbox" style="width:100%;">
             <div class="b1-main panel-1">
                 <textarea class="form-control" id="code_input" name='code_input'></textarea>
             </div>
@@ -143,8 +148,8 @@
         </div>
         <div class="drag-bar"></div>
 
-        <div id="chat-content" class="content-container" style="height: calc(100vh - 5rem);">
-            <div class="chat-module" data-filter-list="chat-module-body"">
+        <div id="chat-content" class="content-container" style="height: calc(100vh - 5rem); display:none;">
+            <div class="chat-module" data-filter-list="chat-module-body">
 
                 <div class="chat-module-top">
                     <div id="chat-box" class="chat-module-body">
