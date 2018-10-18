@@ -62,7 +62,7 @@ router.post("/", middleware.isLoggedIn,function(req, res) {
             .update({
                 'username': req.user.username,
                 'url': '/users/' + req.user.id,
-                'avatar': DEFAULT_USER_AVATAR
+                'avatar': req.user.avatar
             });
         fb_root.child('permission/' + coderoom.id).update(
             { "userId" : req.user.id}
@@ -124,8 +124,6 @@ router.get("/:id",function(req, res, next) {
             } else { callback(null, {username: 'anonymous user', avatar: DEFAULT_USER_AVATAR, _id: null}); }
         }
     }, function(err, results) {
-        //if user not logged in, user will be null.
-        console.log("USER INSIDE: ", results.user);
         res.render('coderooms/coderoom2.ejs', {
             coderoom: {
                 name: results.room.name,
@@ -141,7 +139,7 @@ router.get("/:id",function(req, res, next) {
 
 //pass permission to userId
 router.put('/:roomId/permission/:userId', middleware.isLoggedIn, function(req, res, next) {
-   console.log('Passing permission');
+   console.log(req.user.id, ' is Passing permission to ', req.params.userId);
    const permissionRef = fb_root.child('permission/' + req.params.roomId);
    const requestingRef = fb_root.child('ask-for-permission/' + req.params.roomId);
    async.parallel({
@@ -191,7 +189,6 @@ router.put('/:roomId/permission', middleware.isLoggedIn, function(req, res, next
 });
 
 
-//functioning
 router.get("/:id/run",function(req, res, next) {
     console.log("run code in this coderoom.", req.params.id);
     const dbRefCode = firebase.database().ref().child('code').child(req.params.id);
@@ -201,10 +198,10 @@ router.get("/:id/run",function(req, res, next) {
     });
 });
 
+
 // delete coderoom by its id
 router.delete("/:id",middleware.isOwner, function(req, res, next) {
     console.log("Delete coderoom");
-    //TODO owner of coderoom can do this
     Coderoom.findByIdAndRemove(req.params.id).exec(function(err, coderoom) {
         if (err) { return next(err); }
     });
@@ -214,27 +211,46 @@ router.delete("/:id",middleware.isOwner, function(req, res, next) {
     fb_root.child('code/' + req.params.roomId).remove();
     fb_root.child('permission/' + req.params.roomId).remove();
     fb_root.child('user_list/' + req.params.roomId).remove();
-    fb_root.child('user_list/' + req.params.roomId).remove();
     // TODO redirect can cause problem if coderoom is not deleted yet but the homepage reads another round of coderooms
     res.redirect('/');
 });
 
 //delete user under this room
-router.delete("/:roomId/users", middleware.isLoggedIn, function(req, res, next) {
+router.delete("/:roomId/users", function(req, res, next) {
+    if (!req.user) {
+        res.json({'msg': 'Done'});
+        return;
+    }
     console.log("Delete user in this coderoom, userId: ", req.user.id);
-//
-    let obj = {};
-    obj[req.user.id] = false;
-    fb_root.child('user_list/' + req.params.roomId).child(req.user.id).remove();
-    fb_root.child('ask-for-permission/' + req.params.roomId).update(obj);
-//
-// //TODO if the user is holding the permission.
-// //     fb_root.child('permission/' + req.params.roomId)
-// //         .once('value').then(function (snapshot) {
-// //             if (snapshot.val().userId === req.user.id) {
-// //
-// //             }
-// //     });
+
+    let userListRef = fb_root.child('user_list/' + req.params.roomId);
+    let requestListRef = fb_root.child('ask-for-permission/' + req.params.roomId);
+    let permissionRef = fb_root.child('permission/' + req.params.roomId);
+    userListRef.child(req.user.id).remove();
+    requestListRef.child(req.user.id).remove();
+
+    permissionRef.once('value', holder => {
+        if (holder.val().userId === req.user.id) {
+            requestListRef.once('value', requestList => {
+                //pass the permission to the first user asking for permission
+                for (let userId in requestList) {
+                    permissionRef.update( {'userId': userId} );
+                    requestListRef.remove();
+                    res.status('200').json({"msg": 'Left, permission transferred to user: ' + userId});
+                    return;
+                }
+                // if no user asking for permission, pass permission to the first user in the user list.
+                userListRef.once('value', userList => {
+                    for (let userId in userList) {
+                        permissionRef.update( {'userId': userId} );
+                        requestListRef.remove();
+                        res.status('200').json({"msg": 'Left, permission transferred to user: ' + userId});
+                        return;
+                    }
+                });
+            })
+        }
+    });
     res.status('200').json({'msg': 'user ' + req.user.id + ' deleted'});
 });
 
@@ -243,7 +259,7 @@ router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next)
     fb_root.child('comment_list/' + req.params.roomId).push({
             authorId: req.user.id,
             author: req.user.username,
-            avatar: DEFAULT_USER_AVATAR,
+            avatar: req.user.avatar,
             content: req.body.content,
             upvote: req.body.upvote,
             downvote: req.body.downvote,
@@ -261,7 +277,6 @@ router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next)
             subcomments:{}
         }
     );
-    //TODO err handler?
     res.status('200').json({'msg': 'Comment created.'});
 });
 
@@ -288,7 +303,7 @@ router.post("/:roomId/comments/inside/:commentId", middleware.isLoggedIn,functio
         console.log("much much better")
     })
 
-})
+});
 
 
 router.put('/:roomId/comments/:commentId', function(req, res, next) {
