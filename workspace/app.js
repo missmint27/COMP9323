@@ -53,7 +53,7 @@ passport.use(new LocalStrategy(
             if (err) { return done(err); }
             if (!user) { return done(null, false, { message: 'Incorrect username.' });}
             if (user.password != password) { return done(null, false, { message: 'Incorrect password.' }); }
-            return done(null, {username: user.username, id: user._id, avatar: user.avatar});
+            return done(null, {username: user.username, id: user._id, avatar: user.avatar, isAdmin: user.isAdmin});
         });
     }
 ));

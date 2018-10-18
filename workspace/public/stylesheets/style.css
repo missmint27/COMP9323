@@ -173,19 +173,18 @@ input[type=checkbox]:checked + label:before {
     font-size: 20px;
     font-weight: 300;
     width: 100%;
-    height: 30vh;
+    height: 20vh;
 }
     .coderoom-desc p{
         width: 100%;
         height: 100%;
-        overflow-y: scroll;
         word-break: break-word;
     }
 /*----------------------------------*/
 /*         code room             */
 .block-1{
     padding: 0;
-    width: 80%;/*width need to be Responsive*/
+    width: 76%;/*width need to be Responsive*/
     height: calc(100% - 71px);
     display: inline-block;
     float: left;
@@ -467,7 +466,37 @@ search-icon{
     }
     .chat-item-up .media-body{
         display: inline-block;
+        width: 70%;
     }
+.chat-item-mid{
+    display: block;
+    width: 100%;
+    margin-top: 4px;
+}
+.chat-item-subreply{
+    width: 100%;
+    height: 2rem;
+    display: block;
+    background-color: #f7b7331c;
+    margin-bottom: 3px;
+    padding: 2px 4px;
+    border-radius: 0.5rem;
+}
+.chat-item-subauthor{
+    display: inline-block;
+    width: 20%;
+    color: #212529;
+    font-weight: bold;
+    padding-top: 5px;
+}
+.chat-item-subcomment{
+    display: inline-block;
+    width: calc(100% - 20% - 7px);
+    margin-left: 7px;
+    color:#404040;
+    font-size:0.9rem;
+    cursor: pointer;
+}
 .chat-item-down {
     display: flex;
     width: 100%;
@@ -873,11 +902,7 @@ search-icon{
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
 }
-.chat-item-likeordis{
-    display: inline-block;
-    float: left;
-    width: 7px;
-}
+
 .chat-item-likeordis i {
     border: solid #4abdac;
     border-width: 0 3px 3px 0;
@@ -890,6 +915,17 @@ search-icon{
     display: inline-block;
     padding: 3px;
 }
+.chat-item-likeordis{
+    display: inline-block;
+}
+/*.chat-item-thumbs {*/
+    /*cursor: pointer;*/
+    /*user-select: none;*/
+/*}*/
+
+/*.chat-item-thumbs:hover {*/
+    /*color: #f7b733;*/
+/*}*/
 .chat-item-like .chat-item-dislike .chat-likenum{
     display: block;
     width: 100%;
@@ -917,4 +953,271 @@ search-icon{
 .card-like .card-likenum .card-dislike{
     display: block;
     width: 100%;
+}
+/*reply modal*/
+.modal-replyblock{
+    width: 100%;
+}
+.modal-replyarea{
+    width: 100%;
+    height: 8rem;
+    resize: none;
+    overflow-y: scroll;
+    word-break: break-word;
+}
+
+/*side nav*/
+.coderoom-title {
+    width:100%;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.coderoom-title h2 {
+    color: #FFF;
+    font-family: Monospace;
+    font-weight: 700;
+    
+}
+
+.coderoom-desc p {
+    text-align: center;
+    opacity: 0.8;
+}
+
+.btn-like {
+    margin-left: auto;
+    margin-right: auto;
+    width: 75px;
+    height: 75px;
+    background: #999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    transition: 0.35s ease-in-out;
+    cursor: pointer;
+    box-shadow: 0px 0px 25px 5px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    position: relative;
+  }
+  .btn-like .circle {
+    width: 0;
+    height: 0;
+    border-radius: 100%;
+  }
+  .btn-like.like {
+    background: #2EC4B6;
+  }
+  .btn-like.like .thumbs-up {
+    transform: rotate(0deg);
+  }
+  .btn-like.dislike {
+    background: #E71D36;
+  }
+  .btn-like.dislike .thumbs-up {
+    transform: rotate(180deg);
+  }
+  .btn-like .thumbs-up {
+    transition: 0.35s ease-in-out;
+  }
+  .btn-like .thumbs-up .fa {
+    font-size: 25px;
+    color: white;
+  }
+  .btn-like .thumbs-up .fa::before {
+    display: block;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
+  }
+
+  .btn-home {
+    background: #2EC4B6;
+  }
+
+  .home-logo {
+    position: absolute;
+    left: 50%;
+    background: #2EC4B6;
+    transform: translate(-50%,20px);
+}
+  .home-plus {
+      position: absolute;
+      left: 50%;
+      top:73%;
+      background: #2EC4B6;
+      transform: translate(-50%,-50%);
+  }
+
+  .coderoom-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+
+/*profile*/
+
+.rela-block {
+    display: block;
+    position: relative;
+    margin: auto;
+    top: ;
+    left: ;
+    right: ;
+    bottom: ;
+  }
+
+  .profile-card {
+    width: 70%;
+    padding-top: 100px;
+    margin: 70px auto 30px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px -2px rgba(0,0,0,0.26);
+  }
+
+  .profile-pic {
+    display: false;
+    position: absolute;
+    margin: false;
+    top: -90px;
+    left: 50%;
+    right: false;
+    bottom: false;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    height: 180px;
+    width: 180px;
+    border: 10px solid #fff;
+    border-radius: 100%;
+    
+    background-size: cover;
+  }
+
+  .profile-name-container {
+    margin: 0 auto 10px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .user-name {
+    font-family: "Montserrat";
+    font-size: 24px;
+    letter-spacing: 3px;
+    font-weight: 400;
+    line-height: 30px;
+    margin-bottom: 12px;
+  }
+  .user-desc {
+    letter-spacing: 1px;
+    color: #999;
+  }
+
+  .profile-card-stats {
+    height: 75px;
+    padding: 10px 0px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .profile-stat {
+    height: 100%;
+    width: 33.3333%;
+  }
+  .profile-stat:after {
+    color: #999;
+  }
+  .works::after {
+    content: "works";
+  }
+  .followers::after {
+    content: "followers";
+  }
+  .following::after {
+    content: "following";
+  }
+
+  .rela-block.container {
+    z-index: 1;
+    width: 92%;
+    max-width: 1126px;
+    background-color: #f4f4f4;
+    margin: 0 auto;
+    padding: 70px 0;
+  }
+
+  .floated {
+    display: inline-block;
+    position: relative;
+    margin: false;
+    top: ;
+    left: ;
+    right: ;
+    bottom: ;
+    float: left;
+  }
+
+
+button .msg-follow,
+button .msg-follow-ing,
+button .msg-unfollow{
+  display: none;
+}
+
+button .msg-follow{
+  display: inline;
+}
+
+button.follow-ing .msg-follow{
+  display: none;
+}
+
+button.follow-ing .msg-follow-ing{
+  display: inline;
+}
+
+button.follow-ing:not(.wait):hover .msg-follow-ing{
+  display: none;
+}
+
+button.follow-ing:not(.wait):hover .msg-unfollow{
+  display: inline;
+}
+
+.one-user {
+    justify-content: space-between;
+}
+
+.side-hide {
+    height: 20%;
+    width: 10%;
+    position: absolute;
+    background-color:#a9a9a9;
+    right:-10px;
+    top: 25%;
+    transform: translate(00%,30%);
+    border-radius: 4px;
+    border: solid;
+    opacity:0.8;
+    z-index: 10000;
+}
+
+.side-hide:hover {
+    cursor: pointer;
+    background-color: #d3d3d3;
+}
+
+.side-hide i {
+    color: white;
+    margin-top: auto;
+    font-size: 1em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-90%,-50%);
+}
+
+.pd0 {
+    padding: 0;
 }

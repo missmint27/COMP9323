@@ -72,7 +72,6 @@ dbRefRoomPermission.on('value', snap => {
     }
 });
 
-
 //initialize code input
 dbRefCode.once('value', snap => {
     const content = snap.val();
@@ -88,15 +87,13 @@ dbRefCode.on('value', snap => {
         editor.setValue(code_input.value);
 });
 
-//同步user list, 因为user list是由子elem构成的所以按照子elem来增删（用户进入/离开房间）
 dbRefUserList.on('child_added', snap => {
     const user_obj = snap.val();
-    const avatar   = $("<img>", {alt: user_obj.username, class: "avatar mr-2",id: "user_avatar" + user_obj.authorId, src:user_obj.avatar});
+    const avatar   = $("<img>", {alt: user_obj.username, class: "avatar mr-2",id: "user_avatar" + user_obj.id, src:user_obj.avatar});
     const user     = $("<span>", {class: "h6 mb-0", "data-filter-by": "text"}).text(user_obj.username);
     const add = $("<div>", {id: snap.key, class: "custom-control custom-checkbox"})
         .append($("<div>", {class:"d-flex align-items-center", id: user_obj.userId}).append(avatar, user));
     $("div[id='user-group']").append(add);
-
 });
 
 dbRefUserList.on('child_removed', snap => {
@@ -124,55 +121,70 @@ dbRefAskForPermission.on('child_removed', snap => {
     }
 });
 
-//同步comment list，与user list类似，但是comment可以改，user不行
 dbRefCommentList.on('child_added', snap => {
     const comment_obj = snap.val();
-    console.log(comment_obj);
+    let up_number = 0, down_number = 0;
+    if (comment_obj.upvote) { up_number = Object.keys(comment_obj.upvote).length; }
+    if (comment_obj.downvote) { down_number = Object.keys(comment_obj.downvote).length; }
+    let score = up_number - down_number;
+    //main comment
+    let likeordislike = $("<div class='chat-item-likeordis'>" +
+        "<div class='chat-item-like'><i class='up'></i></div>" +
+        "<div class='chat-likenum'><p>" + score + "</p></div> "+
+        "<div class='chat-item-dislike'><i class='down'></i></div></div>");
 
-    var score = parseInt(comment_obj.upvote) - parseInt(comment_obj.downvote);
-    score = score.toString();
-    //this is the score
-    const likeordislike = $("<div class=\"chat-item-likeordis\">" +
-        "<div class=\"chat-item-like\"><i class=\"up\"></i></div>" +
-        "<div class=\"chat-likenum\"><p>3</p></div> "+
-        "<div class=\"chat-item-dislike\"><i class=\"down\"></i></div></div>");
-
-    console.log(comment_obj.upvote);
-    console.log(comment_obj.downvote);
-    const img    = $("<img>", {
-        alt: comment_obj.author,
-        class: "avatar",
-        id: "comment_avatar" + comment_obj.authorId,
-        src:comment_obj.avatar});
-    comments = {};
-    var subcomments = comment_obj.subcomments;
-
-
-    const title = $("<div>", {class: "chat-item-title"})
-        .append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(comment_obj.author));
-    const body  = $("<div>", {class: "chat-item-body", 'data-filter-by':"text"}).text(comment_obj.content);
-
-
-    const item = $("<div>", {class: "media-body"}).append(title, body);
-    for(var i in subcomments){
-        var subauthor = subcomments[i].subauthor;
-        var comment = subcomments[i].subcomment;
-        var subid = subcomments[i].subid;
-        const sub_author = $("<div>",{class:"chat-item-subauthor"}).text(subauthor);
-        const subcomment = $("<div>",{class:"chat-item-subcomment"}).text(comment);
-        item.append(sub_author, subcomment);
-
-    }
-    const reply_up = $("<div>", {class: "chat-item-up"}).append(likeordislike,img, item);
-    const reply_input = $("<input>",{class:"chat-item-input form-control"});
-    const reply_button = $("<button>", {class:"chat-item-reply btn btn-primary btn-small"}).text("");
-    const button_content = $("<i>", {class: "fa fa-paper-plane"});
-    reply_button.append(button_content);
-
-    const reply_down = $("<div>", {class: "chat-item-down"}).append(reply_input, reply_button);
-    const add = $("<div>", {id: snap.key, class: "chat-item"}).append(reply_up, reply_down);
+    let img    = $("<a>", {href: "/profiles/" + comment_obj.author.id})
+        .append($("<img>", {alt: comment_obj.author.username, class: "avatar", id: "comment_avatar" + comment_obj.author.id, src:comment_obj.author.avatar}));
+    let title = $("<a>", {href: "/profiles/" + comment_obj.authorId})
+        .append($("<div>", {class: "chat-item-title"}).append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(comment_obj.author.username)));
+    //TODO link the reply modal with the comment user id.
+    let body  = $("<div class='chat-item-body' data-filter='text' data-toggle='modal' data-target='#reply-modal'></div>").text(comment_obj.content);
+    let item = $("<div>", {class: "media-body"}).append(title, body);
+    let main_comment = $("<div>", {class: "chat-item-up"}).append(img, item, likeordislike);
+    let add = $("<div>", {id: snap.key, class: "chat-item"}).append(main_comment);
     $("div[id='chat-box']").append(add);
 
+    let up = document.getElementById(snap.key);
+    let up_button = up.getElementsByClassName("up");
+    up_button[0].addEventListener("click",function (e) { upvote(snap.key)});
+    let down = document.getElementById(snap.key);
+    let down_button = down.getElementsByClassName("down");
+    down_button[0].addEventListener("click",function (e) { downvote(snap.key)});
+
+    //subcomments
+    let sub_comments = comment_obj.subComments;
+    for (let commentId in sub_comments) {
+        let sub_author = sub_comments[commentId].author;
+        let sub_comment = sub_comments[commentId].content;
+        let sub_upvote = 0, sub_downvote = 0;
+        if (sub_comments[commentId].upvote) { upvote = Object.keys(sub_comments[commentId].upvote).length; }
+        if (sub_comments[commentId].downvote) { upvote = Object.keys(sub_comments[commentId].downvote).length; }
+        let sub_score = sub_upvote - sub_downvote;
+        let sub_likeordislike = $("<div class='chat-item-likeordis'>" +
+            "<div class='chat-item-like'><i class='up'></i></div>" +
+            "<div class='chat-likenum'><p>" + sub_score + "</p></div> "+
+            "<div class='chat-item-dislike'><i class='down'></i></div></div>");
+
+        let sub_img    = $("<a>", {href: "/profiles/" + sub_author.id})
+            .append($("<img>", {alt: sub_author.username, class: "avatar", id: "comment_avatar" + sub_author.id, src:sub_author.avatar}));
+        let sub_title = $("<a>", {href: "/profiles/" + sub_author.id})
+            .append($("<div>", {class: "chat-item-title"}).append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(sub_author.username)));
+
+        let sub_body  = $("<div class='chat-item-body' data-filter='text' data-toggle='modal' data-target='#reply-modal'></div>").text(sub_comment);
+        let sub_item = $("<div>", {class: "media-body"}).append(sub_title, sub_body);
+        let sub = $("<div>", {class: "chat-item-up"}).append(sub_img, sub_item, sub_likeordislike);
+        let sub_add = $("<div>", {id: commentId, class: "chat-item-subcomment"}).append(sub);
+        $("div[id='chat-box']").append(sub_add);
+
+        let sub_up = document.getElementById(commentId);
+        let sub_up_button = sub_up.getElementsByClassName("up");
+        sub_up_button[0].addEventListener("click",function (e) { sub_upvote(snap.key, commentId)});
+        let sub_down = document.getElementById(commentId);
+        let sub_down_button = sub_down.getElementsByClassName("down");
+        sub_down_button[0].addEventListener("click",function (e) { sub_downvote(snap.key, commentId)});
+    }
+
+    //editor marker
     if (comment_obj.position) {
         const pos = comment_obj.position;
         const code = comment_obj.code;
@@ -188,83 +200,67 @@ dbRefCommentList.on('child_added', snap => {
             });
         }
     }
- //this is for upvote and downvote
-    var ele = document.getElementById(snap.key);
-    var ele1 = ele.getElementsByClassName("up");
-    ele1[0].addEventListener("click",function (ev) { upvote(snap.key, comment_obj.upvote,comment_obj.downvote);});
-
-    var ele_down = document.getElementById(snap.key);
-    var ele_down_1 = ele_down.getElementsByClassName("down");
-    ele_down_1[0].addEventListener("click",function (evt) { downvote(snap.key, comment_obj.upvote, comment_obj.downvote)});
-
-    // this is for subcomment
-    var text_class =  document.getElementsByClassName("chat-item-input form-control")
-    var text = text_class[text_class.length - 1].value;
-    var button_class = document.getElementsByClassName("chat-item-reply btn btn-primary btn-small");
-    button_class[button_class.length - 1].addEventListener("click",function () {
-            comment_submit(snap.key)
-
-    }) ;
-
+//
+// // TODO change to reply-modal
+//
+//     // this is for subcomment
+//     var text_class =  document.getElementsByClassName("chat-item-input form-control");
+//     var text = text_class[text_class.length - 1].value;
+//     var button_class = document.getElementsByClassName("chat-item-reply btn btn-primary btn-small");
+//     button_class[button_class.length - 1].addEventListener("click",function () {
+//             comment_submit(snap.key)
+//     }) ;
+//
+// });
+// function comment_submit(path) {
+//     const url = urlGetter() + "/comments/" + "inside/" + path;
+//     var d1 = document.getElementById(path);
+//     var text =  d1.getElementsByClassName("chat-item-input form-control")[0].value;
+//     console.log(text);
+//     $.ajax({
+//         url:url,
+//         method:"post",
+//         data:{
+//             comment: text,
+//         }
+//     }).done(function () {
+//         console.log("comments inside comments");
+//
+//     }).fail(function (xhr, status) {
+//         console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+//     })
+//
 });
-function comment_submit(path) {
-    const url = urlGetter() + "/comments/" + "inside/" + path
-    var d1 = document.getElementById(path);
-    var text =  d1.getElementsByClassName("chat-item-input form-control")[0].value
-    console.log(text);
+
+function sub_upvote(parent, comment) {
+    const path = parent + '/subcomments/' + comment;
+    upvote(path);
+}
+function upvote(path) {
+    const url = urlGetter() + "/comments/upvote/" + path;
+    console.log(url);
     $.ajax({
-        url:url,
-        method:"post",
-        data:{
-            comment: text,
-        }
-    }).done(function () {
-        console.log("comments inside comments");
-
-    }).fail(function (xhr, status) {
-        console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+        url: url,
+        method:'put',
     })
-
+        .done(function (data) { console.log(data); })
+        .fail(function (xhr, status){ console.log(xhr.status); })
 }
 
-function upvote(path,upvote,downvote) {
-    const url  = urlGetter() + '/comments/'+"vote/" + path;
-    upvote = parseInt(upvote);
-    upvote += 1
-    upvote = upvote.toString();
+function sub_downvote(parent, comment) {
+    const path = parent + '/subcomments/' + comment;
+    downvote(path);
+}
+function downvote(path) {
+    const url = urlGetter() + "/comments/downvote/" + path;
+    console.log(url);
     $.ajax({
         url: url,
         method:'put',
-        data:{
-            upvote:upvote,
-            downvote:downvote
-        }
-       }).done(function (data) {
-            console.log(data);
-        }).fail(function (xhr, status) {
-            console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
-        })
-    }
-
-
-function downvote(path, upvote,downvote) {
-
-    const url = urlGetter() + "/comments/" +"vote/" + path;
-    downvote = parseInt(downvote);
-    downvote -= 1
-    downvote = downvote.toString();
-
-    $.ajax({
-        url: url,
-        method:'put',
-        data:{
-            upvote:upvote,
-            downvote: downvote}
-        }).done(function (data) {
-            console.log(data)}).fail(function (xhr, status){
-        console.log(xhr.status);
-    })}
-
+    })
+    .done(function (data) { console.log(data); })
+    .fail(function (xhr, status){ console.log(xhr.status); })
+}
 
 dbRefCommentList.on('child_removed', snap => {
     const liToRemove = document.getElementById(snap.key);
@@ -280,9 +276,9 @@ dbRefCommentList.on('child_removed', snap => {
 //     liChanged.innerText = JSON.stringify(snap.val());
 // });
 
+//leave room
 window.onbeforeunload = function (e) {
     const url = urlGetter() + '/users';
-    // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/users';
     $.ajax({
         url: url,
         method: 'delete',
@@ -327,7 +323,6 @@ function postComment() {
     const pos  = editor.getSelectedRange();
     const url  = urlGetter() + '/comments';
     const code = editor.getRange(pos.from, pos.to);
-    console.log(url);
     $.ajax({
         url: url,
         method: 'post',
@@ -343,12 +338,11 @@ function postComment() {
                     line:pos.to.line
                 }
             },
-            upvote:0,
-            downvote:0,
             code: code,
             content: document.getElementById('chat-message').value
         }
     }).done(function (data) {
+        document.getElementById('chat-message').value = null;
         console.log(data);
     }).fail(function (xhr, status) {
         console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
@@ -385,30 +379,14 @@ function passPermission(event) {
     });
 }
 
-//TODO Delete after testing.
-function resetPermission() {
-    const passToId = '5bb053d0efdfca206dc66b3f';
-    const url = urlGetter() + '/permission/' + passToId;
-    // const url = 'http://127.0.0.1:3000/api/coderooms/' + roomId + '/permission/' + passToId;
-    $.ajax({
-        url: url,
-        method: 'delete',
-        dataType: 'json',
-    }).done(function (data) {
-        console.log(data);
-    }).fail(function (xhr, status) {
-        console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
-    });
-}
 
-//TODO merge with comment-block and user-block's display control part
 function modeChange() {
     comment_mode = !comment_mode;
     let marker_list=document.getElementsByClassName("cm-marker");
     let length = marker_list.length;
     let css = null;
     if (comment_mode) {
-        css = "background-color : #ff7"
+        css = "background-color : #ff7";
     }
     while(length--) {
         marker_list[length].style.cssText=css;
@@ -417,11 +395,19 @@ function modeChange() {
 }
 
 function hideComments() {
-    const button = document.getElementById("comment-btn-text");
+    let code_content=document.getElementById('code-content');
+    let chat_content=document.getElementById('chat-content');
+    let comment_btn_text = document.getElementById('comment-btn-text');
+    // const user_block = document.getElementById("participants_block");
     if (!comment_mode) {
-        button.innerHTML = "Show Comments";
+        comment_btn_text.innerHTML = 'Show Comments;'
+        code_content.style.cssText = 'width: 97%;';
+        chat_content.style.cssText = 'height: calc(100vh - 5rem); display: none;';
+
     } else {
-        button.innerHTML = "Hide Comments";
+        comment_btn_text.innerHTML = 'Hide Comments;'
+        code_content.style.cssText = 'width: 75%;';
+        chat_content.style.cssText = 'height: calc(100vh - 5rem); display: block;';
     }
 }
 function urlGetter() {
@@ -429,3 +415,4 @@ function urlGetter() {
     const path = window.location.pathname;
     return 'http://' + host + path;
 }
+

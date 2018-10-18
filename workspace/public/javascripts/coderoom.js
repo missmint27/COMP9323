@@ -62,22 +62,33 @@ $(function() {
 })
 
 $( document ).ready(function() {
-    // comment-hide show
-    $("#comment-btn").click(function(){
-        if ($("#chat-content").css("display")!="none"){
-            $("#code-content").css("width","100%");
-            $("#chat-content").css("display","none");
-            console.log("yes");
-        } else {
-            $("#chat-content").css("display","block");
-            $("#code-content").css("width","75%");
-            console.log("no");
-        }
-    });
+//     // // comment-hide show
+//     // $("#comment-btn").click(function(){
+//     //     if ($("#chat-content").css("display")!="none"){
+//     //         $("#code-content").css("width","100%");
+//     //         $("#chat-content").css("display","none");
+//     //         console.log("yes");
+//     //     } else {
+//     //         $("#chat-content").css("display","block");
+//     //         $("#code-content").css("width","75%");
+//     //         console.log("no");
+//     //     }
+//     // });
     //chat submit
     $("#chat-submit").click(function(){
         var text = $("textarea#chat-message").val();
     });
-
-    
+//
+//
 });
+
+$("#like-dislike").on('click', function(e){
+	var $this = $(this);
+    if ($this.hasClass("like")){
+		$this.removeClass("like");
+		$this.addClass("dislike");
+	}else{
+		$this.addClass("like");
+		$this.removeClass("dislike");
+	}		
+}); 
