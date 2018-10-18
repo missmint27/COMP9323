@@ -416,3 +416,23 @@ function urlGetter() {
     return 'http://' + host + path;
 }
 
+function room_downvote(path) {
+    const url = urlGetter() + "/downvote";
+    console.log(url);
+    $.ajax({
+        url: url,
+        method:'put',
+    })
+        .done(function (data) { console.log(data); })
+        .fail(function (xhr, status){ console.log(xhr.status); })
+}
+function room_upvote(path) {
+    const url = urlGetter() + "/upvote";
+    console.log(url);
+    $.ajax({
+        url: url,
+        method:'put',
+    })
+        .done(function (data) { console.log(data); })
+        .fail(function (xhr, status){ console.log(xhr.status); })
+}

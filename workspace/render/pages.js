@@ -29,7 +29,6 @@ router.get("/",function (req,res,next) {
             }
         }
     }, function(err, results) {
-        console.log(results.user_info);
         if (req.user && req.user.isAdmin) {
             res.render("pages/homepage_manage.ejs",{
                 myrooms: results.coderooms,
@@ -37,26 +36,18 @@ router.get("/",function (req,res,next) {
             return;
         }
         const length = results.coderooms.length;
-        let i = 0, found = false;
-        while (i<=length && found === false) {
-            if ((i === length && found === false) || !results.user_info) {
-                res.render("pages/homepage.ejs",{
-                    myrooms: [],
-                    coderoom_list: results.coderooms,
-                });
+        let i = 0; let ret = {coderoom_list: results.coderooms, myrooms: []};
+        while (i<=length) {
+            if ((i === length) || !results.user_info) {
+                console.log(ret);
+                res.render("pages/homepage.ejs",ret);
                 return;
             }
-            if (results.coderooms[i]['_id'] === results.user_info.coderoom) {
-                res.render("pages/homepage.ejs",{
-                    // TODO change to myrooms
-                    myrooms: [results.coderooms[i]],
-                    coderoom_list: results.coderooms,
-                });
-                return;
+            if (results.coderooms[i]['author']['id'] === req.user.id) {
+                ret['myrooms'].push(results.coderooms[i]);
             }
             i++;
         }
-        console.log(JSON.stringify(results.coderooms, null, 3));
     })
 });
 
