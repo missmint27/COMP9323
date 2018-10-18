@@ -13,11 +13,12 @@ var UserSchema = new mongoose.Schema({
     lastName:String,
     postCode:String,
     avatar: String,                     //The url for avatar
+    // TODO history of last coderoom
     coderoom: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Coderoom"
     },
-    // TODO may needed
+    // TODO coderooms that I created
     myrooms: [
             {
                 type: mongoose.Schema.Types.ObjectId,

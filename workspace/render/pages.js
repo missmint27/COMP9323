@@ -29,29 +29,34 @@ router.get("/",function (req,res,next) {
             }
         }
     }, function(err, results) {
-        const length = results.coderooms.length;
-        let i = 0, found = false;
         console.log(results.user_info);
-        if (!results.user_info) {
-            res.render("pages/homepage.ejs",{
-                prev_coderoom: null,
-                coderoom_list: results.coderooms,
-                user_info: results.user_info
+        if (req.user && req.user.isAdmin) {
+            res.render("pages/homepage_manage.ejs",{
+                myrooms: results.coderooms,
             });
             return;
         }
-        while (i<length && found === false) {
+        const length = results.coderooms.length;
+        let i = 0, found = false;
+        while (i<=length && found === false) {
+            if ((i === length && found === false) || !results.user_info) {
+                res.render("pages/homepage.ejs",{
+                    myrooms: [],
+                    coderoom_list: results.coderooms,
+                });
+                return;
+            }
             if (results.coderooms[i]['_id'] === results.user_info.coderoom) {
                 res.render("pages/homepage.ejs",{
-                    prev_coderoom: results.coderooms[i],
+                    // TODO change to myrooms
+                    myrooms: [results.coderooms[i]],
                     coderoom_list: results.coderooms,
-                    user_info: results.user_info
                 });
-                found = true;
+                return;
             }
             i++;
         }
-        console.log(results.coderooms);
+        console.log(JSON.stringify(results.coderooms, null, 3));
     })
 });
 

@@ -172,16 +172,12 @@ router.put('/:roomId/permission/:userId', middleware.isLoggedIn, function(req, r
 
 
 
-//Reset permission, for testing only
-router.delete('/:roomId/permission/:userId', middleware.isLoggedIn, function(req, res, next) {
+//Revoke permission
+router.delete('/:roomId/permission', middleware.isOwner, function(req, res, next) {
     console.log('Resetting permission');
     const permissionRef = fb_root.child('permission/' + req.params.roomId);
-    const requestingRef = fb_root.child('ask-for-permission/' + req.params.roomId);
     permissionRef.update( {'userId': req.user.id} );
-    let obj = {};
-    obj[req.params.userId] = true;
-    requestingRef.update( obj );
-    res.json({'msg': "Reset"});
+    res.redirect('/');
 });
 
 //require for permission
@@ -211,7 +207,6 @@ router.delete("/:id",middleware.isOwner, function(req, res, next) {
     //TODO owner of coderoom can do this
     Coderoom.findByIdAndRemove(req.params.id).exec(function(err, coderoom) {
         if (err) { return next(err); }
-        res.json({Message: "Deleted!"});
     });
     // delete all coderoom entries in fireabse.
     fb_root.child('comment_list/' + req.params.roomId).remove();
@@ -219,7 +214,9 @@ router.delete("/:id",middleware.isOwner, function(req, res, next) {
     fb_root.child('code/' + req.params.roomId).remove();
     fb_root.child('permission/' + req.params.roomId).remove();
     fb_root.child('user_list/' + req.params.roomId).remove();
-    res.status('200').json({'msg': 'coderoom ' + req.params.id + ' deleted'})
+    fb_root.child('user_list/' + req.params.roomId).remove();
+    // TODO redirect can cause problem if coderoom is not deleted yet but the homepage reads another round of coderooms
+    res.redirect('/');
 });
 
 //delete user under this room

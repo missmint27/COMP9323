@@ -17,15 +17,14 @@ module.exports = (app, passport) => {
     });
     router.post("/login", passport.authenticate("local",
         {
-            successRedirect: "/",
+            //TODO will jump back to mainpage if login from coderoom
+            successRedirect: '/',
             failureRedirect: "/login",
         }), function(req, res){
         console.log("sucesss");
 
     });
     router.post('/register', function (req, res, next) {
-        console.log("Username: %s", req.body.username);
-        console.log("Password: %s", req.body.password);
         //escape errors
         //body('username, password...').isLength({ min: 1 }).trim().withMessage('First name must be specified.')
         //sanitizeBody('username, password...').trim().escape()
@@ -42,24 +41,41 @@ module.exports = (app, passport) => {
         });
     });
 
+    // //admin register, should always be commented
+    // router.post('/admin', function (req, res, next) {
+    //     var user = new User({
+    //         username: req.body.username,
+    //         password: req.body.password,
+    //         coderoom: null,
+    //         isAdmin: true
+    //     });
+    //     user.save(function (err) {
+    //         if (err) {
+    //             return next(err);
+    //         }
+    //         res.redirect('/');
+    //     });
+    // });
+
     router.get('/users/:id', function(req, res, next) {
         User.findById(req.params.id).exec(function(err, user) {
             if (err) return next(err);
             const user_info = {
                 username:   user.username,
-                userId:     user._id,
-                email:      user.email,
-                birthday:   user.birthday,
-                country:    user.country,
-                city:       user.city,
+                id:     user._id,
+                isAdmin: user.isAdmin,
                 avatar:     user.avatar,
-                coderoom:   user.coderoom,
-                following:  user.following,
-                follower:   user.follower,
+
+                // email:      user.email,
+                // birthday:   user.birthday,
+                // country:    user.country,
+                // city:       user.city,
+                // coderoom:   user.coderoom,
+                // following:  user.following,
+                // follower:   user.follower,
             };
             res.json(user_info);
         })
-        //TODO get the full info.
     });
 
     router.get("/logout", function(req, res){
@@ -73,12 +89,10 @@ module.exports = (app, passport) => {
             if(err){
                 req.redirect("/");
             }
-            if (req.user) {
-                if (req.user.id === req.params.id) {
-                    //TODO should return something different
-                    res.render("pages/setting.ejs", {user: foundUser});
-                }
+            if (req.user && req.user.id === req.params.id) {
+                res.render("pages/setting.ejs", {user: foundUser});
             } else {
+                //TODO should return profile page.
                 res.render("pages/setting.ejs", {user: foundUser});
             }
         })
@@ -105,7 +119,7 @@ module.exports = (app, passport) => {
                     req.flash("success", "successfully updated!!");
 
                     console.log(user);
-                    res.redirect("/profile/" + user._id);
+                    res.redirect("/profiles/" + user._id);
                 }
             });
         }
