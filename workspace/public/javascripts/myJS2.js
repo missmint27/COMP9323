@@ -133,9 +133,9 @@ dbRefCommentList.on('child_added', snap => {
     score = score.toString();
     //this is the score
     const likeordislike = $("<div class=\"chat-item-likeordis\">" +
-        "<div class=\"chat-item-like\"><i onclick=\"likeOrdis(this)\" class=\"fa fa-thumbs-up chat-item-thumbs\"></i></div>" +
+        "<div class=\"chat-item-like\"><i class=\"up\"></i></div>" +
         "<div class=\"chat-likenum\"><p>3</p></div> "+
-        "</div>");
+        "<div class=\"chat-item-dislike\"><i class=\"down\"></i></div></div>");
 
     console.log(comment_obj.upvote);
     console.log(comment_obj.downvote);
@@ -151,7 +151,7 @@ dbRefCommentList.on('child_added', snap => {
     const title = $("<div>", {class: "chat-item-title"})
         .append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(comment_obj.author));
     //const body  = $("<div>", {class: "chat-item-body", 'data-filter-by':"text"}).text(comment_obj.content);
-    const body  = $("<div class=\"chat-item-body\" data-filter=\"text\" onclick=\"replyComment()\"></div>").text(comment_obj.content);
+    const body  = $("<div class=\"chat-item-body\" data-filter=\"text\" data-toggle=\"modal\" data-target=\"reply-modal\"></div>").text(comment_obj.content);
 
     const item = $("<div>", {class: "media-body"}).append(title, body);
 
@@ -167,7 +167,7 @@ dbRefCommentList.on('child_added', snap => {
         var comment = subcomments[i].subcomment;
         var subid = subcomments[i].subid;
         const sub_author = $("<div>",{class:"chat-item-subauthor"}).text(subauthor);
-        const subcomment = $("<div class=\"chat-item-subcomment\" onclick=\"replyComment()\"></div>").text(comment);
+        const subcomment = $("<div class=\"chat-item-subcomment\"  data-toggle=\"modal\" data-target=\"reply-modal\"></div>").text(comment);
         const reply_block = $("<div class=\"chat-item-subreply\"></div>").append(sub_author,subcomment)
         reply_mid.append(reply_block);
     }
