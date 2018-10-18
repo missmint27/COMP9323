@@ -150,7 +150,7 @@ dbRefCommentList.on('child_added', snap => {
     const title = $("<div>", {class: "chat-item-title"})
         .append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(comment_obj.author));
     //const body  = $("<div>", {class: "chat-item-body", 'data-filter-by':"text"}).text(comment_obj.content);
-    const body  = $("<div class=\"chat-item-body\" data-filter=\"text\" data-toggle=\"modal\" data-target=\"reply-modal\"></div>").text(comment_obj.content);
+    const body  = $("<div class=\"chat-item-body\" data-filter=\"text\" data-toggle=\"modal\" data-target=\"#user-manage-modal\"></div>").text(comment_obj.content);
 
     const item = $("<div>", {class: "media-body"}).append(title, body);
 
