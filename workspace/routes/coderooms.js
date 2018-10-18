@@ -42,6 +42,7 @@ router.get("/search",function(req, res) {
 //functioning
 //create new coderoom，
 router.post("/", middleware.isLoggedIn,function(req, res) {
+    console.log(req.user);
     var coderoom = new Coderoom(
         {
             name: req.body.name,
@@ -50,8 +51,6 @@ router.post("/", middleware.isLoggedIn,function(req, res) {
                 id: req.user.id,
                 username: req.user.username
             },
-            upvote:0,
-            downvote:0
         });
     coderoom.save(function(err) {
         if (err) { return next(err); }
@@ -79,7 +78,7 @@ router.put('/:roomId', function(req, res, next) {
     console.log(req.params);
     fb_root.child("code").child(req.params.roomId).once('value')
         .then(function (snapshot) {
-            console.log("here");
+            console.log("here2");
             fb_root.child("code").child(req.params.roomId)
                 .update({"upvote":req.body.upvote, "downvote": req.body.downvote});
             res.status('200').json({'msg': 'coderoom upvote.'});
@@ -118,7 +117,8 @@ router.get("/:id",function(req, res, next) {
                     .update({
                         'username': req.user.username,
                         'url': '/users/' + req.user.id,
-                        'avatar': req.user.avatar
+                        'avatar': req.user.avatar,
+                        'id': req.user.id,
                     });
                 callback(null, req.user);
             } else { callback(null, {username: 'anonymous user', avatar: DEFAULT_USER_AVATAR, _id: null}); }
@@ -200,11 +200,20 @@ router.get("/:id/run",function(req, res, next) {
 
 
 // delete coderoom by its id
-router.delete("/:id",middleware.isOwner, function(req, res, next) {
+router.delete("/:id",middleware.isLoggedIn, function(req, res, next) {
     console.log("Delete coderoom");
-    Coderoom.findByIdAndRemove(req.params.id).exec(function(err, coderoom) {
-        if (err) { return next(err); }
-    });
+    if (req.user.isAdmin) {
+        Coderoom.findByIdAndRemove(req.params.id, function (err,coderoom){
+            if (err) console.log(err);
+        });
+    } else {
+        Coderoom.findOneAndRemove({
+            '_id': req.params.id,
+            "author.id": req.user.id
+        }, function (err, coderoom) {
+            if (err) console.log(err);
+        });
+    }
     // delete all coderoom entries in fireabse.
     fb_root.child('comment_list/' + req.params.roomId).remove();
     fb_root.child('ask-for-permission/' + req.params.roomId).remove();
@@ -214,6 +223,12 @@ router.delete("/:id",middleware.isOwner, function(req, res, next) {
     // TODO redirect can cause problem if coderoom is not deleted yet but the homepage reads another round of coderooms
     res.redirect('/');
 });
+
+// router.get("/:id/test", function(req, res, next) {
+//     console.log("test coderoom");
+//     fb_root.child('comment_list/' + req.params.roomId).update({'test2': '?'});
+//     res.send('aaa');
+// });
 
 //delete user under this room
 router.delete("/:roomId/users", function(req, res, next) {
@@ -231,38 +246,45 @@ router.delete("/:roomId/users", function(req, res, next) {
 
     permissionRef.once('value', holder => {
         if (holder.val().userId === req.user.id) {
+            console.log("permission leave.");
             requestListRef.once('value', requestList => {
                 //pass the permission to the first user asking for permission
-                for (let userId in requestList) {
+
+                for (let userId in requestList.val()) {
+                    console.log(userId);
                     permissionRef.update( {'userId': userId} );
                     requestListRef.remove();
                     res.status('200').json({"msg": 'Left, permission transferred to user: ' + userId});
                     return;
                 }
                 // if no user asking for permission, pass permission to the first user in the user list.
-                userListRef.once('value', userList => {
-                    for (let userId in userList) {
-                        permissionRef.update( {'userId': userId} );
-                        requestListRef.remove();
-                        res.status('200').json({"msg": 'Left, permission transferred to user: ' + userId});
-                        return;
-                    }
-                });
+                if (!requestList.val()) {
+                    console.log("No user requesting.");
+                    userListRef.once('value', userList => {
+                        for (let userId in userList.val()) {
+                            permissionRef.update({'userId': userId});
+                            requestListRef.remove();
+                            res.status('200').json({"msg": 'Left, permission transferred to user: ' + userId});
+                            return;
+                        }
+                    });
+                }
+                //TODO if no user in the room and the permission holder left.
             })
-        }
+        } else {res.status('200').json({'msg': 'user ' + req.user.id + ' deleted'});}
     });
-    res.status('200').json({'msg': 'user ' + req.user.id + ' deleted'});
+
 });
 
 router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next) {
     console.log("post comment.");
     fb_root.child('comment_list/' + req.params.roomId).push({
-            authorId: req.user.id,
-            author: req.user.username,
-            avatar: req.user.avatar,
+            author: {
+                id: req.user.id,
+                username: req.user.username,
+                avatar: req.user.avatar,
+            },
             content: req.body.content,
-            upvote: req.body.upvote,
-            downvote: req.body.downvote,
             position: {
                 from: {
                     line: parseInt(req.body.pos.from.line),
@@ -274,66 +296,63 @@ router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next)
                 }
             },
             code: req.body.code,
-            subcomments:{}
         }
     );
     res.status('200').json({'msg': 'Comment created.'});
 });
 
-
-
 //this is for subcomment
 router.post("/:roomId/comments/inside/:commentId", middleware.isLoggedIn,function (req,res,next) {
     console.log("you get there man");
     console.log(req.params);
-    fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).once('value').then(function (value) {
-        console.log("way much beeter");
-        console.log(req.user);
-
-        var fb_subomments = fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).push();
-        var sub_comments = fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).child("subcomments");
-        var key = fb_subomments.getKey();
-        var subcomments = {};
-        var temp_comment = {};
-        temp_comment["subauthor"] = req.user.username;
-        temp_comment["subid"] = req.user.id;
-        temp_comment["subcomment"] = req.body.comment;
-        subcomments[key] = temp_comment
-        sub_comments.update(subcomments);
-        console.log("much much better")
-    })
-
+    let subCommentRef = fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).child("subComments");
+    let commentId = subCommentRef.push({
+        author: {
+            id: req.user.username,
+            username:  req.user.username,
+            avatar: req.user.avatar,
+        },
+        content: req.body.comment,
+    });
+    res.json({'msg': 'commentID: ' + commentId + ' created.'});
 });
 
 
-router.put('/:roomId/comments/:commentId', function(req, res, next) {
+router.put('/:roomId/comments/:commentId', middleware.isLoggedIn, function(req, res, next) {
     console.log("modify comment.");
     fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).once('value')
         .then(function (snapshot) {
-            // if (snapshot.authorId !== req.user.id) {
-            //     res.status('400').json({'msg': "You can't modify other's comment"});
-            //     return;
-            // }
+            if (snapshot.author.id !== req.user.id) {
+                res.status('400').json({'msg': "You can't modify other's comment"});
+                return;
+            }
             console.log("here");
             fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId)
-                .update({"content": req.body.content,"upvote":req.body.upvote, "downvote": req.body.downvote});
+                .update({"content": req.body.content});
             res.status('200').json({'msg': 'Comment created.'});
         });
     //TODO err handler?
 });
 
-router.put('/:roomId/comments/vote/:commentId',function(req, res) {
+router.put('/:roomId/comments/upvote/:path',middleware.isLoggedIn, function(req, res) {
     console.log("modify upvote.");
-    fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).once('value')
-        .then(function (snapshot) {
-            console.log("here");
-            fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId)
-                .update({"upvote":req.body.upvote, "downvote": req.body.downvote});
-            res.status('200').json({'msg': 'Comment created.'});
-        });
+    const commentRef = fb_root.child('comment_list/' + req.params.roomId).child(req.params.path);
+    const upvote_obj = {};
+    upvote_obj[req.user.id] = true;
+    commentRef.child('upvote').update(upvote_obj);
+    commentRef.child('downvote/' + req.user.id).remove();
     //TODO err handler?
 });
 
+router.put('/:roomId/comments/downvote/:path',middleware.isLoggedIn, function(req, res) {
+    console.log("modify downvote.");
+    const commentRef = fb_root.child('comment_list/' + req.params.roomId).child(req.params.path);
+    const downvote_obj = {};
+    downvote_obj[req.user.id] = true;
+    commentRef.child('downvote').update(downvote_obj);
+    commentRef.child('upvote/' + req.user.id).remove();
+    //TODO err handler?
+});
 
 
 

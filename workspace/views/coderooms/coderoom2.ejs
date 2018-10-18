@@ -142,6 +142,33 @@
         </div>
         <div class="drag-bar"></div>
 
+        <div class="modal fade" id="user-manage-modal" tabindex="-1" role="dialog" aria-labelledby="user-manage-modal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">User list</h5>
+
+                    </div>
+                    <!--end of modal head-->
+                    <div class="modal-body">
+                        <!--TODO user list-->
+                        <div class="users-manage" data-filter-list="form-group-users">
+                            <div id="user-group" class="form-group-users">
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of modal body-->
+                    <div class="modal-footer">
+                        <!--<button role="button" class="btn btn-primary" type="submit">-->
+                        <!--Done-->
+                        <!--</button>-->
+                        <button type="button" class="btn btn-warning" data-dismiss="modal" aria-label="Close">
+                            <i class="material-icons">close</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="chat-content" class="content-container" style="height: calc(100vh - 5rem); display: none;">
             <div class="chat-module" data-filter-list="chat-module-body">
 
@@ -159,33 +186,6 @@
                     </button>
                 </div>
 
-                <div class="modal fade" id="user-manage-modal" tabindex="-1" role="dialog" aria-labelledby="user-manage-modal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">User list</h5>
-
-                            </div>
-                            <!--end of modal head-->
-                            <div class="modal-body">
-                                <!--TODO user list-->
-                                <div class="users-manage" data-filter-list="form-group-users">
-                                    <div id="user-group" class="form-group-users">
-                                    </div>
-                                </div>
-                            </div>
-                            <!--end of modal body-->
-                            <div class="modal-footer">
-                                <!--<button role="button" class="btn btn-primary" type="submit">-->
-                                    <!--Done-->
-                                <!--</button>-->
-                                <button type="button" class="btn btn-warning" data-dismiss="modal" aria-label="Close">
-                                    <i class="material-icons">close</i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="modal fade" id="reply-modal" tabindex="-1" role="dialog" aria-labelledby="reply-modal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -203,11 +203,11 @@
                             </div>
                             <!--end of modal body-->
                             <div class="modal-footer">
-                                <button role="button" class="btn btn-warning" type="submit">
-                                    <i class="fa fa-paper-plane"></i>
+                                <button role="button" class="btn btn-success" type="submit">
+                                    Reply
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
-                                    <i class="material-icons">close</i>
+                                    Close
                                 </button>
                             </div>
                         </div>

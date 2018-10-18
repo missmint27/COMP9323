@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var middleware = require("../middleware/index")
+var middleware = require("../middleware/index");
 var User = require('../models/user');
 var async = require('async');
 var middleware = require('../middleware');
-module.exports = (app, passport) => {
+const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v1538825655/sujhmatymeuigsghpfby.png';
+    module.exports = (app, passport) => {
     router.get('/logout', middleware.isLoggedIn, function(req, res){
         req.logout();
         res.redirect('/');
@@ -19,20 +20,31 @@ module.exports = (app, passport) => {
         {
             successRedirect: "/",
             failureRedirect: "/login",
-        }), function(req, res){
-        console.log("sucesss");
+        }));
 
-    });
     router.post('/register', function (req, res, next) {
-        console.log("Username: %s", req.body.username);
-        console.log("Password: %s", req.body.password);
-        //escape errors
-        //body('username, password...').isLength({ min: 1 }).trim().withMessage('First name must be specified.')
-        //sanitizeBody('username, password...').trim().escape()
         var user = new User({
             username: req.body.username,
             password: req.body.password,
-            coderoom: null
+            coderoom: null,
+            avatar: DEFAULT_USER_AVATAR,
+        });
+        user.save(function (err) {
+            if (err) {
+                return next(err);
+            }
+            res.redirect('/');
+        });
+    });
+
+    router.post('/register/admin', function (req, res, next) {
+        console.log("New admin created.");
+        var user = new User({
+            username: req.body.username,
+            password: req.body.password,
+            coderoom: null,
+            avatar: DEFAULT_USER_AVATAR,
+            isAdmin: true,
         });
         user.save(function (err) {
             if (err) {
@@ -68,7 +80,7 @@ module.exports = (app, passport) => {
         res.redirect("/");
     });
 
-    router.get("/profile/:id", function (req,res) {
+    router.get("/profiles/:id", function (req,res) {
         User.findById(req.params.id,function(err,foundUser) {
             if(err){
                 req.redirect("/");
@@ -107,7 +119,7 @@ module.exports = (app, passport) => {
         })
     });
 
-    router.put("/profile/:id",middleware.isLoggedIn,function (req,res) {
+    router.put("/profiles/:id",middleware.isLoggedIn,function (req,res) {
         if(req.user.id === req.params.id) {
             //TODO partly update
             var newData = {

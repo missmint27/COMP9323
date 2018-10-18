@@ -9,7 +9,9 @@ module.exports = {
     },
     isOwner: function(req, res, next){
         if(req.user){
-            if (req.user.isAdmin) {next();}
+            if (req.user.isAdmin) {
+                console.log("ISADMIN!!");
+                next();}
             Coderoom.findById(req.params.id, function(err, found_coderoom){
                 if(found_coderoom.author.id.equals(req.user.id)){
                     next();
