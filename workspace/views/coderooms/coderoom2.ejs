@@ -187,26 +187,26 @@
                     </div>
                 </div>
 
-                <!--Have some problem, can not display, js is in the myJS2-->
-                <div class="modal fade" id="reply-modal" tabindex="-1" role="dialog" aria-labelledby="user-manage-modal" aria-hidden="true">
+                <div class="modal fade" id="reply-modal" tabindex="-1" role="dialog" aria-labelledby="reply-modal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">User list</h5>
+                                <h5 class="modal-title">Reply</h5>
 
                             </div>
                             <!--end of modal head-->
                             <div class="modal-body">
                                 <!--TODO reply comment-->
-                                <div class="users-manage" data-filter-list="form-group-users">
-                                    <div id="user-group" class="form-group-users">
-                                    </div>
+                                <div class="modal-replyblock">
+                                    <textarea class="modal-replyarea"></textarea>
                                 </div>
                             </div>
                             <!--end of modal body-->
                             <div class="modal-footer">
-                                <button role="button" class="btn btn-primary" type="submit"></button>
-                                <button type="button" class="btn btn-warning" data-dismiss="modal" aria-label="Close">
+                                <button role="button" class="btn btn-warning" type="submit">
+                                    <i class="fa fa-paper-plane"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
                                     <i class="material-icons">close</i>
                                 </button>
                             </div>
