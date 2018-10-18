@@ -66,10 +66,9 @@
                     </div>
                 </form>
                 <div class=" mt-2">
-                    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#task-add-modal">
+                    <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#task-add-modal">
                         Create Coderoom
                     </button>
-
                 </div>
             </div>
         </div>
@@ -155,7 +154,7 @@
                     <form class="chat-form" style="margin-bottom:1em;">
                         <textarea id="chat-message" class="form-control" placeholder="Type message" rows="1"></textarea>
                     </form>
-                    <button id="chat-submit" class="btn btn-primary" type="button" onclick="postComment()">
+                    <button id="chat-submit" class="btn btn-warning" type="button" onclick="postComment()">
                         Submit
                     </button>
                 </div>
@@ -180,13 +179,41 @@
                                 <!--<button role="button" class="btn btn-primary" type="submit">-->
                                     <!--Done-->
                                 <!--</button>-->
-                                <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="btn btn-warning" data-dismiss="modal" aria-label="Close">
                                     <i class="material-icons">close</i>
                                 </button>
                             </div>
                         </div>
                     </div>
-                </>
+                </div>
+
+                <!--Have some problem, can not display, js is in the myJS2-->
+                <div class="modal fade" id="reply-modal" tabindex="-1" role="dialog" aria-labelledby="reply-modal" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">User list</h5>
+
+                            </div>
+                            <!--end of modal head-->
+                            <div class="modal-body">
+                                <!--TODO reply comment-->
+                                <div class="users-manage" data-filter-list="form-group-users">
+                                    <div id="user-group" class="form-group-users">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end of modal body-->
+                            <div class="modal-footer">
+                                <button role="button" class="btn btn-primary" type="submit"></button>
+                                <button type="button" class="btn btn-warning" data-dismiss="modal" aria-label="Close">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

@@ -133,9 +133,9 @@ dbRefCommentList.on('child_added', snap => {
     score = score.toString();
     //this is the score
     const likeordislike = $("<div class=\"chat-item-likeordis\">" +
-        "<div class=\"chat-item-like\"><i class=\"up\"></i></div>" +
+        "<div class=\"chat-item-like\"><i onclick=\"likeOrdis(this)\" class=\"fa fa-thumbs-up chat-item-thumbs\"></i></div>" +
         "<div class=\"chat-likenum\"><p>3</p></div> "+
-        "<div class=\"chat-item-dislike\"><i class=\"down\"></i></div></div>");
+        "</div>");
 
     console.log(comment_obj.upvote);
     console.log(comment_obj.downvote);
@@ -150,27 +150,30 @@ dbRefCommentList.on('child_added', snap => {
 
     const title = $("<div>", {class: "chat-item-title"})
         .append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(comment_obj.author));
-    const body  = $("<div>", {class: "chat-item-body", 'data-filter-by':"text"}).text(comment_obj.content);
-
+    //const body  = $("<div>", {class: "chat-item-body", 'data-filter-by':"text"}).text(comment_obj.content);
+    const body  = $("<div class=\"chat-item-body\" data-filter=\"text\" onclick=\"replyComment()\"></div>").text(comment_obj.content);
 
     const item = $("<div>", {class: "media-body"}).append(title, body);
+
+    const reply_up = $("<div>", {class: "chat-item-up"}).append(img, item,likeordislike);
+    const reply_input = $("<input>",{class:"chat-item-input form-control"});
+    const reply_button = $("<button>", {class:"chat-item-reply btn btn-warning btn-small"}).text("");
+    const button_content = $("<i>", {class: "fa fa-paper-plane"});
+    reply_button.append(button_content);
+
+    const reply_mid = $("<div class=\"chat-item-mid\"></div>");
     for(var i in subcomments){
         var subauthor = subcomments[i].subauthor;
         var comment = subcomments[i].subcomment;
         var subid = subcomments[i].subid;
         const sub_author = $("<div>",{class:"chat-item-subauthor"}).text(subauthor);
-        const subcomment = $("<div>",{class:"chat-item-subcomment"}).text(comment);
-        item.append(sub_author, subcomment);
-
+        const subcomment = $("<div class=\"chat-item-subcomment\" onclick=\"replyComment()\"></div>").text(comment);
+        const reply_block = $("<div class=\"chat-item-subreply\"></div>").append(sub_author,subcomment)
+        reply_mid.append(reply_block);
     }
-    const reply_up = $("<div>", {class: "chat-item-up"}).append(likeordislike,img, item);
-    const reply_input = $("<input>",{class:"chat-item-input form-control"});
-    const reply_button = $("<button>", {class:"chat-item-reply btn btn-primary btn-small"}).text("");
-    const button_content = $("<i>", {class: "fa fa-paper-plane"});
-    reply_button.append(button_content);
 
     const reply_down = $("<div>", {class: "chat-item-down"}).append(reply_input, reply_button);
-    const add = $("<div>", {id: snap.key, class: "chat-item"}).append(reply_up, reply_down);
+    const add = $("<div>", {id: snap.key, class: "chat-item"}).append(reply_up,reply_mid, reply_down);
     $("div[id='chat-box']").append(add);
 
     if (comment_obj.position) {
@@ -434,4 +437,19 @@ function urlGetter() {
     const host = window.location.host;
     const path = window.location.pathname;
     return 'http://' + host + path;
+}
+
+//like and dislike
+function likeOrdis(x) {
+    x.classList.toggle("fa-thumbs-down");
+}
+
+//reply comment (second level comment)
+function replyComment(){
+    var x = document.getElementById("reply-modal");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
 }

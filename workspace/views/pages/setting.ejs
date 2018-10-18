@@ -26,24 +26,59 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
+
 </head>
 <body>
+
 <nav class="nav-bar">
     <div class="nav-container">
         <div class="nav-name">
             <a href="homepage.ejs">OurCodes</a>
         </div>
-
         <img src="/img/avatar/avatar3.png" class="avatar" alt="">
+        <%if(flag){%>
         <div class="nav-sign">
-            <div class="nav-menu"><a class="nav-sign" href="signup.ejs">Sign up</a></div>
+            <div class="nav-menu"><a class="nav-sign" href="/register">Sign up</a></div>
             <div class="nav-slash">/</div>
-            <div class="nav-menu"><a class="nav-sign" href="signin.ejs">Sign in</a></div>
+            <div class="nav-menu"><a class="nav-sign" href="/login">Sign in</a></div>
         </div>
-        <!--Can be replaced after login-->
+
+        <br>
         <div class="nav-username">
-            <span>Please sign in</span>
+            <span>please sign in </span>
         </div>
+        <%}%>
+
+        <%if(!flag){%>
+        <div class="nav-sign">
+            <div class="nav-menu"><a class="nav-sign" href="/logout">Log out</a></div>
+            <div class="nav-slash">/</div>
+            <div class="nav-menu"><a class="nav-sign" href="/profile/<%=user.id%>">Profile</a></div>
+            <br>
+            <div class="nav-username">
+                <span>Welcome <%=user.username%></span>
+            </div>
+        </div>
+
+        <%}%>
+
+
+        <%if(another_user_flag){%>
+
+        <div class="nav-sign">
+            <div class="nav-menu"><a class="nav-sign" href="/logout">Log out</a></div>
+            <div class="nav-slash">/</div>
+            <div class="nav-menu"><a class="nav-sign" href="/profile/<%=another_user.id%>">Profile</a></div>
+            <br>
+            <div class="nav-username">
+                <span>Welcome <%=another_user.username%></span>
+            </div>
+        </div>
+
+
+        <%}%>
+        <!--Can be replaced after login-->
+
 
 
         <!--click these two buttons show and hide a div of contents-->
@@ -319,6 +354,7 @@
                                     <i class="fa fa-checkmark-round"></i>
                                     <span>Following</span>
                                 </button>
+                                <button type="button" class="btn btn-sm btn-warning pull-right">View</button>
                             </div>
                         </div>
                         <div class="media user-follower">
@@ -328,81 +364,7 @@
                                 <button type="button" class="btn btn-sm btn-default pull-right">
                                     <i class="fa fa-plus"></i> Follow
                                 </button>
-                            </div>
-                        </div>
-                        <div class="media user-follower">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Stella<br><span class="text-muted username">@stella</span></a>
-                                <button type="button" class="btn btn-sm btn-default pull-right">
-                                    <i class="fa fa-plus"></i> Follow
-                                </button>
-                            </div>
-                        </div>
-                        <div class="media user-follower">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Jane Doe<br><span class="text-muted username">@janed</span></a>
-                                <button type="button" class="btn btn-sm btn-toggle-following pull-right">
-                                    <i class="fa fa-checkmark-round"></i>
-                                    <span>Following</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="media user-follower">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">John Simmons<br><span class="text-muted username">@jsimm</span></a>
-                                <button type="button" class="btn btn-sm btn-default pull-right">
-                                    <i class="fa fa-plus"></i> Follow
-                                </button>
-                            </div>
-                        </div>
-                        <div class="media user-follower">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Antonius<br><span class="text-muted username">@mrantonius</span></a>
-                                <button type="button" class="btn btn-sm btn-toggle-following pull-right">
-                                    <i class="fa fa-checkmark-round"></i>
-                                    <span>Following</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="media user-follower">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Michael<br><span class="text-muted username">@iamichael</span></a>
-                                <button type="button" class="btn btn-sm btn-default pull-right">
-                                    <i class="fa fa-plus"></i> Follow
-                                </button>
-                            </div>
-                        </div>
-                        <div class="media user-follower">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Stella<br><span class="text-muted username">@stella</span></a>
-                                <button type="button" class="btn btn-sm btn-default pull-right">
-                                    <i class="fa fa-plus"></i> Follow
-                                </button>
-                            </div>
-                        </div>
-                        <div class="media user-follower">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Jane Doe<br><span class="text-muted username">@janed</span></a>
-                                <button type="button" class="btn btn-sm btn-toggle-following pull-right">
-                                    <i class="fa fa-checkmark-round"></i>
-                                    <span>Following</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="media user-follower">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">John Simmons<br><span class="text-muted username">@jsimm</span></a>
-                                <button type="button" class="btn btn-sm btn-default pull-right">
-                                    <i class="fa fa-plus"></i> Follow
-                                </button>
+                                <button type="button" class="btn btn-sm btn-warning pull-right">View</button>
                             </div>
                         </div>
                     </div><!--/tab-pane-->
@@ -416,59 +378,22 @@
                                 <button type="button" class="btn btn-sm btn-danger pull-right">
                                     <i class="fa fa-close-round"></i> Unfollow
                                 </button>
-                            </div>
-                        </div>
-                        <div class="media user-following">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Jane Doe<br><span class="text-muted username">@janed</span></a>
-                                <button type="button" class="btn btn-sm btn-danger pull-right">
-                                    <i class="fa fa-close-round"></i> Unfollow
-                                </button>
-                            </div>
-                        </div>
-                        <div class="media user-following">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">John Simmons<br><span class="text-muted username">@jsimm</span></a>
-                                <button type="button" class="btn btn-sm btn-danger pull-right">
-                                    <i class="fa fa-close-round"></i> Unfollow
-                                </button>
-                            </div>
-                        </div>
-                        <div class="media user-following">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Antonius<br><span class="text-muted username">@mrantonius</span></a>
-                                <button type="button" class="btn btn-sm btn-danger pull-right">
-                                    <i class="fa fa-close-round"></i> Unfollow
-                                </button>
-                            </div>
-                        </div>
-                        <div class="media user-following">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Michael<br><span class="text-muted username">@iamichael</span></a>
-                                <button type="button" class="btn btn-sm btn-danger pull-right">
-                                    <i class="fa fa-close-round"></i> Unfollow
-                                </button>
-                            </div>
-                        </div>
-                        <div class="media user-following">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Stella<br><span class="text-muted username">@stella</span></a>
-                                <button type="button" class="btn btn-sm btn-danger pull-right">
-                                    <i class="fa fa-close-round"></i> Unfollow
-                                </button>
+                                <button type="button" class="btn btn-sm btn-warning pull-right">View</button>
                             </div>
                         </div>
                     </div><!--/tab-pane-->
                 </div><!--/tab-content-->
-
             </div><!--/col-9-->
         </div><!--/row-->
     </div>
 </body>
 <script type="text/javascript" src="/javascripts/ellaJS.js"></script>
+<script>
+    <%if(flag){%>
+    $(":input").prop("readonly","true");
+    $(".my-button").css("visibility","hidden");
+    $('.btn-group-sm>.btn, .btn-sm').css("visibility","hidden");
+    <%}%>
+</script>
+
 </html>

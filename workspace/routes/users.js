@@ -17,14 +17,15 @@ module.exports = (app, passport) => {
     });
     router.post("/login", passport.authenticate("local",
         {
-            //TODO will jump back to mainpage if login from coderoom
-            successRedirect: '/',
+            successRedirect: "/",
             failureRedirect: "/login",
         }), function(req, res){
         console.log("sucesss");
 
     });
     router.post('/register', function (req, res, next) {
+        console.log("Username: %s", req.body.username);
+        console.log("Password: %s", req.body.password);
         //escape errors
         //body('username, password...').isLength({ min: 1 }).trim().withMessage('First name must be specified.')
         //sanitizeBody('username, password...').trim().escape()
@@ -41,41 +42,24 @@ module.exports = (app, passport) => {
         });
     });
 
-    // //admin register, should always be commented
-    // router.post('/admin', function (req, res, next) {
-    //     var user = new User({
-    //         username: req.body.username,
-    //         password: req.body.password,
-    //         coderoom: null,
-    //         isAdmin: true
-    //     });
-    //     user.save(function (err) {
-    //         if (err) {
-    //             return next(err);
-    //         }
-    //         res.redirect('/');
-    //     });
-    // });
-
     router.get('/users/:id', function(req, res, next) {
         User.findById(req.params.id).exec(function(err, user) {
             if (err) return next(err);
             const user_info = {
                 username:   user.username,
-                id:     user._id,
-                isAdmin: user.isAdmin,
+                userId:     user._id,
+                email:      user.email,
+                birthday:   user.birthday,
+                country:    user.country,
+                city:       user.city,
                 avatar:     user.avatar,
-
-                // email:      user.email,
-                // birthday:   user.birthday,
-                // country:    user.country,
-                // city:       user.city,
-                // coderoom:   user.coderoom,
-                // following:  user.following,
-                // follower:   user.follower,
+                coderoom:   user.coderoom,
+                following:  user.following,
+                follower:   user.follower,
             };
             res.json(user_info);
         })
+        //TODO get the full info.
     });
 
     router.get("/logout", function(req, res){
@@ -84,21 +68,46 @@ module.exports = (app, passport) => {
         res.redirect("/");
     });
 
-    router.get("/profiles/:id", function (req,res) {
+    router.get("/profile/:id", function (req,res) {
         User.findById(req.params.id,function(err,foundUser) {
             if(err){
                 req.redirect("/");
             }
-            if (req.user && req.user.id === req.params.id) {
-                res.render("pages/setting.ejs", {user: foundUser});
-            } else {
-                //TODO should return profile page.
-                res.render("pages/setting.ejs", {user: foundUser});
+            var flag = true;
+            var another_user_flag = false;
+            if (req.user) {
+                    console.log(req.user);
+                    console.log(req.params.id);
+                if (req.user.id === req.params.id) {
+                    console.log(req.user);
+
+                    flag = false;
+
+                    //TODO should return something different
+                    res.render("pages/setting.ejs", {user: foundUser,flag:flag,another_user_flag:another_user_flag});
+                }
+                else {
+                    another_user_flag = true;
+                    User.findById(req.user.id, function (err, foundUser_V2) {
+                        if(err){
+                            req.redirect("/");
+                        }
+                        else{
+                            res.render("pages/setting.ejs", {user: foundUser,another_user: another_user,flag:flag, another_user_flag:another_user_flag});
+
+                        }
+
+                    })
+                }
             }
+            else{
+                res.render("pages/setting.ejs",{user:foundUser, flag:flag,another_user_flag:another_user_flag});
+            }
+
         })
     });
 
-    router.put("/profiles/:id",middleware.isLoggedIn,function (req,res) {
+    router.put("/profile/:id",middleware.isLoggedIn,function (req,res) {
         if(req.user.id === req.params.id) {
             //TODO partly update
             var newData = {
@@ -119,7 +128,7 @@ module.exports = (app, passport) => {
                     req.flash("success", "successfully updated!!");
 
                     console.log(user);
-                    res.redirect("/profiles/" + user._id);
+                    res.redirect("/profile/" + user._id);
                 }
             });
         }
