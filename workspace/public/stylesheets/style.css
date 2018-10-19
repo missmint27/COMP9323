@@ -525,6 +525,8 @@ search-icon{
     text-align: center;
 }
 .b3-disk{
+    position: absolute;
+    left: calc(50% - 200px);
     width: 400px;
     height: 400px;
     margin-top: 180px;
@@ -534,7 +536,7 @@ search-icon{
     border-radius: 2%;
 }
 .b3-cover{
-    position: absolute;
+    position: relative;
     width: 270px;
     height: 15px;
     margin-left: 50px;
@@ -542,7 +544,8 @@ search-icon{
     z-index: 2;
 }
 .b3_triangle1 {
-    position:absolute;
+    position:relative;
+    top: -15.5px;
     width: 0px;
     height: 0px;
     border-top: 12px solid transparent;
@@ -558,7 +561,8 @@ search-icon{
     z-index: 3;
 }
 .b3_triangle2 {
-    position:absolute;
+    position:relative;
+    top: -40px;
     width: 0px;
     height: 0px;
     border-top: 13px solid transparent;
@@ -573,7 +577,8 @@ search-icon{
     margin-top: -10px;
 }
 .b3-hold{
-    position: absolute;
+    position: relative;
+    top: -50px;
     width: 255px;
     height: 120px;
     background-color: #308377;
@@ -591,7 +596,9 @@ search-icon{
         margin-top: 35px;
     }
 .b3-moveclick{
-    position: absolute;
+    position: relative;
+    top: -170px;
+    left:70px;
     width: 190px;
     height: 120px;
     background-color: #f7b733;
@@ -605,9 +612,10 @@ search-icon{
         margin-top: 35px;
     }
 .b3-label{
-    position: absolute;
+    position: relative;
+    top: -300px;
     width: 320px;;
-    height: 200px;
+    height: 210px;
     background-color: #dfdce3;
     margin-top: 170px;
     margin-left: 40px;
@@ -621,6 +629,8 @@ search-icon{
         color: #e6e6e6;
     }
 .b3-name{
+    position: relative;
+    top:80px;
     width: 120px;
     height: 30px;
     color: #fff;
@@ -635,6 +645,8 @@ search-icon{
     margin-left: -30px;
 }
 .b3-form-in, .b3-form-up{
+    position: relative;
+    top:80px;
     margin-top: -80px;
     margin-left: 30px;
 }

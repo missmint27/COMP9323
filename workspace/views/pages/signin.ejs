@@ -9,12 +9,13 @@
 
 	</head>
 	<script type="text/javascript">
+		<!--TODO how to change to 加载页面的时候就自动调用-->
         $(document).ready(function() {
             var sideMenu = false;
             $(".b3-moveclick").click(function() {
                 if (!sideMenu) {
                     sideMenu = true;
-                    $(".b3-moveclick").animate({left: "520px"});
+                    $(".b3-moveclick").animate({left: "0px"});
                     $(".b3-hold-right").css('display','inline-block');
                     $(".b3-hold-left").css('display','none');
                     $(".b3-moveclick-left").css('display','inline-block');
@@ -24,7 +25,7 @@
                 }
                 else {
                     sideMenu = false;
-                    $(".b3-moveclick").animate({left: "586px"});
+                    $(".b3-moveclick").animate({left: "70px"});
                     $(".b3-hold-right").css('display','none');
                     $(".b3-hold-left").css('display','inline-block');
                     $(".b3-moveclick-left").css('display','none');
@@ -50,7 +51,7 @@
                     </div>
 
                 </div>
-				<div class="b3-moveclick" style="left: 520px;">
+				<div class="b3-moveclick">
 					<div class="b3-moveclick-left">
                         <h2>Sign in</h2>
                     </div>
