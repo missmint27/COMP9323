@@ -7411,7 +7411,8 @@ label[class*='col'] {
         align-items: flex-start;
         width: 100%;
         flex-shrink: 0;
-        padding-bottom: 1.5rem; }
+        /*padding-bottom: 1.5rem; }*/
+      }
       .layout-nav-side > .navbar .navbar-nav {
         flex-direction: column;
         width: 100%; }

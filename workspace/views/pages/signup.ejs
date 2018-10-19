@@ -14,7 +14,7 @@
         $(".b3-moveclick").click(function() {
             if (!sideMenu) {
                 sideMenu = true;
-                $(".b3-moveclick").animate({left: "586px"});
+                $(".b3-moveclick").animate({left: "70px"});
                 $(".b3-hold-right").css('display','none');
                 $(".b3-hold-left").css('display','inline-block');
                 $(".b3-moveclick-left").css('display','none');
@@ -24,7 +24,7 @@
             }
             else {
                 sideMenu = false;
-                $(".b3-moveclick").animate({left: "520px"});
+                $(".b3-moveclick").animate({left: "0px"});
                 $(".b3-hold-right").css('display','inline-block');
                 $(".b3-hold-left").css('display','none');
                 $(".b3-moveclick-left").css('display','inline-block');
@@ -50,7 +50,7 @@
 			</div>
 
 		</div>
-		<div class="b3-moveclick" style="left: 586px;">
+		<div class="b3-moveclick">
 			<div class="b3-moveclick-left" style="display: none;">
 				<h2>Sign in</h2>
 			</div>
@@ -62,7 +62,6 @@
 			<div class="b3-name"><a href="homepage.ejs">OurCodes</a></div>
 
 			<div class="b3-hidden">
-
 				<div class="b3-form-in" style="display:none;">
 					<form action="/login" method="post" >
 						<div class="b3-username">

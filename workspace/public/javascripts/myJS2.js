@@ -445,4 +445,4 @@ function room_upvote(path) {
     })
         .done(function (data) { console.log(data); })
         .fail(function (xhr, status){ console.log(xhr.status); })
-} 
+}
