@@ -28,32 +28,19 @@
             OURCODES
         </a>
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
-            <%if(!currentUser){%>
-                <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
-                    <a class="nav-sign" href="/register" id="signup">Sign up</a>
-
-                    <a class="nav-sign" href="/login" id="signin">Sign in</a>
-                </div>
-            <%}%>
             <div class="coderoom-title">
                 <p><%=coderoom.name%></p>
             </div>
             <div class="coderoom-desc">
                 <p><%=coderoom.description%></p>
             </div>
-            <%if(currentUser){%>
-                <div class="nav-bottom text-center" style="margin: 30px auto 0 auto;">
-                    <div class="nav-bo">
-                        <img class="nav-icon" onclick="javascript:location.href='setting.ejs'"
-                             src="/icon/settings-fff.png"
-                             onmouseover="this.src='/icon/settings-e6e6e6.png'"
-                             onmouseout="this.src='/icon/settings-fff.png'"/>
-                    </div>
-                </div>
-            <%}%>
-            <hr>
 
-            <div>
+
+        </div>
+
+        <div class="d-none d-lg-block">
+            <div style="margin-bottom: 1em">
+                <hr>
                 <form>
                     <div class="input-group input-group-dark input-group-round">
                         <div class="input-group-prepend">
@@ -65,16 +52,9 @@
                                aria-label="Search app" aria-describedby="search-app">
                     </div>
                 </form>
-                <div class=" mt-2">
-                    <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#task-add-modal">
-                        Create Coderoom
-                    </button>
-                </div>
-            </div>
-        </div>
 
-        <div class="d-none d-lg-block">
-            <div class="dropup">
+            </div>
+            <div class="dropup" style="margin: auto;">
                 <%if(currentUser){%>
                     <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
@@ -89,6 +69,20 @@
                         <img id="logo" src="/icon/anonymous.png" class="avatar" alt=""
                              style="width:50px;height:50px;margin-left:auto; margin-right:auto">
                     </a>
+                <%}%>
+            </div>
+            <div class="bottom-rigth" style="margin-left: 4em">
+                <%if(currentUser){%>
+                    <div class=" mt-2">
+                        <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#task-add-modal">
+                            Create Coderoom
+                        </button>
+                    </div>
+                <%} else {%>
+                    <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; top: 1em; bottom: 1em; font-weight:bold">
+                        <a href="/register" id="signup"><button class="btn btn-success btn-sm" style="margin: auto;width: 100%; height: 100%">Sign up</button></a>
+                        <a href="/login" id="signin"><button class="btn btn-primary btn-sm" style="margin-left: 1em; width: 100%; height: 100%">Sign in</button></a>
+                    </div>
                 <%}%>
             </div>
         </div>
@@ -110,7 +104,6 @@
                         Require Permission
                         </div>
                     </button>
-                    <!--TODO-->
                     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#user-manage-modal">
                         <i class="fa fa-user"></i>
                         User list
@@ -151,7 +144,6 @@
                     </div>
                     <!--end of modal head-->
                     <div class="modal-body">
-                        <!--TODO user list-->
                         <div class="users-manage" data-filter-list="form-group-users">
                             <div id="user-group" class="form-group-users">
                             </div>
