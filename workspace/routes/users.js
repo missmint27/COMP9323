@@ -81,7 +81,7 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
         res.redirect("/");
     });
 
-    router.get("/profile/:id", function (req,res) {
+    router.get("/profiles/:id", function (req,res) {
         User.findById(req.params.id, function(err, user) {
             if(err){ return next(err); }
             if (req.user && req.user.id === req.params.id) {
@@ -99,46 +99,8 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
             }
         })
     });
-    // router.get("/profiles/:id", function (req,res) {
-    //     User.findById(req.params.id,function(err,foundUser) {
-    //         if(err){
-    //             req.redirect("/");
-    //         }
-    //         var flag = true;
-    //         var another_user_flag = false;
-    //         if (req.user) {
-    //                 console.log(req.user);
-    //                 console.log(req.params.id);
-    //             if (req.user.id === req.params.id) {
-    //                 console.log(req.user);
-    //
-    //                 flag = false;
-    //
-    //                 //TODO should return something different
-    //                 res.render("pages/setting.ejs", {user: foundUser,flag:flag,another_user_flag:another_user_flag});
-    //             }
-    //             else {
-    //                 another_user_flag = true;
-    //                 User.findById(req.user.id, function (err, foundUser_V2) {
-    //                     if(err){
-    //                         res.redirect("/");
-    //                     }
-    //                     else{
-    //                         res.render("pages/setting.ejs", {user: foundUser,another_user: another_user,flag:flag, another_user_flag:another_user_flag});
-    //
-    //                     }
-    //
-    //                 })
-    //             }
-    //         }
-    //         else{
-    //             res.render("pages/setting.ejs",{user:foundUser, flag:flag,another_user_flag:another_user_flag});
-    //         }
-    //
-    //     })
-    // });
 
-    router.put("/profile/:id",middleware.isLoggedIn,function (req,res) {
+    router.put("/profiles/:id",middleware.isLoggedIn,function (req,res) {
         if(req.user.id === req.params.id) {
             //TODO partly update
             console.log("here")
@@ -165,7 +127,7 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
                     req.flash("success", "successfully updated!!");
 
                     console.log(user);
-                    res.redirect("/profile/" + user._id);
+                    res.redirect("/profiles/" + user._id);
                 }
             });
         }
@@ -182,6 +144,7 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
                 if(err) {console.log(err);return next(err);}
                 console.log(followee);
                 //TODO ugly
+                // update the follower
                 User.findByIdAndUpdate(req.user.id,
                     {$addToSet: {following: {"_id": req.params.id, 'avatar': followee['avatar'], 'username': followee['username']}}},
                     {new:true}, function(err, follower) {
@@ -189,8 +152,6 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
                         console.log(follower);
                     });
         });
-        // update the follower
-
         res.json({'msg': 'followed user: ' + req.params.id})
     });
 
