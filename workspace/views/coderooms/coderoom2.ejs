@@ -21,8 +21,8 @@
 <div id="roomId" style="display: none"><%=coderoom.id%></div>
 <div id="userId" style="display: none"><%=user.id%></div>
 <body>
-<div class="layout layout-nav-side">
-    <div id="side-nav" class="navbar navbar-expand-lg navbar-dark sticky-top" style="width:264px; background-color: #4abdac">
+<div class="layout layout-nav-side" style="overflow: hidden;">
+    <div id="side-nav" class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #4abdac">
         <div class="side-hide" style="height:20%;width:30px;position:absolute;"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
         <div class="side-container" style="height:100%; background-color: #4abdac;">
         <a class="navbar-brand text-center" href="/"
@@ -48,11 +48,18 @@
                 <p><%=coderoom.description%></p>
             </div>
             <%if(currentUser){%>
-                <div id="like-dislike" class='btn-like'>
-                    <div class='thumbs-up'>
+                <div class="like-btn-group">
+                    <div id="user-like" class='btn-like like'>
+                        
                         <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                    </div>	
-                </div>	
+                        
+                    </div>
+                    <div id="user-dislike" class='btn-like dislike'>
+                        
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            
+                    </div>
+                </div>		
                 <div class="nav-bottom text-center" style="margin: 30px auto 0 auto;">
                     <div class="nav-bo">
                         <img class="nav-icon" onclick="javascript:location.href='setting.ejs'"
@@ -80,12 +87,12 @@
             </div>
         </div>
 
-        <div class="d-none d-lg-block">
+        <div class="d-none d-lg-block" style="position: absolute;bottom: 50px;">
             <div class="dropup">
                 <%if(currentUser){%>
                     <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
-                             style="width:50px;height:50px;margin-left:auto; margin-right:auto; transform: translateY(400%);">
+                             style="width:50px;height:50px;margin-left:auto; margin-right:auto;">
                     </a>
                     <div class="dropdown-menu">
                         <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
@@ -94,7 +101,7 @@
                 <%} else {%>
                     <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img id="logo" src="/icon/anonymous.png" class="avatar" alt=""
-                             style="width:50px;height:50px;margin-left:auto; margin-right:auto; transform: translateY(400%);">
+                             style="width:50px;height:50px;margin-left:auto; margin-right:auto;">
                     </a>
                 <%}%>
             </div>
@@ -245,20 +252,5 @@
 <script type="text/javascript" src="/javascripts/bootstrap/list.min.js"></script>
 <script type="text/javascript" src="/javascripts/bootstrap/bootstrap.js"></script>
 <!--<script type="text/javascript" src="/javascripts/bootstrap/theme.js"></script>-->
-<script>
-$(document).ready(function(){
-    $('.side-hide').click(function(){
-        if ($('#side-nav').hasClass('pd0')) {
-            console.log("hide");
-            $('#side-nav').removeClass("pd0").animate({width:"264px"}, 300);
-            $(".side-container").animate({opacity:"1"}, 300);
-            $("i.fa-chevron-right").removeClass("fa-chevron-right").addClass("fa-chevron-left");
-        } else {
-        $('#side-nav').addClass("pd0").animate({width:"20px"}, 300);
-        $(".side-container").animate({opacity:"0"}, 300);
-        $("i.fa-chevron-left").removeClass("fa-chevron-left").addClass("fa-chevron-right");
-        };
-    });
-});
-</script>
+
 </html>

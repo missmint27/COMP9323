@@ -985,11 +985,17 @@ search-icon{
     opacity: 0.8;
 }
 
+.like-btn-group {
+    display: flex;
+    text-align: center;
+    width: 100%;
+}
+
 .btn-like {
     margin-left: auto;
     margin-right: auto;
-    width: 75px;
-    height: 75px;
+    width: 50px;
+    height: 50px;
     background: #999;
     display: flex;
     flex-direction: column;
@@ -1007,26 +1013,23 @@ search-icon{
     height: 0;
     border-radius: 100%;
   }
-  .btn-like.like {
+  .btn-like.like.thumbs-up {
     background: #2EC4B6;
   }
-  .btn-like.like .thumbs-up {
-    transform: rotate(0deg);
-  }
-  .btn-like.dislike {
-    background: #E71D36;
-  }
-  .btn-like.dislike .thumbs-up {
+  .btn-like.dislike {  
     transform: rotate(180deg);
   }
-  .btn-like .thumbs-up {
+  .btn-like.dislike.thumbs-up {
+    background: #E71D36;
+  }
+  .btn-like.thumbs-up {
     transition: 0.35s ease-in-out;
   }
-  .btn-like .thumbs-up .fa {
+  .btn-like .fa {
     font-size: 25px;
     color: white;
   }
-  .btn-like .thumbs-up .fa::before {
+  .btn-like .fa::before {
     display: block;
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
   }
@@ -1220,4 +1223,10 @@ button.follow-ing:not(.wait):hover .msg-unfollow{
 
 .pd0 {
     padding: 0;
+}
+
+@media (max-width: 768px) {
+    .sticky-top {
+        width: 100% !important;
+    }
 }

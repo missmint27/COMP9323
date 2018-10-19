@@ -400,14 +400,23 @@ function hideComments() {
     let comment_btn_text = document.getElementById('comment-btn-text');
     // const user_block = document.getElementById("participants_block");
     if (!comment_mode) {
-        comment_btn_text.innerHTML = 'Show Comments;'
-        code_content.style.cssText = 'width: 97%;';
-        chat_content.style.cssText = 'height: calc(100vh - 5rem); display: none;';
-
+        comment_btn_text.innerHTML = 'Show Comments';
+        $('#code-content').animate({width:"97%"}, 300);
+        $('#chat-content').hide(300);
+        if ($('#side-nav').hasClass('pd0')) {
+            $('#side-nav').removeClass("pd0").animate({width:"264px"}, 300);
+            $(".side-container").animate({opacity:"1"}, 300);
+            $("i.fa-chevron-right").removeClass("fa-chevron-right").addClass("fa-chevron-left");
+        }
     } else {
-        comment_btn_text.innerHTML = 'Hide Comments;'
-        code_content.style.cssText = 'width: 75%;';
-        chat_content.style.cssText = 'height: calc(100vh - 5rem); display: block;';
+        comment_btn_text.innerHTML = 'Hide Comments';
+        $('#code-content').animate({width:"75%"}, 300);
+        $('#chat-content').show(300);
+        if (!$('#side-nav').hasClass('pd0')) {
+            $('#side-nav').addClass("pd0").animate({width:"20px"}, 300);
+            $(".side-container").animate({opacity:"0"}, 300);
+            $("i.fa-chevron-left").removeClass("fa-chevron-left").addClass("fa-chevron-right");
+        }
     }
 }
 function urlGetter() {
@@ -426,6 +435,7 @@ function room_downvote(path) {
         .done(function (data) { console.log(data); })
         .fail(function (xhr, status){ console.log(xhr.status); })
 }
+
 function room_upvote(path) {
     const url = urlGetter() + "/upvote";
     console.log(url);
@@ -435,4 +445,4 @@ function room_upvote(path) {
     })
         .done(function (data) { console.log(data); })
         .fail(function (xhr, status){ console.log(xhr.status); })
-}
+} 

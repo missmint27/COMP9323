@@ -80,15 +80,25 @@ $( document ).ready(function() {
     });
 //
 //
+    $('.side-hide').click(function(){
+        if ($('#side-nav').hasClass('pd0')) {
+            $('#side-nav').removeClass("pd0").animate({width:"264px"}, 300);
+            $(".side-container").animate({opacity:"1"}, 300);
+            $("i.fa-chevron-right").removeClass("fa-chevron-right").addClass("fa-chevron-left");
+        } else {
+        $('#side-nav').addClass("pd0").animate({width:"20px"}, 300);
+        $(".side-container").animate({opacity:"0"}, 300);
+        $("i.fa-chevron-left").removeClass("fa-chevron-left").addClass("fa-chevron-right");
+        };
+    });
 });
 
-$("#like-dislike").on('click', function(e){
+$(".btn-like").on('click', function(e){
 	var $this = $(this);
-    if ($this.hasClass("like")){
-		$this.removeClass("like");
-		$this.addClass("dislike");
+    if ($this.hasClass("thumbs-up")){
+		$this.removeClass("thumbs-up");
 	}else{
-		$this.addClass("like");
-		$this.removeClass("dislike");
+        $this.addClass("thumbs-up");
+        $(".btn-like").not(this).removeClass("thumbs-up");
 	}		
 }); 
