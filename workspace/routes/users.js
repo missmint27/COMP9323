@@ -129,7 +129,7 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
     //     })
     // });
 
-    router.put("/profiles/:id",middleware.isLoggedIn,function (req,res) {
+    router.put("/profile/:id",middleware.isLoggedIn,function (req,res) {
         if(req.user.id === req.params.id) {
             //TODO partly update
             var newData = {

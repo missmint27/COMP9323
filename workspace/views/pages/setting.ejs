@@ -7,391 +7,319 @@
     <title>Setting</title>
     <link rel="icon" href="/icon/website.png" type="image/x-icon">
     <link rel="stylesheet" href="/stylesheets/style.css">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Optional theme -->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+    <link href="/stylesheets/theme.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton|Fira+Sans" rel="stylesheet">
 
 
 </head>
 <body>
 <div class="layout layout-nav-side">
-<nav class="nav-bar">
-    <div class="nav-container">
-        <div class="nav-name">
-            <a href="homepage.ejs">OurCodes</a>
-        </div>
-        <img src="/img/avatar/avatar3.png" class="avatar" alt="">
-        <%if(flag){%>
-        <div class="nav-sign">
-            <div class="nav-menu"><a class="nav-sign" href="/register">Sign up</a></div>
-            <div class="nav-slash">/</div>
-            <div class="nav-menu"><a class="nav-sign" href="/login">Sign in</a></div>
-        </div>
-
-        <br>
-        <div class="nav-username">
-            <span>please sign in </span>
-        </div>
-        <%}%>
-
-        <%if(!flag){%>
-        <div class="nav-sign">
-            <div class="nav-menu"><a class="nav-sign" href="/logout">Log out</a></div>
-            <div class="nav-slash">/</div>
-            <div class="nav-menu"><a class="nav-sign" href="/profile/<%=user.id%>">Profile</a></div>
-            <br>
-            <div class="nav-username">
-                <span>Welcome <%=user.username%></span>
-            </div>
-        </div>
-
-        <%}%>
-
-
-        <%if(another_user_flag){%>
-
-        <div class="nav-sign">
-            <div class="nav-menu"><a class="nav-sign" href="/logout">Log out</a></div>
-            <div class="nav-slash">/</div>
-            <div class="nav-menu"><a class="nav-sign" href="/profile/<%=another_user.id%>">Profile</a></div>
-            <br>
-            <div class="nav-username">
-                <span>Welcome <%=another_user.username%></span>
-            </div>
-        </div>
-
-
-        <%}%>
-        <!--Can be replaced after login-->
-
-
-
-        <!--click these two buttons show and hide a div of contents-->
-
-
-        <div class="nav-bottom">
-            <div class="nav-circle">
-                <img src="/icon/folder-fff.png" class="circle-icon" id="project-list"
-                     onmouseover="this.src='/icon/folder-4abdac.png'"
-                     onmouseout="this.src='/icon/folder-fff.png'">
-                <!--怎么可以一起变呀？-->
-            </div>
-            <div class="nav-circle">
-                <img src="/icon/participant-fff.png" class="circle-icon" id="participant-list"
-                     onmouseover="this.src='/icon/participant-4abdac.png'"
-                     onmouseout="this.src='/icon/participant-fff.png'">
-            </div>
-            <div class="nav-bo">
-                <img class="nav-icon" onclick="javascript:location.href='setting.html'"
-                     src="/icon/settings-fff.png"
-                     onmouseover="this.src='/icon/settings-e6e6e6.png'"
-                     onmouseout="this.src='/icon/settings-fff.png'"/>
-            </div>
-            <div class="b1-search">
-                <div class="search-icon">
-                    <img class="nav-icon" src="/icon/search-fff.png"
-                         onmouseover="this.src='/icon/search-e6e6e6.png'"
-                         onmouseout="this.src='/icon/search-fff.png'"
-                         onclick="searchBar()" style="display: inline-block;float: left;"/>
-                </div>
-                <div id="hidDiv" style="display: none;">
-                    <input type="text" class="b1-searcher" placeholder="e.g. Ella">
-
-                    <input class="b1-advsearch my-button" type="button" value="+ Advanced Search" onclick="advSearch()">
-                </div>
-                <div id="hidAdv" class="b1-divadv" style="display: none;">
-                    <ul class="b1-adv-ul">
-                        <li class="b1-adv-li">
-                            <input type="checkbox" name="advancedsearch" value="title" id="advs1">
-                            <label for="advs1">Title</label>
-                        </li>
-                        <li class="b1-adv-li">
-                            <input type="checkbox" name="advancedsearch" value="author" id="advs2">
-                            <label for="advs2">Author</label>
-                        </li>
-                        <li class="b1-adv-li">
-                            <input type="checkbox" name="advancedsearch" value="Content" id="advs3">
-                            <label for="advs3">Content</label>
-                        </li>
-                    </ul>
-                    <button class="my-button">Search</button>
-
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-</nav>
-<div class="block-5">
-    <!--username/password/email/mobile/birthday/city/country/coderooms/follower/following-->
-    <br>
-    <br>
-    <div class="container bootstrap snippet">
-        <div class="row">
-            <div class="col-sm-10">
-                <h1>Setting</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3"><!--left col-->
-
-
-                <div class="text-center">
-                    <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                         class="avatar img-circle b5-avatar" alt="avatar">
-
-                    <input type="file" class="text-center center-block file-upload">
-                </div>
-                <br>
-
-                <ul class="list-group">
-                    <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Coderooms</strong></span> 3
-                    </li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 14</li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Following</strong></span> 37
-                    </li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78
-                    </li>
-                </ul>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">Social Media</div>
-                    <div class="panel-body">
-                        <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i
-                            class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i
-                            class="fa fa-google-plus fa-2x"></i>
+    <div class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #4abdac">
+            <a class="navbar-brand text-center" href="/"
+                style="font-size:2rem; margin-left:auto; margin-right:auto">
+                OURCODES
+            </a>
+            <%if(currentUser){%>
+            <div class="navbar-brand text-center"
+                    style="font-size:1rem; margin-top: -3em; margin-left:auto; margin-right:auto" cnavbar-brand text-center> Welcome <%=currentUser.username%></div>
+            <%}%>
+    
+            <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
+                <%if(currentUser){%>
+                    <!--TODO currentUser in passport will not update automatically-->
+                    <%if(currentUser.avatar) {%>
+                        <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
+                                style="width:50px;height:50px;margin-left:auto; margin-right:auto">
+                    <%} else {%>
+                        <img id="logo" src="/icon/anonymous.png" class="avatar" alt=""
+                                style="width:50px;height:50px;margin-left:auto; margin-right:auto">
+                    <%}%>
+                <div class="nav-bottom text-center" style="margin: 100px auto 0 auto;">
+                    <div class="nav-bo">
+                        <img class="nav-icon" onclick="javascript:location.href='/profiles/<%=currentUser.id%>'"
+                                src="/icon/settings-fff.png"
+                                onmouseover="this.src='/icon/settings-e6e6e6.png'"
+                                onmouseout="this.src='/icon/settings-fff.png'"/>
                     </div>
                 </div>
-
-            </div><!--/col-3-->
-            <div class="col-sm-9">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#profile" class="b5-a">User Proile</a></li>
-                    <li><a data-toggle="tab" href="#coderooms" class="b5-a">Coderoomes</a></li>
-                    <li><a data-toggle="tab" href="#followers" class="b5-a">Followers</a></li>
-                    <li><a data-toggle="tab" href="#following" class="b5-a">Following</a></li>
-                </ul>
-
-                <div class="tab-content">
-
-                    <div class="tab-pane active" id="profile">
-                        <hr>
-                        <form class="form" action="/profile/<%=user.id%>?_method=PUT" method="POST" id="profileform">
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="first_name"><h4>First name</h4></label>
-                                    <input type="text" class="form-control" name="firstName" id="first_name"
-                                           placeholder="first name" value ="<%=user.firstName%>"title="enter your first name if any.">
-
-                                </div>
+                <%} else {%>
+                    <img id="logo" src="/icon/anonymous.png" class="avatar" alt=""
+                            style="width:50px;height:50px;margin-left:auto; margin-right:auto">
+                    <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
+                        <a class="nav-sign" href="/register" id="signup">Sign up</a>
+                        <a class="nav-sign" href="/login" id="signin">Sign in</a>
+                    </div>
+                    <div class="nav-bottom text-center" style="margin: 100px auto 0 auto;">
+                    </div>
+                <%}%>
+                <hr>
+    
+    
+                <div>
+                    <form>
+                        <div class="input-group input-group-dark input-group-round">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">search</i>
+                                </span>
                             </div>
-                            <div class="form-group">
+                            <input type="search" class="form-control form-control-dark" placeholder="Search"
+                                    aria-label="Search app" aria-describedby="search-app">
+                        </div>
+                    </form>
+                </div>
+            </div>
+    
+    
+            <div class="d-none d-lg-block">
+                <div class="dropup">
+                    <%if(currentUser){%>
+                        <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img alt="Image" src='icon/settings-e6e6e6.png' class="avatar"/>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
+                            <a href="/logout" class="dropdown-item">Log Out</a>
+                        </div>
+                    <%}%>
+                </div>
+            </div>
+    </div>
+    <div class="main-container">
+            <div class="container">
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-lg-3 mb-3">
+                            <ul class="nav nav-tabs flex-lg-column">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Your Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="coderooms-tab" data-toggle="tab" href="#coderooms" role="tab" aria-controls="coderooms" aria-selected="false">Coderooms</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="following-tab" data-toggle="tab" href="#following" role="tab" aria-controls="following" aria-selected="false">Following</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="follower-tab" data-toggle="tab" href="#follower" role="tab" aria-controls="follower" aria-selected="false">Follower</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-xl-8 col-lg-9">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" role="tabpanel" id="profile" aria-labelledby="profile-tab">
+                                                        <div class="media mb-4">
+                                                            <img alt="Image" src="<%=currentUser.avatar%>" class="avatar avatar-lg" />
+                                                            <div class="media-body ml-3">
+                                                                <div class="custom-file custom-file-naked d-block mb-1">
+                                                                    <input type="file" class="custom-file-input d-none" id="avatar-file">
+                                                                    <label class="custom-file-label position-relative" for="avatar-file">
+                                                                        <span class="btn btn-primary">
+                                                                            Upload avatar
+                                                                        </span>
+                                                                    </label>
+                                                                </div>
+                                                                <small>For best results, use an image at least 256px by 256px in either .jpg or .png format</small>
+                                                            </div>
+                                                        </div>
+                                                        <!--end of avatar-->
+                                                        <form>
+                                                            <div class="form-group row align-items-center">
+                                                                <label class="col-3">First Name</label>
+                                                                <div class="col">
+                                                                    <input type="text" placeholder="First name" value="David" name="profile-first-name" class="form-control" required />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row align-items-center">
+                                                                <label class="col-3">Last Name</label>
+                                                                <div class="col">
+                                                                    <input type="text" placeholder="First name" value="Whittaker" name="profile-last-name" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row align-items-center">
+                                                                <label class="col-3">Email</label>
+                                                                <div class="col">
+                                                                    <input type="email" placeholder="Enter your email address" name="profile-email" class="form-control" required />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row align-items-center">
+                                                                <label class="col-3">Location</label>
+                                                                <div class="col">
+                                                                    <input type="text" placeholder="Enter your location" name="profile-location" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-3">Bio</label>
+                                                                <div class="col">
+                                                                    <textarea type="text" placeholder="Tell us a little about yourself" name="profile-bio" class="form-control" rows="4"></textarea>
+                                                                    <small>This will be displayed on your public profile</small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row justify-content-end">
+                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                            </div>
+                                                        </form>
+                                        </div>
+                                        <div class="tab-pane fade" role="tabpanel" id="coderooms" aria-labelledby="coderooms-tab">
+                                                <div id="coderoom-lists" style="width: 100%;margin: 0 auto;"> 
+                                                     
+                                                        <div class="content-list-body">
+                                                                <div class="card-list">
+                                                                    <div class="card-list-body">
+                                                                        
+                                
+                                                                        <div class="card card-task">
+                                
+                                                                            <div class="progress">
+                                                                                <div class="progress-bar bg-warning" role="progressbar"
+                                                                                     style="width: 100%"></div>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="card-title">
+                                                                                    <a href="#">
+                                                                                        <h6 data-filter-by="text">name</h6>
+                                                                                    </a>
+                                                                                    <div class="text-small"
+                                                                                         style="max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap;">
+                                                                                        description
+                                                                                    </div>
+                                                                                    <p class="text-small" style="margin-top: 1rem;">Author:author</p>
+                                
+                                                                                </div>
+                                                                                <div class="card-meta">
+                                                                                    <ul class="avatars" id="id">
+                                                                                    </ul>
+                                
+                                                                                    <div class="dropdown card-options">
+                                                                                        <button class="btn-options" type="button"
+                                                                                                id="task-dropdown-button-1" data-toggle="dropdown"
+                                                                                                aria-haspopup="true" aria-expanded="false">
+                                                                                            <i class="material-icons">more_vert</i>
+                                                                                        </button>
+                                                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                                                            <form method="post"  action="">
+                                                                                                <button type="submit" class="dropdown-item text-danger" >Delete
+                                                                                                    room</button>
+                                                                                            </form>
+                                                                                            <div class="dropdown-divider"></div>
+                                                                                            <!--TODO revoke permission-->
+                                                                                            <a class="dropdown-item" href="#">Revoke permission</a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!--TODO Should be only numbers-->
+                                                                                    <div class="card-likeordislike">
+                                                                                        <div class="card-likenum">
+                                                                                            <p>3</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!--TODO Should be only numbers-->
+                                                                                    <div>
+                                                                                        <form method="get" action="">
+                                                                                        <button type="submit" class="btn btn-outline-primary">Enter
+                                                                                        </button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                
+                                                                            </div>
+                                                                            <!--TODO-->
+                                
+                                                                        </div>
+                                
+                                                                    </div>
+                                                                    <!--</div>-->
+                                
+                                                                </div>
+                                
+                                                                <!--**********************************************-->
+                                                                <!--end of content list body-->
+                                                        </div>
+                                                    </div>
 
-                                <div class="col-xs-6">
-                                    <label for="last_name"><h4>Last name</h4></label>
-                                    <input type="text" class="form-control" name="lastName" id="last_name"
-                                           placeholder="last name" value="<%=user.lastName%>"title="enter your last name if any.">
-
+                                        </div>
+                                        <div class="tab-pane fade" role="tabpanel" id="following" aria-labelledby="following-tab">
+                                            <span>You are following</span> <span>X</span><span> people:</span>
+                                            <div id="following-list mt-3" style="margin-top: 20px;">
+                                                <div class="row one-user">
+                                                        <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
+                                                        style="width:50px;height:50px;">
+                                                        <button id="follow-btn" class="btn btn-outline-primary follow-ing">
+                                                                <span class="msg-follow">Follow</span>
+                                                                <span class="msg-follow-ing">Following</span>
+                                                                <span class="msg-unfollow">Unfollow</span>
+                                                            </button>
+                                                </div>
+                                                <div class="row one-user">
+                                                        <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
+                                                        style="width:50px;height:50px;">
+                                                        <button id="follow-btn" class="btn btn-outline-primary follow-ing">
+                                                                <span class="msg-follow">Follow</span>
+                                                                <span class="msg-follow-ing">Following</span>
+                                                                <span class="msg-unfollow">Unfollow</span>
+                                                            </button>
+                                                </div>
+                                                <div class="row one-user">
+                                                        <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
+                                                        style="width:50px;height:50px;">
+                                                        <button id="follow-btn" class="btn btn-outline-primary follow-ing">
+                                                                <span class="msg-follow">Follow</span>
+                                                                <span class="msg-follow-ing">Following</span>
+                                                                <span class="msg-unfollow">Unfollow</span>
+                                                            </button>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <div class="tab-pane fade" role="tabpanel" id="follower" aria-labelledby="follower-tab">
+                                                <span>You are followed by </span> <span>X</span><span> people:</span>
+                                                <div id="follower-list" style="margin-top: 20px;">
+                                                    <div class="row one-user">
+                                                            <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
+                                                            style="width:50px;height:50px;">
+                                                    </div>
+                                                    <div class="row one-user">
+                                                            <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
+                                                            style="width:50px;height:50px;">
+                                                    </div>
+                                                    <div class="row one-user">
+                                                            <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
+                                                            style="width:50px;height:50px;">
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-6">
-                                    <label for="last_name"><h4>Username</h4></label>
-                                    <input type="text" class="form-control" name="username" id="username"
-                                           placeholder="username" value="<%=user.username%>"title="enter your username if any.">
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="email"><h4>Email</h4></label>
-                                    <input type="email" class="form-control" name="email" id="email"
-                                           placeholder="you@email.com" value = "<%=user.email%>"title="enter your email.">
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-6">
-                                    <label for="password"><h4>Password</h4></label>
-                                    <input type="password" class="form-control" name="password" id="password"
-                                           placeholder="password" title="enter your password.">
-
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-xs-6">
-                                    <label for="confirmpwd"><h4>Confirm Password</h4></label>
-                                    <input type="password" class="form-control" name="confirmpwd" id="confirmpwd"
-                                           placeholder="confirm password" title="enter your password again.">
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-6">
-                                    <label for="mobile"><h4>Mobile</h4></label>
-                                    <input type="text" class="form-control" name="mobile" id="mobile"
-                                           placeholder="enter mobile number" value="<%=user.mobile%>"title="enter your mobile number if any.">
-
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-xs-6">
-                                    <label for="postcode"><h4>Postcode</h4></label>
-                                    <input type="text" class="form-control" name="postCode" id="postcode"
-                                           placeholder="enter postcode" value="<%=user.postCode%>"title="enter your postcode if any.">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-xs-6">
-                                    <label for="city"><h4>City</h4></label>
-                                    <input type="text" class="form-control" value="<%=user.city%>" id="city" name="city" placeholder="somewhere"
-                                           title="enter a city">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-6">
-                                    <label for="country"><h4>Country</h4></label>
-                                    <input type="text" class="form-control" id="country" placeholder="somewhere"
-                                           title="enter a city">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <br>
-                                    <button class="my-button b5-button" type="submit">
-                                        <i class="glyphicon glyphicon-ok-sign"></i>
-                                        Save
-                                    </button>
-                                    <button class="my-button b5-button" type="reset">
-                                        <i class="glyphicon glyphicon-repeat"></i>
-                                        Reset
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                        <hr>
-                    </div><!--/tab-pane-->
-
-
-                    <div class="tab-pane table-responsive" id="coderooms">
-                        <h2></h2>
-                        <hr>
-                        <form class="form" action="##" method="post" id="coderoomtable">
-                            <table class="table table-hover table-striped">
-                                <caption>My Coderooms</caption>
-                                <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>#Participants</th>
-                                    <th>Short Description</th>
-                                    <th>Manage</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Code1</td>
-                                    <td>20</td>
-                                    <td>asdfasdfasdf</td>
-                                    <td>
-                                        <button class="my-button" style="height: 3rem;width: 6rem;">View</button>
-                                        <button class="my-button" style="height: 3rem;width: 6rem;">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Code2</td>
-                                    <td>14</td>
-                                    <td>asdfasdfasdf</td>
-                                    <td>
-                                        <button class="my-button" style="height: 3rem;width: 6rem;">View</button>
-                                        <button class="my-button" style="height: 3rem;width: 6rem;">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Code3</td>
-                                    <td>27</td>
-                                    <td>asdfasdfasdf</td>
-                                    <td>
-                                        <button class="my-button" style="height: 3rem;width: 6rem;">View</button>
-                                        <button class="my-button" style="height: 3rem;width: 6rem;">Delete</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
-
-                    </div><!--/tab-pane-->
-
-                    <div class="tab-pane" id="followers">
-                        <hr>
-                        <div class="media user-follower">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Antonius<br><span class="text-muted username">@mrantonius</span></a>
-                                <button type="button" class="btn btn-sm btn-toggle-following pull-right">
-                                    <i class="fa fa-checkmark-round"></i>
-                                    <span>Following</span>
-                                </button>
                             </div>
                         </div>
-                        <div class="media user-follower">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Michael<br><span class="text-muted username">@iamichael</span></a>
-                                <button type="button" class="btn btn-sm btn-default pull-right">
-                                    <i class="fa fa-plus"></i> Follow
-                                </button>
-                            </div>
-                        </div>
-                    </div><!--/tab-pane-->
-
-                    <div class="tab-pane" id="following">
-                        <hr>
-                        <div class="media user-following">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User Avatar">
-                            <div class="media-body">
-                                <a href="#">Stella<br><span class="text-muted username">@stella</span></a>
-                                <button type="button" class="btn btn-sm btn-danger pull-right">
-                                    <i class="fa fa-close-round"></i> Unfollow
-                                </button>
-                            </div>
-                        </div>
-                    </div><!--/tab-pane-->
-                </div><!--/tab-content-->
-            </div><!--/col-9-->
-        </div><!--/row-->
+                    </div>
+            </div>
     </div>
 </div>
 </body>
-<script type="text/javascript" src="/javascripts/ellaJS.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/jquery.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/autosize.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/popper.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/prism.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/draggable.bundle.legacy.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/swap-animation.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/dropzone.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/list.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/bootstrap.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap/theme.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+<script src="/javascripts/homepageJS.js"></script>
 <script>
-    <%if(flag){%>
-    $(":input").prop("readonly","true");
-    $(".my-button").css("visibility","hidden");
-    $('.btn-group-sm>.btn, .btn-sm').css("visibility","hidden");
-    <%}%>
-</script>
-
+        $('#follow-btn').click(function(){
+          var $this = $(this);
+          $this.toggleClass('follow-ing')
+          if($this.is('.follow-ing')){
+            $this.addClass('wait');
+          }
+        }).on('mouseleave',function(){
+          $(this).removeClass('wait');
+        })
+        </script>
 </html>

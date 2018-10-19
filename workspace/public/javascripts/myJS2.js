@@ -397,11 +397,15 @@ function modeChange() {
 function hideComments() {
     let code_content=document.getElementById('code-content');
     let chat_content=document.getElementById('chat-content');
+    let comment_btn_text = document.getElementById('comment-btn-text');
     // const user_block = document.getElementById("participants_block");
     if (!comment_mode) {
+        comment_btn_text.innerHTML = 'Show Comments'
         code_content.style.cssText = 'width: 97%;';
         chat_content.style.cssText = 'height: calc(100vh - 5rem); display: none;';
+
     } else {
+        comment_btn_text.innerHTML = 'Hide Comments'
         code_content.style.cssText = 'width: 75%;';
         chat_content.style.cssText = 'height: calc(100vh - 5rem); display: block;';
     }
