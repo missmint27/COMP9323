@@ -646,10 +646,12 @@ search-icon{
     height: 2rem;
     margin-bottom: 10px;
     border:0;
+    padding-left: 5px;
     padding-bottom: 2px;
     border-bottom: 2px solid #fff;
     background-color: #dfdce3;
     color: #fff;
+    font-size: 20px;
 }
 .b3-button{
     border:0;
@@ -657,6 +659,7 @@ search-icon{
     border-bottom: 2px solid #fff;
     background-color: #dfdce3;
     color: #fff;
+    font-size: 20px;
 
 }
 
@@ -1064,10 +1067,6 @@ search-icon{
     display: block;
     position: relative;
     margin: auto;
-    top: ;
-    left: ;
-    right: ;
-    bottom: ;
   }
 
   .profile-card {
@@ -1081,11 +1080,11 @@ search-icon{
   .profile-pic {
     display: false;
     position: absolute;
-    margin: false;
+    margin: 0;
     top: -90px;
     left: 50%;
-    right: false;
-    bottom: false;
+    right: 0;
+    bottom: 0;
     -webkit-transform: translateX(-50%);
             transform: translateX(-50%);
     height: 180px;
@@ -1120,16 +1119,23 @@ search-icon{
     padding: 10px 0px;
     text-align: center;
     overflow: hidden;
+      background-color: #ffffff;
   }
   .profile-stat {
     height: 100%;
     width: 33.3333%;
   }
+  .profile-stat a{
+      color: #666666;
+  }
+    .profile-stat a:hover{
+        color: #f7b733;
+    }
   .profile-stat:after {
     color: #999;
   }
-  .works::after {
-    content: "works";
+  .coderooms::after {
+    content: "coderooms";
   }
   .followers::after {
     content: "followers";
@@ -1150,11 +1156,7 @@ search-icon{
   .floated {
     display: inline-block;
     position: relative;
-    margin: false;
-    top: ;
-    left: ;
-    right: ;
-    bottom: ;
+    margin: 0;
     float: left;
   }
 
@@ -1220,4 +1222,40 @@ button.follow-ing:not(.wait):hover .msg-unfollow{
 
 .pd0 {
     padding: 0;
+}
+.profile-tab{
+    background-color: transparent;
+}
+.tab-item{
+    width: 70%;
+    margin: 0 auto;
+}
+.profile-ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.profile-li {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid white;
+    display: inline-block;
+    position: relative;
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);
+    -webkit-transition: .2s ease;
+    transition: .2s ease;
+    background: #4abdac;
+}
+.profile-li:nth-child(n+2) {
+    margin-left: -50px;
+}
+.profile-ul:hover .profile-li:nth-child(n+2) {
+    margin-left: -10px;
+}
+.profile-ava-li{
+    vertical-align: center;
+    text-align: center;
+    border-radius: 50%;
+    margin: 0 auto;
 }

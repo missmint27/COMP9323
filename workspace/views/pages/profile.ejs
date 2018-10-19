@@ -103,67 +103,153 @@
             </button>
             </div>
             <div class="rela-block profile-card-stats">
-                <div class="floated profile-stat works" id="num_works">28<br>
-                </div>
-                <div class="floated profile-stat followers" id="num_followers">112<br>
-                </div><div class="floated profile-stat following" id="num_following">245<br>
-                </div>
+                <ul class="nav profile-tab">
+                    <li class="floated profile-stat">
+                        <a data-toggle="tab" href="#coderoom-lists">
+                            <div class="coderooms" id="num_coderooms">
+                                28<br>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="floated profile-stat">
+                        <a data-toggle="tab" href="#follower-list">
+                            <div class="followers" id="num_followers">
+                                112<br>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="floated profile-stat">
+                        <a data-toggle="tab" href="#following-list">
+                            <div class="following" id="num_following">
+                                245<br>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
             </div>
         </div>
-        <div id="coderoom-lists" style="width: 70%;margin: 0 auto;"> 
-            <div class="row content-list-head mt-5">
+
+        <div class="tab-content">
+            <div id="coderoom-lists" class="tab-pane tab-item active">
+                <div class="row content-list-head mt-5">
                     <div class="col-auto">
                         <h3>CodeRooms</h3>
                     </div>
-                    
-            </div>
-                <!--end of content list head-->
 
-            <div class="content-list-body">
+                </div><!--end of content list head-->
+
+                <div class="content-list-body">
                     <div class="card-list">
                         <div class="card-list-body">
-                            
-                                <div class="card card-task">
-                                    <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar"
-                                            style="width: 100%"></div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="card-title">
-                                            <a href="#">
-                                                <h6 data-filter-by="text">Name</h6>
-                                            </a>
-                                            <div class="text-small"
-                                                style="max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap;">
-                                                description
-                                            </div>
-                                            <p class="text-small" style="margin-top: 1rem;">Author:</p>
 
+                            <div class="card card-task">
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" role="progressbar"
+                                         style="width: 100%"></div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <a href="#">
+                                            <h6 data-filter-by="text">Name</h6>
+                                        </a>
+                                        <div class="text-small"
+                                             style="max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap;">
+                                            description
                                         </div>
-                                        <div class="card-meta">
-                                            <ul class="avatars" id="">>
-                                            </ul>
-                                            <div class="card-likeordislike">
-                                                <div class="card-likenum">
-                                                    <p>3</p>
-                                                </div>
+                                        <p class="text-small" style="margin-top: 1rem;">Author:</p>
+
+                                    </div>
+                                    <div class="card-meta">
+                                        <ul class="avatars" id="">
+                                        </ul>
+                                        <div class="card-likeordislike">
+                                            <div class="card-likenum">
+                                                <p>3</p>
                                             </div>
-                                            <div>
-                                                <form method="get" action="/">
-                                                    <button type="submit" class="btn btn-outline-primary">Enter
-                                                    </button>
-                                                </form>
-                                            </div>
+                                        </div>
+                                        <div>
+                                            <form method="get" action="/">
+                                                <button type="submit" class="btn btn-outline-primary">Enter
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                            
+                            </div>
+
                         </div>
+                    </div><!--end of content list body-->
+                </div>
+            </div>    <!--end of coderoom list tag-->
+
+            <div id="follower-list" class="tab-pane tab-item">
+                <div class="row content-list-head mt-5">
+                    <div class="col-auto">
+                        <h3>Follower</h3>
                     </div>
-                    <!--end of content list body-->
+                </div><!--end of content list head-->
+
+                <div class="content-list-body">
+                    <ul class="profile-ul">
+                        <li class="profile-li">
+                            <a href="/profiles/undefined">
+                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
+                            </a>
+                        </li>
+                        <li class="profile-li">
+                            <a href="/profiles/undefined">
+                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
+                            </a>
+                        </li>
+                        <li class="profile-li">
+                            <a href="/profiles/undefined">
+                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
+                            </a>
+                        </li>
+                        <li class="profile-li">
+                            <a href="/profiles/undefined">
+                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="following-list" class="tab-pane tab-item">
+                <div class="row content-list-head mt-5">
+                    <div class="col-auto">
+                        <h3>Following</h3>
+                    </div>
+                </div><!--end of content list head-->
+
+                <div class="content-list-body">
+                    <ul class="profile-ul">
+                        <li class="profile-li">
+                            <a href="/profiles/undefined">
+                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
+                            </a>
+                        </li>
+                        <li class="profile-li">
+                            <a href="/profiles/undefined">
+                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
+                            </a>
+                        </li>
+                        <li class="profile-li">
+                            <a href="/profiles/undefined">
+                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
+                            </a>
+                        </li>
+                        <li class="profile-li">
+                            <a href="/profiles/undefined">
+                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-        </div>
+    </div>
 </div>
 </body>
 <script type="text/javascript" src="/javascripts/bootstrap/jquery.min.js"></script>
