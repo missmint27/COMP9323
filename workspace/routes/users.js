@@ -90,6 +90,7 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
                         return next(err);
                     }
                     else {
+                        console.log(user);
                         res.render('pages/setting.ejs', {me: req.user, user: user, allcoderooms: coderooms});
                     }
                 })

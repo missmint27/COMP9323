@@ -97,9 +97,10 @@
             </div>
             <div style="text-align: center;margin: 20px 0;">
             <button id="follow-btn" class="btn btn-outline-primary follow">
-                <span class="msg-follow">Follow</span>
-                <span class="msg-follow-ing">Following</span>
-                <span class="msg-unfollow">Unfollow</span>
+
+                <span class="msg-follow" id="follow_button">Follow</span>
+                <span class="msg-follow-ing" id="following_button">Following</span>
+                <span class="msg-unfollow" id="delete_button">Unfollow</span>
             </button>
             </div>
             <div class="rela-block profile-card-stats">
@@ -107,21 +108,21 @@
                     <li class="floated profile-stat">
                         <a data-toggle="tab" href="#coderoom-lists">
                             <div class="coderooms" id="num_coderooms">
-                                28<br>
+                                <%=user.myrooms.length%><br>
                             </div>
                         </a>
                     </li>
                     <li class="floated profile-stat">
                         <a data-toggle="tab" href="#follower-list">
                             <div class="followers" id="num_followers">
-                                112<br>
+                                <%=user.follower.length%><br>
                             </div>
                         </a>
                     </li>
                     <li class="floated profile-stat">
                         <a data-toggle="tab" href="#following-list">
                             <div class="following" id="num_following">
-                                245<br>
+                                <%=user.following.length%><br>
                             </div>
                         </a>
                     </li>
@@ -273,6 +274,29 @@ $('#follow-btn').click(function(){
   }
 }).on('mouseleave',function(){
   $(this).removeClass('wait');
+});
+
+$("#follow_button").click(function () {
+    console.log("sdfsdf");
+    $.ajax({
+        url:"/users/<%=user._id%>/follow",
+        type:"put",
+        success: function (result) {
+            console.log(result);
+        }
+    })
+});
+
+$("#delete_button").click(function(){
+    console.log("get delete button");
+    $.ajax({
+        url:"/users/<%=user._id%>/follow",
+        type:"delete",
+        success: function(result){
+            console.log(result);
+        }
+    })
 })
+
 </script>
 </html>
