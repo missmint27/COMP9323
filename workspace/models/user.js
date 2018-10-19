@@ -9,6 +9,7 @@ var UserSchema = new mongoose.Schema({
     birthday:{type: Date},
     country:String,
     city:String,
+    bio:String,
     firstName:String,
     lastName:String,
     postCode:String,

@@ -127,35 +127,39 @@
                                                             </div>
                                                         </div>
                                                         <!--end of avatar-->
-                                                        <form>
+                                                        <%=currentUser.firstName%>
+                                                        <%console.log(currentUser)%>
+                                                        <%console.log(me)%>
+                                                            <%console.log("sdfsdfsfd")%>
+                                                        <form action="/profile/<%=currentUser.id%>?_method=PUT"  method="POST" >
                                                             <div class="form-group row align-items-center">
                                                                 <label class="col-3">First Name</label>
                                                                 <div class="col">
-                                                                    <input type="text" placeholder="First name" value="David" name="profile-first-name" class="form-control" required />
+                                                                    <input type="text" placeholder="First name" value="<%=currentUser.firstName%>" name="profileName" class="form-control" required />
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row align-items-center">
                                                                 <label class="col-3">Last Name</label>
                                                                 <div class="col">
-                                                                    <input type="text" placeholder="First name" value="Whittaker" name="profile-last-name" class="form-control" />
+                                                                    <input type="text" placeholder="First name" value="<%=currentUser.lastName%>" name="profileLastName" class="form-control" />
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row align-items-center">
                                                                 <label class="col-3">Email</label>
                                                                 <div class="col">
-                                                                    <input type="email" placeholder="Enter your email address" name="profile-email" class="form-control" required />
+                                                                    <input type="email" placeholder="Enter your email address" value="<%=currentUser.email%>" name="profileEmail" class="form-control" required />
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row align-items-center">
                                                                 <label class="col-3">Location</label>
                                                                 <div class="col">
-                                                                    <input type="text" placeholder="Enter your location" name="profile-location" class="form-control" />
+                                                                    <input type="text" placeholder="Enter your location" name="profileLocation" value="<%=currentUser.city%>" class="form-control" />
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-3">Bio</label>
                                                                 <div class="col">
-                                                                    <textarea type="text" placeholder="Tell us a little about yourself" name="profile-bio" class="form-control" rows="4"></textarea>
+                                                                    <textarea type="text" placeholder="Tell us a little about yourself" name="profileBio" class="form-control" rows="4"> <%=currentUser.postCode%></textarea>
                                                                     <small>This will be displayed on your public profile</small>
                                                                 </div>
                                                             </div>

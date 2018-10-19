@@ -80,7 +80,7 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
         res.redirect("/");
     });
 
-    router.get("/profiles/:id", function (req,res) {
+    router.get("/profile/:id", function (req,res) {
         User.findById(req.params.id, function(err, user) {
             if(err){ return next(err); }
             if (req.user && req.user.id === req.params.id) {
@@ -132,21 +132,27 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
     router.put("/profile/:id",middleware.isLoggedIn,function (req,res) {
         if(req.user.id === req.params.id) {
             //TODO partly update
+            console.log("here")
+            console.log(req.body);
             var newData = {
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email,
-                city: req.body.city,
-                birthday: req.body.birthday,
-                mobile: req.body.mobile
+                firstName: req.body.profileName,
+                lastName: req.body.profileLastName,
+                email: req.body.profileEmail,
+                city: req.body.profileLocation,
+                postCode: req.body.profileBio,
+                // mobile: req.body.mobile
             };
 
+            console.log(req.body);
             User.findByIdAndUpdate(req.params.id, {$set: newData}, function (err, user) {
                 if (err) {
+                    console.log(err);
+
                     req.flash("error", err.message);
                     res.redirect("back");
                 }
                 else {
+                    console.log("success");
                     req.flash("success", "successfully updated!!");
 
                     console.log(user);
