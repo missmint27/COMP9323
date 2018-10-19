@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var middleware = require("../middleware/index");
+var coderoom = require("../models/coderoom");
 var User = require('../models/user');
 var async = require('async');
 var middleware = require('../middleware');
@@ -84,7 +85,14 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
         User.findById(req.params.id, function(err, user) {
             if(err){ return next(err); }
             if (req.user && req.user.id === req.params.id) {
-                res.render('pages/setting.ejs', {me: req.user, user: user});
+                coderoom.find({"author.id": req.params.id},function (err, coderooms) {
+                    if(err){
+                        return next(err);
+                    }
+                    else {
+                        res.render('pages/setting.ejs', {me: req.user, user: user, allcoderooms: coderooms});
+                    }
+                })
             } else {
                 res.render('pages/profile.ejs', {me: req.user, user: user});
             }
