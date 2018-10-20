@@ -1282,3 +1282,7 @@ button.follow-ing:not(.wait):hover .msg-unfollow{
     border-radius: 50%;
     margin: 0 auto;
 }
+
+.vw-100 {
+    width: calc(100vw - 264px) !important;
+}

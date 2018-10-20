@@ -24,14 +24,36 @@
 <div class="layout layout-nav-side" style="overflow: hidden;">
     <div id="side-nav" class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #4abdac">
         <div class="side-hide" style="height:20%;width:30px;position:absolute;"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
-        <div class="side-container" style="height:80%; background-color: #4abdac;">
+        <div class="side-container" style="height:100%; width:100%; text-align:center; background-color: #4abdac;">
         <a class="navbar-brand text-center" href="/"
            style="font-size:2rem; margin-left:auto; margin-right:auto;">
             OURCODES
         </a>
-        <a class="home-logo" href="/"
-           style="">
-        </a>
+    
+            <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
+                <%if(currentUser){%>
+                    <!--TODO currentUser in passport will not update automatically-->
+                    <%if(currentUser.avatar) {%>
+                        <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
+                             style="width:50px;height:50px;margin-left:auto; margin-right:auto">
+                    <%} else {%>
+                        <img id="logo" src="/icon/anonymous.png" class="avatar" alt=""
+                             style="width:50px;height:50px;margin-left:auto; margin-right:auto">
+                    <%}%>
+                <%} else {%>
+                    <img id="logo" src="/icon/anonymous.png" class="avatar" alt=""
+                         style="width:50px;height:50px;margin-left:auto; margin-right:auto">
+                    <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
+                        <a class="nav-sign" href="/register" id="signup">Sign up</a>
+                        <a class="nav-sign" href="/login" id="signin">Sign in</a>
+                    </div>
+                    <div class="nav-bottom text-center" style="">
+                    </div>
+                <%}%>
+    
+    
+    
+            </div>
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
 
             <hr>
@@ -41,10 +63,6 @@
             <div class="coderoom-desc">
                 <p><%=coderoom.description%></p>
             </div>
-
-        </div>
-
-        <div class="d-none d-lg-block" style="position: absolute;bottom: 50px;">
             <%if(currentUser){%>
                 <div class="like-btn-group">
                     <div id="user-like" class='btn-like like' onclick="room_upvote">
@@ -59,9 +77,11 @@
                     </div>
                 </div>
             <%}%>
+        </div>
 
-            <hr>
-            <div id="search_add">
+        <div class="d-none d-lg-block" style="margin-bottom: 1em; position: absolute; bottom: 24px;">
+            <div style="margin-bottom: 1em">
+                <hr>
                 <form>
                     <div class="input-group input-group-dark input-group-round">
                         <div class="input-group-prepend">
@@ -77,39 +97,26 @@
             <div class="dropup">
                 <%if(currentUser){%>
                     <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
-                             style="width:50px;height:50px;margin-left:auto; margin-right:auto;">
+                        <img alt="Image" src='/icon/settings-e6e6e6.png' class="avatar" style="width:50px;height:50px;margin-left:auto; margin-right:auto"/>
                     </a>
                     <div class="dropdown-menu">
                         <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
                         <a href="/logout" class="dropdown-item">Log Out</a>
                     </div>
-
-                    <div class="bottom-rigth" style="margin-left: 4em; width: 70%">
-                        <div class=" mt-2">
-                            <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#task-add-modal">
-                                Create Coderoom
-                            </button>
-                        </div>
-                    </div>
-                <%} else {%>
-                    <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img id="logo" src="/icon/anonymous.png" class="avatar" alt=""
-                             style="width:50px;height:50px;margin-left:auto; margin-right:auto;s">
-                    </a>
-
-                    <div class="bottom-rigth" style="margin-left: 4em; width: 70%">
-                        <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
-                            <a class="nav-sign" href="/register" id="signup">Sign up</a>
-                            <a class="nav-sign" href="/login" id="signin">Sign in</a>
-                        </div>
+                    <div class="bottom-rigth" style="margin-left: 4em">
+                            <div class=" mt-2">
+                                <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#task-add-modal">
+                                    Create Coderoom
+                                </button>
+                            </div>
                     </div>
                 <%}%>
             </div>
         </div>
     </div>
     </div>
-    <div id="content" style="height:100vh; width:100%">
+    
+    <div id="content" style="height:100vh; width:calc(100vw - 264px)">
         <div class="bg-white breadcrumb-bar" style="padding: 8px 16px; margin-bottom:0px;border-bottom: solid 2px #EEE">
             <nav aria-label="breadcrumb" style="width:100%">
                 <div class="button-group" style="display:inline">

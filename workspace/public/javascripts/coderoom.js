@@ -81,14 +81,17 @@ $( document ).ready(function() {
 //
 //
     $('.side-hide').click(function(){
+        var cw = $(window).width()-264
         if ($('#side-nav').hasClass('pd0')) {
             $('#side-nav').removeClass("pd0").animate({width:"264px"}, 300);
             $(".side-container").animate({opacity:"1"}, 300);
             $("i.fa-chevron-right").removeClass("fa-chevron-right").addClass("fa-chevron-left");
+            $("#content").animate({width:cw}, 300);
         } else {
         $('#side-nav').addClass("pd0").animate({width:"20px"}, 300);
         $(".side-container").animate({opacity:"0"}, 300);
         $("i.fa-chevron-left").removeClass("fa-chevron-left").addClass("fa-chevron-right");
+        $("#content").animate({width:"100%"}, 300);
         };
     });
 });
