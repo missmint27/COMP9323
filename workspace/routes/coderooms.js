@@ -21,6 +21,14 @@ firebase.initializeApp(config);
 //firebase root directory
 var fb_root = firebase.database().ref();
 
+router.get("/test", function(req, res, next) {
+    console.log("TEST");
+    console.log(req.user);
+
+    req.user.avatar = 'testing';
+    console.log(req.user);
+    res.json({"msg": "DONE"});
+});
 //functioning
 router.get("/", function(req, res, next) {
     console.log("Show all coderooms");
@@ -50,8 +58,13 @@ router.post("/", middleware.isLoggedIn,function(req, res, next) {
                 username: req.user.username
             },
         });
-    coderoom.save(function(err) {
+    coderoom.save(function(err, coderoom) {
         if (err) { return next(err); }
+        User.findByIdAndUpdate(req.user.id,
+            {$addToSet: {myrooms: {_id:coderoom.id}}}, {new:true}, function(err, user) {
+                if(err) { return next(err); }
+                console.log(user);
+            });
         fb_root.child('code/').child(coderoom.id).update(
             {'content': "print(\"Hello World\")","upvote":0, "downvote":0}
         );
@@ -190,7 +203,11 @@ router.delete("/:id",middleware.isLoggedIn, function(req, res, next) {
             '_id': req.params.id,
             "author.id": req.user.id
         }, function (err, coderoom) {
-            if (err) console.log(err);
+            if (err) return next(err);
+        });
+        User.findByIdAndUpdate(req.user.id, {$pull: {myrooms: {"_id": req.params.id}}}, {new:true}, function(err, user) {
+            if(err) {console.log(err);return next(err);}
+            console.log(user);
         });
     }
     // delete all coderoom entries in fireabse.

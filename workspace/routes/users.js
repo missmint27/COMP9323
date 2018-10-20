@@ -5,6 +5,7 @@ var coderoom = require("../models/coderoom");
 var User = require('../models/user');
 var async = require('async');
 var middleware = require('../middleware');
+var mongoose = require('mongoose');
 const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v1538825655/sujhmatymeuigsghpfby.png';
     module.exports = (app, passport) => {
     router.get('/logout', middleware.isLoggedIn, function(req, res){
@@ -84,17 +85,17 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
     router.get("/profiles/:id", function (req,res, next) {
         async.parallel({
             target: function(callback) {
-                User.findById(req.params.id, function(err, target) {
-                    if(err) {return next(err); }
+                User.findById(req.params.id, function (err, target) {
+                    if (err) { return next(err); }
                     callback(null, target);
                 })
             },
             me: function(callback) {
-                if (req.user && req.user.id === req.params.id) {
+                if (!req.user || req.user.id === req.params.id) {
                     callback(null, null);
                 } else {
                     User.findById(req.user.id, function(err, me) {
-                        if(err) {return next(err); }
+                        if(err) { return next(err); }
                         callback(null, me);
                     })
                 }
@@ -106,10 +107,28 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
                 })
             }
         }, function(err, results) {
-            if(results.me) {
-                res.render('pages/profile.ejs', {me: results.me, user: results.target, allcoderooms: results.rooms});
-            } else {
+            if(!results.me && req.user) {
                 res.render('pages/setting.ejs', {me: results.target, user: null, allcoderooms: results.rooms});
+            } else {
+                let len = 0;
+                if (results.me) { len = results.me.following.length; }
+                let found = false; let i = 0;
+                while ( i <= len) {
+                    if (i === len) {
+                        if(found === true) {
+                            res.render('pages/profile.ejs', {me: results.me, user: results.target, allcoderooms: results.rooms, flag: true});
+                        } else {
+                            res.render('pages/profile.ejs', {me: results.me, user: results.target, allcoderooms: results.rooms, flag: false});
+                        }
+                    } else {
+                        if (results.me.following[i]._id.equals(req.params.id)) {
+                            found = true;
+                            i = len - 1;
+                        }
+                    }
+                    i++;
+                }
+
             }
         })
 
@@ -189,6 +208,8 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
         User.findByIdAndUpdate(req.params.id, {avatar: req.body.url}, {new:true}, function(err, user) {
             if(err) {console.log(err);return next(err);}
             console.log(user);
+            // TODO testing
+            req.user.avatar = req.body.url;
             res.json({"msg": "Uploaded!"});
         });
     });

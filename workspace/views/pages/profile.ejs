@@ -30,8 +30,8 @@
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
             <%if(currentUser){%>
             <!--TODO currentUser in passport will not update automatically-->
-            <%if(currentUser.avatar) {%>
-            <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
+            <%if(me.avatar) {%>
+            <img id="logo" src="<%=me.avatar%>" class="avatar" alt=""
                  style="width:50px;height:50px;margin-left:auto; margin-right:auto">
             <%} else {%>
                 <img id="logo" src="/icon/anonymous.png" class="avatar" alt=""
@@ -69,7 +69,7 @@
                         <img alt="Image" src='/icon/settings-e6e6e6.png' class="avatar" style="width:50px;height:50px;margin-left:auto; margin-right:auto"/>
                     </a>
                     <div class="dropdown-menu">
-                        <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
+                        <a href="/profiles/<%=currentUser.id%>" class="dropdown-item">Profile</a>
                         <a href="/logout" class="dropdown-item">Log Out</a>
                     </div>
                     <%}%>
@@ -86,40 +86,20 @@
                 <div class="rela-block user-name" id="user_name"><%=user.username%></div>
             </div>
 
-
-            <%var flag = true;%>
-            <%for(var i in me.following){
-                console.log("sdfsdfsdfsdfsdfsdf",me.following[i]);
-                if(user._id == me.following[i]._id){
-                    flag = false;
-                }
-            }
-            %>
-            <%console.log(me)%>
-            <%console.log(flag)
-            //if flag 是true，显示follow. if flag是false, 从following开始显示
-
-            %>
-
-
-            
             <div style="text-align: center;margin: 20px 0;">
-                <% if (flag==true) {%>
-                    <button id="follow-btn" class="btn btn-outline-primary follow">
-                <%} else {%>
-                    <button id="follow-btn" class="btn btn-outline-primary follow follow-ing">
-                <% } %>
+                <button id="follow-btn" class="btn btn-outline-primary follow">
                 <span class="msg-follow" id="follow_button">Follow</span>
                 <span class="msg-follow-ing" id="following_button">Following</span>
                 <span class="msg-unfollow" id="delete_button">Unfollow</span>
                 </button>
+            <!--TODO            -->
             </div>
             <div class="rela-block profile-card-stats">
                 <ul class="nav profile-tab">
                     <li class="floated profile-stat">
                         <a data-toggle="tab" href="#coderoom-lists">
                             <div class="coderooms" id="num_coderooms">
-                                <%=user.myrooms.length%><br>
+                                <%=allcoderooms.length%><br>
                             </div>
                         </a>
                     </li>
@@ -155,6 +135,7 @@
                     <div class="card-list">
                         <div class="card-list-body">
 
+                            <% allcoderooms.forEach(function(coderoom){ %>
                             <div class="card card-task">
                                 <div class="progress">
                                     <div class="progress-bar bg-warning" role="progressbar"
@@ -162,26 +143,24 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="card-title">
-                                        <a href="#">
-                                            <h6 data-filter-by="text">Name</h6>
+                                        <a href="/coderooms/<%=coderoom._id%>">
+                                            <h6 data-filter-by="text"><%= coderoom.name%></h6>
                                         </a>
                                         <div class="text-small"
                                              style="max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap;">
-                                            description
+                                            <%= coderoom.description%>
                                         </div>
-                                        <p class="text-small" style="margin-top: 1rem;">Author:</p>
+                                        <p class="text-small" style="margin-top: 1rem;"><a href="/profiles/<%= coderoom.author.id%>">Author:<%= coderoom.author.username%></a></p>
 
                                     </div>
                                     <div class="card-meta">
-                                        <ul class="avatars" id="">
-                                        </ul>
                                         <div class="card-likeordislike">
                                             <div class="card-likenum">
                                                 <p>3</p>
                                             </div>
                                         </div>
                                         <div>
-                                            <form method="get" action="/">
+                                            <form method="get" action="/coderooms/<%=coderoom._id%>">
                                                 <button type="submit" class="btn btn-outline-primary">Enter
                                                 </button>
                                             </form>
@@ -189,6 +168,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <% })%>
 
                         </div>
                     </div><!--end of content list body-->
@@ -204,26 +184,13 @@
 
                 <div class="content-list-body">
                     <ul class="profile-ul">
-                        <li class="profile-li">
-                            <a href="/profiles/undefined">
-                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
-                            </a>
-                        </li>
-                        <li class="profile-li">
-                            <a href="/profiles/undefined">
-                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
-                            </a>
-                        </li>
-                        <li class="profile-li">
-                            <a href="/profiles/undefined">
-                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
-                            </a>
-                        </li>
-                        <li class="profile-li">
-                            <a href="/profiles/undefined">
-                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
-                            </a>
-                        </li>
+                        <%user.follower.forEach(function(person) {%>
+                            <li class="profile-li">
+                                <a href="/profiles/<%=person._id%>">
+                                    <img style="width:50px;height:50px;" src='<%=person.avatar%>' class="profile-ava-li" alt="<%=person.username%>"/>
+                                </a>
+                            </li>
+                        <%})%>
                     </ul>
                 </div>
             </div>
@@ -237,26 +204,13 @@
 
                 <div class="content-list-body">
                     <ul class="profile-ul">
-                        <li class="profile-li">
-                            <a href="/profiles/undefined">
-                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
-                            </a>
-                        </li>
-                        <li class="profile-li">
-                            <a href="/profiles/undefined">
-                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
-                            </a>
-                        </li>
-                        <li class="profile-li">
-                            <a href="/profiles/undefined">
-                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
-                            </a>
-                        </li>
-                        <li class="profile-li">
-                            <a href="/profiles/undefined">
-                                <img alt="Image" src='icon/user0.png' class="profile-ava-li"/>
-                            </a>
-                        </li>
+                        <%user.following.forEach(function(person) {%>
+                            <li class="profile-li">
+                                <a href="/profiles/<%=person._id%>">
+                                    <img style="width:50px;height:50px;" src='<%=person.avatar%>' class="profile-ava-li" alt="<%=person.username%>"/>
+                                </a>
+                            </li>
+                        <%})%>
                     </ul>
                 </div>
             </div>
@@ -276,37 +230,12 @@
 <script type="text/javascript" src="/javascripts/bootstrap/theme.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
 <script src="/javascripts/homepageJS.js"></script>
+<script src="/javascripts/follow.js"></script>
 <script>
-$('#follow-btn').click(function(){
-  var $this = $(this);
-  $this.toggleClass('follow-ing')
-  if($this.is('.follow-ing')){
-    $this.addClass('wait');
-  }
-}).on('mouseleave',function(){
-  $(this).removeClass('wait');
-});
-
-$("#follow-btn").on("click", function () {
-    if (!$(this).hasClass("follow-ing")) {
-        console.log("get delete button");
-        $.ajax({
-            url:"/users/<%=user._id%>/follow",
-            type:"delete",
-            success: function(result){
-                console.log(result);
-            }
-        })
-    } else {
-        console.log("sdfsdf");
-        $.ajax({
-            url:"/users/<%=user._id%>/follow",
-            type:"put",
-            success: function (result) {
-                console.log(result);
-            }
-        })
-    }
-});
+    <%if (flag) {%>
+        let follow_btn = $('#follow-btn');
+        follow_btn.addClass('follow-ing');
+        follow_btn.attr("onclick","follow('<%=user._id%>')");
+    <%}%>
 </script>
 </html>
