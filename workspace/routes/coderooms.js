@@ -293,12 +293,12 @@ router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next)
 
 //this is for subcomment
 router.post("/:roomId/comments/inside/:commentId", middleware.isLoggedIn,function (req,res,next) {
-    console.log("you get there man");
     console.log(req.params);
+    console.log(req.body.comment);
     let subCommentRef = fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).child("subComments");
     let commentId = subCommentRef.push({
         author: {
-            id: req.user.username,
+            id: req.user.id,
             username:  req.user.username,
             avatar: req.user.avatar,
         },
@@ -331,6 +331,7 @@ router.put('/:roomId/comments/upvote/:path',middleware.isLoggedIn, function(req,
     upvote_obj[req.user.id] = true;
     commentRef.child('upvote').update(upvote_obj);
     commentRef.child('downvote/' + req.user.id).remove();
+    res.json({'msg': 'Upvoted comment: ' + req.params.path});
     //TODO err handler?
 });
 
@@ -341,12 +342,13 @@ router.put('/:roomId/comments/downvote/:path',middleware.isLoggedIn, function(re
     downvote_obj[req.user.id] = true;
     commentRef.child('downvote').update(downvote_obj);
     commentRef.child('upvote/' + req.user.id).remove();
+    res.json({'msg': 'Upvoted comment: ' + req.params.path});
     //TODO err handler?
 });
 
 
 
-router.get('/:roomId/upvote',middleware.isLoggedIn, function(req, res,next) {
+router.put('/:roomId/upvote',middleware.isLoggedIn, function(req, res,next) {
     console.log("modify room upvote.");
     Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {upvote: {"_id": id}}}, {new:true}, function(err, coderoom) {
         if(err) {console.log(err);return next(err);}

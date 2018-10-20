@@ -123,11 +123,13 @@ dbRefAskForPermission.on('child_removed', snap => {
 
 dbRefCommentList.on('child_added', snap => {
     const comment_obj = snap.val();
+    const comment_key = snap.key;
     let up_number = 0, down_number = 0;
     if (comment_obj.upvote) { up_number = Object.keys(comment_obj.upvote).length; }
     if (comment_obj.downvote) { down_number = Object.keys(comment_obj.downvote).length; }
     let score = up_number - down_number;
     //main comment
+
     let likeordislike = $("<div class='chat-item-likeordis'>" +
         "<div class='chat-item-like'><i class='up'></i></div>" +
         "<div class='chat-likenum'>" + score + "</div> "+
@@ -138,51 +140,29 @@ dbRefCommentList.on('child_added', snap => {
     let title = $("<a>", {href: "/profiles/" + comment_obj.author.id})
         .append($("<div>", {class: "chat-item-title"}).append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(comment_obj.author.username)));
     //TODO link the reply modal with the comment user id.
-    let body  = $("<div class='chat-item-body' data-filter='text' onclick=\"replyModal('" + snap.key + "')\"></div>").text(comment_obj.content);
+    let body  = $("<div class='chat-item-body' data-filter='text' onclick=\"replyModal('" + comment_key + "')\"></div>").text(comment_obj.content);
     let item = $("<div>", {class: "media-body"}).append(title, body);
     let main_comment = $("<div>", {class: "chat-item-up"}).append(img, item, likeordislike);
-    let add = $("<div>", {id: snap.key, class: "chat-item"}).append(main_comment);
-    $("div[id='chat-box']").append(add);
+    let add = $("<div>", {id: comment_key, class: "chat-item"}).append(main_comment);
+    $("div[id='chat-box']").append($("<div>", {id: "cover"+ comment_key, class: "chat-item-cover"}).append(add));
 
-    let up = document.getElementById(snap.key);
+    let up = document.getElementById(comment_key);
     let up_button = up.getElementsByClassName("up");
-    up_button[0].addEventListener("click",function (e) { upvote(snap.key)});
-    let down = document.getElementById(snap.key);
+    up_button[0].addEventListener("click",function (e) { upvote(comment_key)});
+    let down = document.getElementById(comment_key);
     let down_button = down.getElementsByClassName("down");
-    down_button[0].addEventListener("click",function (e) { downvote(snap.key)});
+    down_button[0].addEventListener("click",function (e) { downvote(comment_key)});
 
-    //subcomments
-    let sub_comments = comment_obj.subComments;
-    for (let commentId in sub_comments) {
-        let sub_author = sub_comments[commentId].author;
-        let sub_comment = sub_comments[commentId].content;
-        let sub_upvote = 0, sub_downvote = 0;
-        if (sub_comments[commentId].upvote) { upvote = Object.keys(sub_comments[commentId].upvote).length; }
-        if (sub_comments[commentId].downvote) { upvote = Object.keys(sub_comments[commentId].downvote).length; }
-        let sub_score = sub_upvote - sub_downvote;
-        let sub_likeordislike = $("<div class='chat-item-likeordis'>" +
-            "<div class='chat-item-like'><i class='up'></i></div>" +
-            "<div class='chat-likenum'><p>" + sub_score + "</p></div> "+
-            "<div class='chat-item-dislike'><i class='down'></i></div></div>");
-
-        let sub_img    = $("<a>", {href: "/profiles/" + sub_author.id})
-            .append($("<img>", {alt: sub_author.username, class: "avatar", id: "comment_avatar" + sub_author.id, src:sub_author.avatar}));
-        let sub_title = $("<a>", {href: "/profiles/" + sub_author.id})
-            .append($("<div>", {class: "chat-item-title"}).append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(sub_author.username)));
-
-        let sub_body  = $("<div class='chat-item-body' data-filter='text' onclick=\"replyModal('" + commentId + "')\"></div>").text(sub_comment);
-        let sub_item = $("<div>", {class: "media-body"}).append(sub_title, sub_body);
-        let sub = $("<div>", {class: "chat-item-up"}).append(sub_img, sub_item, sub_likeordislike);
-        let sub_add = $("<div>", {id: commentId, class: "chat-item-subcomment"}).append(sub);
-        $("div[id='chat-box']").append(sub_add);
-
-        let sub_up = document.getElementById(commentId);
-        let sub_up_button = sub_up.getElementsByClassName("up");
-        sub_up_button[0].addEventListener("click",function (e) { sub_upvote(snap.key, commentId)});
-        let sub_down = document.getElementById(commentId);
-        let sub_down_button = sub_down.getElementsByClassName("down");
-        sub_down_button[0].addEventListener("click",function (e) { sub_downvote(snap.key, commentId)});
-    }
+    dbRefCommentList.child(comment_key).child('upvote').on('value', upvote => {
+        dbRefCommentList.child(comment_key).child('downvote').once('value', downvote => {
+            update_vote_number(comment_key, upvote, downvote);
+        });
+    });
+    dbRefCommentList.child(comment_key).child('downvote').on('value', downvote => {
+        dbRefCommentList.child(comment_key).child('upvote').once('value', upvote => {
+            update_vote_number(comment_key, upvote, downvote);
+        });
+    });
 
     //editor marker
     if (comment_obj.position) {
@@ -200,6 +180,45 @@ dbRefCommentList.on('child_added', snap => {
             });
         }
     }
+
+
+    dbRefCommentList.child(comment_key).child('subComments').on('child_added', snap => {
+        let sub_comment = snap.val();
+        let sub_author = sub_comment.author;
+        let sub_content = sub_comment.content;
+        let sub_upvote = 0, sub_downvote = 0;
+        if (sub_comment.upvote) { upvote = Object.keys(sub_comment.upvote).length; }
+        if (sub_comment.downvote) { upvote = Object.keys(sub_comment.downvote).length; }
+        let sub_score = sub_upvote - sub_downvote;
+        let sub_likeordislike = $("<div class='chat-item-likeordis'>" +
+            "<div class='chat-item-like'><i class='up'></i></div>" +
+            "<div class='chat-likenum'>" + sub_score + "</div> "+
+            "<div class='chat-item-dislike'><i class='down'></i></div></div>");
+
+        dbRefCommentList.child(comment_key).child('subComments').child(snap.key).child('upvote').on('value', upvote => {
+            dbRefCommentList.child(comment_key).child('subComments').child(snap.key).child('downvote').once('value', downvote => {
+                console.log("UChanged");
+                update_vote_number(snap.key, upvote, downvote);
+            });
+        });
+        dbRefCommentList.child(comment_key).child('subComments').child(snap.key).child('downvote').on('value', downvote => {
+            dbRefCommentList.child(comment_key).child('subComments').child(snap.key).child('upvote').once('value', upvote => {
+                console.log("DChanged");
+                update_vote_number(snap.key, upvote, downvote);
+            });
+        });
+
+        let sub_img    = $("<a>", {href: "/profiles/" + sub_author.id})
+            .append($("<img>", {alt: sub_author.username, class: "avatar", id: "comment_avatar" + sub_author.id, src:sub_author.avatar}));
+        let sub_title = $("<a>", {href: "/profiles/" + sub_author.id})
+            .append($("<div>", {class: "chat-item-title"}).append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(sub_author.username)));
+
+        let sub_body  = $("<div class='chat-item-body' data-filter='text' onclick=\"replyModal('" + comment_key + "')\"></div>").text(sub_content);
+        let sub_item = $("<div>", {class: "media-body"}).append(sub_title, sub_body);
+        let sub = $("<div>", {class: "chat-item-up"}).append(sub_img, sub_item, sub_likeordislike);
+        let sub_add = $("<div>", {id: snap.key, class: "chat-item-subcomment"}).append(sub);
+        $("div[id='chat-box'] div[id='cover"+ comment_key + "']").append(sub_add);
+    })
 });
 
 function sub_upvote(parent, comment) {
@@ -209,18 +228,18 @@ function sub_upvote(parent, comment) {
 function upvote(path) {
     const url = urlGetter() + "/comments/upvote/" + path;
     console.log(url);
-    //TODO for adding voting number
-    // let id = path.split('/').pop();
-    // let number = $('#'+id + ' .chat-likenum').value;
-    // console.log(number);
-    // console.log("va",number);
-
-    // $.ajax({
-    //     url: url,
-    //     method:'put',
-    // })
-    //     .done(function (data) { console.log(data); })
-    //     .fail(function (xhr, status){ console.log(xhr.status); })
+    $.ajax({
+        url: url,
+        method:'put',
+    })
+        .done(function (data) {
+            //TODO not finished yet, duplicate upvote
+            // let id = path.split('/').pop();
+            // let number = $('#' + id + ' .chat-likenum');
+            // number.text(parseInt(number.text()) + 1);
+            // console.log(data);
+        })
+        .fail(function (xhr, status){ console.log(xhr.status); })
 }
 
 function sub_downvote(parent, comment) {
@@ -232,15 +251,18 @@ function downvote(path) {
     const url = urlGetter() + "/comments/downvote/" + path;
     console.log(url);
 
-
     $.ajax({
         url: url,
         method:'put',
     })
-    .done(function (data) {
-        console.log(data);
-    })
-    .fail(function (xhr, status){ console.log(xhr.status); })
+        .done(function (data) {
+            //TODO
+            // let id = path.split('/').pop();
+            // let number = $('#' + id + ' .chat-likenum');
+            // number.text(parseInt(number.text()) - 1);
+            // console.log(data);
+        })
+        .fail(function (xhr, status){ console.log(xhr.status); })
 }
 
 dbRefCommentList.on('child_removed', snap => {
@@ -426,17 +448,15 @@ function room_upvote() {
         .fail(function (xhr, status){ console.log(xhr.status); })
 }
 
+
 function replyModal(commentId) {
-    $("#reply-modal").on('show.bs.modal', function () {
-        $("#reply-btn").on('click', function () {
-            let comment = $("#reply-modal .modal-dialog .modal-content .modal-body .modal-replyblock .modal-replyarea").val();
-            comment_submit(comment, commentId);
-        });
-    }).modal('show');
+    $("#reply-modal").modal('show');
+    $("#reply-btn").attr("onclick","comment_submit('" + commentId + "')");
 }
 
-function comment_submit(content, path) {
+function comment_submit(path) {
     const url = urlGetter() + "/comments/" + "inside/" + path;
+    let content = $("#reply-modal .modal-dialog .modal-content .modal-body .modal-replyblock .modal-replyarea").val();
     $.ajax({
         url:url,
         method:"post",
@@ -444,7 +464,16 @@ function comment_submit(content, path) {
             comment: content,
         }
     })
-        .done(function () { console.log("Comment reply done."); })
+        .done(function (data) { console.log(data.msg); })
         .fail(function (xhr, status) { console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
     })
+}
+
+
+function update_vote_number(commentId, upvote, downvote) {
+    let up_number = 0, down_number = 0;
+    if (upvote.val()) { up_number = Object.keys(upvote.val()).length; }
+    if (downvote.val()) { down_number = Object.keys(downvote.val()).length; }
+    let number = $('#' + commentId + ' .chat-likenum');
+    number.text(up_number - down_number);
 }
