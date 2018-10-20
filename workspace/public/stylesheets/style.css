@@ -521,6 +521,7 @@ search-icon{
     color:#404040;
     font-size:0.9rem;
     cursor: pointer;
+    margin-bottom: 3px;
 }
 .media-subbody{
     display: inline-block;
