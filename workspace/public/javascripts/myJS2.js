@@ -399,6 +399,7 @@ function modeChange() {
 
 function hideComments() {
     let comment_btn_text = document.getElementById('comment-btn-text');
+    const cw = $(window).width() - 264;
     if (!comment_mode) {
         comment_btn_text.innerHTML = 'Show Comments';
         $('#code-content').animate({width:"97%"}, 300);
@@ -407,6 +408,7 @@ function hideComments() {
             $('#side-nav').removeClass("pd0").animate({width:"264px"}, 300);
             $(".side-container").animate({opacity:"1"}, 300);
             $("i.fa-chevron-right").removeClass("fa-chevron-right").addClass("fa-chevron-left");
+            $("#content").animate({width:cw}, 300);
         }
     } else {
         comment_btn_text.innerHTML = 'Hide Comments';
@@ -416,6 +418,7 @@ function hideComments() {
             $('#side-nav').addClass("pd0").animate({width:"20px"}, 300);
             $(".side-container").animate({opacity:"0"}, 300);
             $("i.fa-chevron-left").removeClass("fa-chevron-left").addClass("fa-chevron-right");
+            $("#content").animate({width:"100%"}, 300);
         }
     }
 }

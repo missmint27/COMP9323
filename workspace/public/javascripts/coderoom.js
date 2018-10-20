@@ -81,7 +81,7 @@ $( document ).ready(function() {
 //
 //
     $('.side-hide').click(function(){
-        var cw = $(window).width()-264
+        const cw = $(window).width() - 264;
         if ($('#side-nav').hasClass('pd0')) {
             $('#side-nav').removeClass("pd0").animate({width:"264px"}, 300);
             $(".side-container").animate({opacity:"1"}, 300);
