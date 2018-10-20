@@ -112,11 +112,13 @@
             %>
 
 
-
-            <div style="text-align: center;margin: 20px 0;">
-               
-                <button id="follow-btn" class="btn btn-outline-primary follow follow-ing">
             
+            <div style="text-align: center;margin: 20px 0;">
+                <% if (flag==true) {%>
+                    <button id="follow-btn" class="btn btn-outline-primary follow">
+                <%} else {%>
+                    <button id="follow-btn" class="btn btn-outline-primary follow follow-ing">
+                <% } %>
                 <span class="msg-follow" id="follow_button">Follow</span>
                 <span class="msg-follow-ing" id="following_button">Following</span>
                 <span class="msg-unfollow" id="delete_button">Unfollow</span>
@@ -295,27 +297,26 @@ $('#follow-btn').click(function(){
   $(this).removeClass('wait');
 });
 
-$("#follow_button").on("click", function () {
-    console.log("sdfsdf");
-    $.ajax({
-        url:"/users/<%=user._id%>/follow",
-        type:"put",
-        success: function (result) {
-            console.log(result);
-        }
-    })
+$("#follow-btn").on("click", function () {
+    if (!$(this).hasClass("follow-ing")) {
+        console.log("get delete button");
+        $.ajax({
+            url:"/users/<%=user._id%>/follow",
+            type:"delete",
+            success: function(result){
+                console.log(result);
+            }
+        })
+    } else {
+        console.log("sdfsdf");
+        $.ajax({
+            url:"/users/<%=user._id%>/follow",
+            type:"put",
+            success: function (result) {
+                console.log(result);
+            }
+        })
+    }
 });
-
-$("#delete_button").on("click", function(){
-    console.log("get delete button");
-    $.ajax({
-        url:"/users/<%=user._id%>/follow",
-        type:"delete",
-        success: function(result){
-            console.log(result);
-        }
-    })
-})
-
 </script>
 </html>
