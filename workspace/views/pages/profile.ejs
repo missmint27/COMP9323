@@ -95,6 +95,24 @@
             <div class="rela-block profile-name-container">
                 <div class="rela-block user-name" id="user_name"><%=user.username%></div>
             </div>
+
+
+            <%var flag = true;%>
+            <%for(var i in me.following){
+                console.log("sdfsdfsdfsdfsdfsdf",me.following[i]);
+                if(user._id == me.following[i]._id){
+                    flag = false;
+                }
+            }
+            %>
+            <%console.log(me)%>
+            <%console.log(flag)
+            //if flag 是true，显示follow. if flag是false, 从following开始显示
+
+            %>
+
+
+
             <div style="text-align: center;margin: 20px 0;">
                
                 <button id="follow-btn" class="btn btn-outline-primary follow follow-ing">
