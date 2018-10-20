@@ -232,13 +232,7 @@ function upvote(path) {
         url: url,
         method:'put',
     })
-        .done(function (data) {
-            //TODO not finished yet, duplicate upvote
-            // let id = path.split('/').pop();
-            // let number = $('#' + id + ' .chat-likenum');
-            // number.text(parseInt(number.text()) + 1);
-            // console.log(data);
-        })
+        .done(function (data) { console.log(data); })
         .fail(function (xhr, status){ console.log(xhr.status); })
 }
 
@@ -255,13 +249,7 @@ function downvote(path) {
         url: url,
         method:'put',
     })
-        .done(function (data) {
-            //TODO
-            // let id = path.split('/').pop();
-            // let number = $('#' + id + ' .chat-likenum');
-            // number.text(parseInt(number.text()) - 1);
-            // console.log(data);
-        })
+        .done(function (data) { console.log(data); })
         .fail(function (xhr, status){ console.log(xhr.status); })
 }
 
