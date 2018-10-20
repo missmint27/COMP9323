@@ -82,22 +82,37 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
     });
 
     router.get("/profiles/:id", function (req,res, next) {
-        User.findById(req.params.id, function(err, user) {
-            if(err){ return next(err); }
-            if (req.user && req.user.id === req.params.id) {
-                coderoom.find({"author.id": req.params.id},function (err, coderooms) {
-                    if(err){
-                        return next(err);
-                    }
-                    else {
-                        res.render('pages/setting.ejs', {me: req.user, user: user, allcoderooms: coderooms});
-                    }
+        async.parallel({
+            target: function(callback) {
+                User.findById(req.params.id, function(err, target) {
+                    if(err) {return next(err); }
+                    callback(null, target);
                 })
-            } else {
-                res.render('pages/profile.ejs', {me: req.user, user: user});
+            },
+            me: function(callback) {
+                if (req.user && req.user.id === req.params.id) {
+                    callback(null, null);
+                } else {
+                    User.findById(req.user.id, function(err, me) {
+                        if(err) {return next(err); }
+                        callback(null, me);
+                    })
+                }
+            },
+            rooms: function(callback) {
+                coderoom.find({"author.id": req.params.id},function (err, coderooms) {
+                    if(err){ return next(err); }
+                    callback(null, coderooms);
+                })
             }
-            console.log(user);
+        }, function(err, results) {
+            if(results.me) {
+                res.render('pages/profile.ejs', {me: results.me, user: results.target, allcoderooms: results.rooms});
+            } else {
+                res.render('pages/setting.ejs', {me: results.target, user: null, allcoderooms: results.rooms});
+            }
         })
+
     });
 
     router.put("/profiles/:id",middleware.isLoggedIn,function (req,res, next) {
