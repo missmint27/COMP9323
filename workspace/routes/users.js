@@ -81,7 +81,7 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
         res.redirect("/");
     });
 
-    router.get("/profiles/:id", function (req,res) {
+    router.get("/profiles/:id", function (req,res, next) {
         User.findById(req.params.id, function(err, user) {
             if(err){ return next(err); }
             if (req.user && req.user.id === req.params.id) {
@@ -100,7 +100,7 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
         })
     });
 
-    router.put("/profiles/:id",middleware.isLoggedIn,function (req,res) {
+    router.put("/profiles/:id",middleware.isLoggedIn,function (req,res, next) {
         if(req.user.id === req.params.id) {
             //TODO partly update
             console.log("here")

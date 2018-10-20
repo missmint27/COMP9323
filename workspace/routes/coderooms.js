@@ -31,7 +31,7 @@ router.get("/", function(req, res, next) {
 });
 
 //search for coderooms
-router.get("/search",function(req, res) {
+router.get("/search",function(req, res, next) {
     console.log("query coderooms: ", req.query);
     Coderoom.find(req.query).exec(function(err, coderoom) {
         if (err) { return next(err); }
@@ -40,7 +40,7 @@ router.get("/search",function(req, res) {
 });
 
 //create new coderoom，
-router.post("/", middleware.isLoggedIn,function(req, res) {
+router.post("/", middleware.isLoggedIn,function(req, res, next) {
     console.log(req.user);
     var coderoom = new Coderoom(
         {
@@ -359,7 +359,7 @@ router.get('/:roomId/upvote',middleware.isLoggedIn, function(req, res,next) {
     res.json({'msg': 'Upvoted!'});
 });
 
-router.put('/:roomId/downvote',middleware.isLoggedIn, function(req, res) {
+router.put('/:roomId/downvote',middleware.isLoggedIn, function(req, res, next) {
     console.log("modify room downvote.");
     Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {downvote: {"_id": id}}}, {new:true}, function(err, coderoom) {
         if(err) {console.log(err);return next(err);}
