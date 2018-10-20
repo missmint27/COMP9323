@@ -474,14 +474,16 @@ search-icon{
     width: 100%;
     margin-top: 4px;
 }
-.chat-item-subreply{
-    width: 100%;
-    height: 2rem;
+.chat-item-subup{
     display: block;
-    background-color: #f7b7331c;
-    margin-bottom: 3px;
-    padding: 2px 4px;
-    border-radius: 0.5rem;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #ececec;
+    padding: 2px 2px;
+}
+.chat-item-ava{
+    display: inline-block;
+    margin-top: 10px;
 }
 .chat-item-subauthor{
     display: inline-block;
@@ -492,11 +494,17 @@ search-icon{
 }
 .chat-item-subcomment{
     display: inline-block;
-    width: calc(100% - 20% - 7px);
+    width:89%;
     margin-left: 7px;
     color:#404040;
     font-size:0.9rem;
     cursor: pointer;
+}
+.media-subbody{
+    display: inline-block;
+    width: calc(100% - 4rem);
+    padding: 0;
+    margin: 0;
 }
 .chat-item-down {
     display: flex;
