@@ -209,13 +209,13 @@ dbRefCommentList.on('child_added', snap => {
         });
 
         let sub_img    = $("<a>", {href: "/profiles/" + sub_author.id})
-            .append($("<img>", {alt: sub_author.username, class: "avatar", id: "comment_avatar" + sub_author.id, src:sub_author.avatar}));
+            .append($("<img>", {alt: sub_author.username, class: "avatar chat-item-ava", id: "comment_avatar" + sub_author.id, src:sub_author.avatar}));
         let sub_title = $("<a>", {href: "/profiles/" + sub_author.id})
-            .append($("<div>", {class: "chat-item-title"}).append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(sub_author.username)));
+            .append($("<div>", {class: "chat-item-title"}).append($("<span>", {class:"chat-item-subauthor", 'data-filter-by':"text"}).text(sub_author.username)));
 
         let sub_body  = $("<div class='chat-item-body' data-filter='text' onclick=\"replyModal('" + comment_key + "')\"></div>").text(sub_content);
-        let sub_item = $("<div>", {class: "media-body"}).append(sub_title, sub_body);
-        let sub = $("<div>", {class: "chat-item-up"}).append(sub_img, sub_item, sub_likeordislike);
+        let sub_item = $("<div>", {class: "media-subbody"}).append(sub_title, sub_body);
+        let sub = $("<div>", {class: "chat-item-subup"}).append(sub_img, sub_item, sub_likeordislike);
         let sub_add = $("<div>", {id: snap.key, class: "chat-item-subcomment"}).append(sub);
         $("div[id='chat-box'] div[id='cover"+ comment_key + "']").append(sub_add);
     })

@@ -6771,7 +6771,7 @@ h3 + .btn-round, h5 + .btn-round {
     padding-bottom: 1rem;
     padding-left: 3px;}
     .layout-nav-side .content-container > .chat-module .chat-item:not(:last-child), .layout-sidebar .content-container > .chat-module .chat-item:not(:last-child) {
-      border-bottom: 1px solid #E9EEF2; }
+      /*border-bottom: 1px solid #E9EEF2; }*/}
     .layout-nav-side .content-container > .chat-module .chat-item .media-body, .layout-sidebar .content-container > .chat-module .chat-item .media-body {
       padding: 0;
       background: none; }
