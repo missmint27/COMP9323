@@ -10,25 +10,27 @@
 </head>
 <script type="text/javascript">
     $(document).ready(function() {
-        var sideMenu = false;
+        var sideMenu = true;
         $(".b3-moveclick").click(function() {
             if (!sideMenu) {
                 sideMenu = true;
-                $(".b3-moveclick").animate({left: "70px"});
-                $(".b3-hold-right").css('display','none');
-                $(".b3-hold-left").css('display','inline-block');
-                $(".b3-moveclick-left").css('display','none');
-                $(".b3-moveclick-right").css('display','inline-block');
-                $(".b3-form-in").css('display','none');
-                $(".b3-form-up").css('display','inline-block');
-            }
-            else {
-                sideMenu = false;
+                console.log("not sidemenu");
                 $(".b3-moveclick").animate({left: "0px"});
                 $(".b3-hold-right").css('display','inline-block');
                 $(".b3-hold-left").css('display','none');
                 $(".b3-moveclick-left").css('display','inline-block');
                 $(".b3-moveclick-right").css('display','none');
+                $(".b3-form-in").css('display','none');
+                $(".b3-form-up").css('display','inline-block');
+            }
+            else {
+                console.log("side menu");
+                sideMenu = false;
+                $(".b3-moveclick").animate({left: "70px"});
+                $(".b3-hold-right").css('display','none');
+                $(".b3-hold-left").css('display','inline-block');
+                $(".b3-moveclick-left").css('display','none');
+                $(".b3-moveclick-right").css('display','inline-block');
                 $(".b3-form-in").css('display','inline-block');
                 $(".b3-form-up").css('display','none');
             }
@@ -43,19 +45,17 @@
 		<div class="b3_triangle2"></div>
 		<div class="b3-hold">
 			<div class="b3-hold-right" style="display: none;float: right">
-				<h2>up</h2>
 			</div>
 			<div class="b3-hold-left" style="float: left">
-				<h2>in</h2>
 			</div>
 
 		</div>
-		<div class="b3-moveclick">
-			<div class="b3-moveclick-left" style="display: none;">
-				<h2>Sign in</h2>
-			</div>
-			<div class="b3-moveclick-right">
+		<div class="b3-moveclick" style="left: 0px">
+			<div class="b3-moveclick-left" style="display: inline-block;">
 				<h2>Sign up</h2>
+			</div>
+			<div class="b3-moveclick-right" style="display: none;">
+				<h2>Sign in</h2>
 			</div>
 		</div>
 		<div class="b3-label">

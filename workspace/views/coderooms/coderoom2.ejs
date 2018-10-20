@@ -63,24 +63,25 @@
             <div class="coderoom-desc">
                 <p><%=coderoom.description%></p>
             </div>
-            <%if(currentUser){%>
-                <div class="like-btn-group">
-                    <div id="user-like" class='btn-like like' onclick="room_upvote">
 
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-
-                    </div>
-                    <div id="user-dislike" class='btn-like dislike' onclick="room_downvote">
-
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-
-                    </div>
-                </div>
-            <%}%>
         </div>
 
         <div class="d-none d-lg-block" style="margin-bottom: 1em; position: absolute; bottom: 24px;">
             <div style="margin-bottom: 1em">
+                <%if(currentUser){%>
+                    <div class="like-btn-group">
+                        <div id="user-like" class='btn-like like' onclick="room_upvote">
+
+                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+
+                        </div>
+                        <div id="user-dislike" class='btn-like dislike' onclick="room_downvote">
+
+                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+
+                        </div>
+                    </div>
+                <%}%>
                 <hr>
                 <form>
                     <div class="input-group input-group-dark input-group-round">
