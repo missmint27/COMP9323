@@ -90,21 +90,19 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
                         return next(err);
                     }
                     else {
-                        console.log(user);
                         res.render('pages/setting.ejs', {me: req.user, user: user, allcoderooms: coderooms});
                     }
                 })
             } else {
                 res.render('pages/profile.ejs', {me: req.user, user: user});
             }
+            console.log(user);
         })
     });
 
     router.put("/profiles/:id",middleware.isLoggedIn,function (req,res, next) {
+        console.log("Update profile");
         if(req.user.id === req.params.id) {
-            //TODO partly update
-            console.log("here")
-            console.log(req.body);
             var newData = {
                 firstName: req.body.profileName,
                 lastName: req.body.profileLastName,
@@ -113,8 +111,6 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
                 postCode: req.body.profileBio,
                 // mobile: req.body.mobile
             };
-
-            console.log(req.body);
             User.findByIdAndUpdate(req.params.id, {$set: newData}, function (err, user) {
                 if (err) {
                     console.log(err);
@@ -125,8 +121,6 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
                 else {
                     console.log("success");
                     req.flash("success", "successfully updated!!");
-
-                    console.log(user);
                     res.redirect("/profiles/" + user._id);
                 }
             });
@@ -171,5 +165,17 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
         res.json({'msg': 'defollowed user: ' + req.params.id})
     });
 
+    router.put("/profiles/:id/avatar", middleware.isLoggedIn, function(req, res, next) {
+        console.log("Updating avatar");
+        if (req.user.id !== req.params.id) {
+            res.json({"msg": "No permission."});
+            return;
+        }
+        User.findByIdAndUpdate(req.params.id, {avatar: req.body.url}, {new:true}, function(err, user) {
+            if(err) {console.log(err);return next(err);}
+            console.log(user);
+            res.json({"msg": "Uploaded!"});
+        });
+    });
     app.use('/', router);
 };

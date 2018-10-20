@@ -39,7 +39,6 @@ router.get("/",function (req,res,next) {
         let i = 0; let ret = {coderoom_list: results.coderooms, myrooms: []};
         while (i<=length) {
             if ((i === length) || !results.user_info) {
-                console.log(ret);
                 res.render("pages/homepage.ejs",ret);
                 return;
             }

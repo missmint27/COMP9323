@@ -81,7 +81,7 @@
                         <img alt="Image" src='/icon/settings-e6e6e6.png' class="avatar" style="width:50px;height:50px;margin-left:auto; margin-right:auto"/>
                     </a>
                     <div class="dropdown-menu">
-                        <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
+                        <a href="/profiles/<%=currentUser.id%>" class="dropdown-item">Profile</a>
                         <a href="/logout" class="dropdown-item">Log Out</a>
                     </div>
                     <div class="bottom-rigth" style="margin-left: 4em">
@@ -130,14 +130,14 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="card-title">
-                                                    <a href="#">
+                                                    <a href="/coderooms/<%=myroom._id%>">
                                                         <h6 data-filter-by="text"><%=myroom.name%></h6>
                                                     </a>
                                                     <div class="text-small"
                                                          style="max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap;">
                                                         <%=myroom.description%>
                                                     </div>
-                                                    <p class="text-small" style="margin-top: 1rem;">Author:<%=myroom.author.username%></p>
+                                                    <p class="text-small" style="margin-top: 1rem;"><a href="/profiles/<%=myroom.author.id%>">Author:<%=myroom.author.username%></a></p>
 
                                                 </div>
                                                 <div class="card-meta">
@@ -220,14 +220,14 @@
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="card-title">
-                                                        <a href="#">
+                                                        <a href="/coderooms/<%=coderoom._id%>">
                                                             <h6 data-filter-by="text"><%= coderoom.name%></h6>
                                                         </a>
                                                         <div class="text-small"
                                                              style="max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap;">
                                                             <%= coderoom.description%>
                                                         </div>
-                                                        <p class="text-small" style="margin-top: 1rem;">Author:<%= coderoom.author.username%></p>
+                                                        <p class="text-small" style="margin-top: 1rem;"><a href="/profiles/<%= coderoom.author.id%>">Author:<%= coderoom.author.username%></a></p>
 
                                                     </div>
                                                     <div class="card-meta">

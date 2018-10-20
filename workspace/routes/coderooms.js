@@ -41,7 +41,6 @@ router.get("/search",function(req, res, next) {
 
 //create new coderoom，
 router.post("/", middleware.isLoggedIn,function(req, res, next) {
-    console.log(req.user);
     var coderoom = new Coderoom(
         {
             name: req.body.name,
@@ -65,24 +64,8 @@ router.post("/", middleware.isLoggedIn,function(req, res, next) {
         fb_root.child('permission/' + coderoom.id).update(
             { "userId" : req.user.id}
         );
-        console.log(coderoom.id);
         res.redirect('/coderooms/' + coderoom.id);
     });
-});
-
-router.put('/:roomId', function(req, res, next) {
-    console.log("modify coderoom.");
-    // eval(require("locus"));
-    // fb_root.child(req.params.)
-    console.log(req.params);
-    fb_root.child("code").child(req.params.roomId).once('value')
-        .then(function (snapshot) {
-            console.log("here2");
-            fb_root.child("code").child(req.params.roomId)
-                .update({"upvote":req.body.upvote, "downvote": req.body.downvote});
-            res.status('200').json({'msg': 'coderoom upvote.'});
-        });
-    //TODO err handler?
 });
 
 // get coderoom by its id
@@ -241,7 +224,6 @@ router.delete("/:roomId/users", function(req, res, next) {
                 //pass the permission to the first user asking for permission
 
                 for (let userId in requestList.val()) {
-                    console.log(userId);
                     permissionRef.update( {'userId': userId} );
                     requestListRef.remove();
                     res.status('200').json({"msg": 'Left, permission transferred to user: ' + userId});
@@ -293,8 +275,7 @@ router.post('/:roomId/comments', middleware.isLoggedIn, function(req, res, next)
 
 //this is for subcomment
 router.post("/:roomId/comments/inside/:commentId", middleware.isLoggedIn,function (req,res,next) {
-    console.log(req.params);
-    console.log(req.body.comment);
+    console.log("posting sub comment");
     let subCommentRef = fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId).child("subComments");
     let commentId = subCommentRef.push({
         author: {
@@ -316,7 +297,6 @@ router.put('/:roomId/comments/:commentId', middleware.isLoggedIn, function(req, 
                 res.status('400').json({'msg': "You can't modify other's comment"});
                 return;
             }
-            console.log("here");
             fb_root.child('comment_list/' + req.params.roomId).child(req.params.commentId)
                 .update({"content": req.body.content});
             res.status('200').json({'msg': 'Comment created.'});
@@ -347,30 +327,29 @@ router.put('/:roomId/comments/downvote/:path',middleware.isLoggedIn, function(re
 });
 
 
-
+//TODO pull not working
 router.put('/:roomId/upvote',middleware.isLoggedIn, function(req, res,next) {
     console.log("modify room upvote.");
-    Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {upvote: {"_id": id}}}, {new:true}, function(err, coderoom) {
+    Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {upvote: {"_id": req.user.id}}}, {new:true}, function(err, coderoom) {
         if(err) {console.log(err);return next(err);}
-        console.log(coderoom);
     });
-    Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {downvote: {"_id": id}}}, {new:true}, function(err, coderoom) {
+    Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {downvote: {"_id": req.user.id}}}, {new:true}, function(err, coderoom) {
         if(err) {console.log(err);return next(err);}
-        console.log(coderoom);
     });
+    console.log(coderoom);
     res.json({'msg': 'Upvoted!'});
 });
 
+//TODO pull not working
 router.put('/:roomId/downvote',middleware.isLoggedIn, function(req, res, next) {
     console.log("modify room downvote.");
-    Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {downvote: {"_id": id}}}, {new:true}, function(err, coderoom) {
+    Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {downvote: {"_id": req.user.id}}}, {new:true}, function(err, coderoom) {
         if(err) {console.log(err);return next(err);}
-        console.log(coderoom);
     });
-    Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {upvote: {"_id": id}}}, {new:true}, function(err, coderoom) {
+    Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {upvote: {"_id": req.user.id}}}, {new:true}, function(err, coderoom) {
         if(err) {console.log(err);return next(err);}
-        console.log(coderoom);
     });
+    console.log(coderoom);
     res.json({'msg': 'Downvoted!'});
 });
 

@@ -1,11 +1,13 @@
 //need this: <script src="https://unpkg.com/axios/dist/axios.min.js"></script> and jquery
 var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/db1kyoeue/image/upload';
 var CLOUDINARY_UPLOAD_PRESET = 'zdcuntzg';
-var fileUpload = document.getElementById('image_uploader');
+var fileUpload = document.getElementById('avatar-file');
 
 fileUpload.addEventListener('change', function(event) {
     let file = event.target.files[0];
     let formData = new FormData();
+
+    console.log("Uploade started");
     formData.append('file', file);
     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
     axios({
@@ -17,6 +19,7 @@ fileUpload.addEventListener('change', function(event) {
         data: formData,
     }).then(function (res) {
         console.log(res.data.url);
+        console.log("Uploaded");
         postImageUrl(res.data.url);
     }).catch(function (err) {
         console.error(err);

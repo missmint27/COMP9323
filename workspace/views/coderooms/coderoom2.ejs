@@ -70,12 +70,12 @@
             <div style="margin-bottom: 1em">
                 <%if(currentUser){%>
                     <div class="like-btn-group">
-                        <div id="user-like" class='btn-like like' onclick="room_upvote">
+                        <div id="user-like" class='btn-like like' onclick="room_upvote()">
 
                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
 
                         </div>
-                        <div id="user-dislike" class='btn-like dislike' onclick="room_downvote">
+                        <div id="user-dislike" class='btn-like dislike' onclick="room_downvote()">
 
                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
 
@@ -101,7 +101,7 @@
                         <img alt="Image" src='/icon/settings-e6e6e6.png' class="avatar" style="width:50px;height:50px;margin-left:auto; margin-right:auto"/>
                     </a>
                     <div class="dropdown-menu">
-                        <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
+                        <a href="/profiles/<%=currentUser.id%>" class="dropdown-item">Profile</a>
                         <a href="/logout" class="dropdown-item">Log Out</a>
                     </div>
                     <div class="bottom-rigth" style="margin-left: 4em">
