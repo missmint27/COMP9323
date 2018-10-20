@@ -130,15 +130,15 @@ dbRefCommentList.on('child_added', snap => {
     //main comment
     let likeordislike = $("<div class='chat-item-likeordis'>" +
         "<div class='chat-item-like'><i class='up'></i></div>" +
-        "<div class='chat-likenum'><p>" + score + "</p></div> "+
+        "<div class='chat-likenum'>" + score + "</div> "+
         "<div class='chat-item-dislike'><i class='down'></i></div></div>");
 
     let img    = $("<a>", {href: "/profiles/" + comment_obj.author.id})
         .append($("<img>", {alt: comment_obj.author.username, class: "avatar", id: "comment_avatar" + comment_obj.author.id, src:comment_obj.author.avatar}));
-    let title = $("<a>", {href: "/profiles/" + comment_obj.authorId})
+    let title = $("<a>", {href: "/profiles/" + comment_obj.author.id})
         .append($("<div>", {class: "chat-item-title"}).append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(comment_obj.author.username)));
     //TODO link the reply modal with the comment user id.
-    let body  = $("<div class='chat-item-body' data-filter='text' data-toggle='modal' data-target='#reply-modal'></div>").text(comment_obj.content);
+    let body  = $("<div class='chat-item-body' data-filter='text' onclick=\"replyModal('" + snap.key + "')\"></div>").text(comment_obj.content);
     let item = $("<div>", {class: "media-body"}).append(title, body);
     let main_comment = $("<div>", {class: "chat-item-up"}).append(img, item, likeordislike);
     let add = $("<div>", {id: snap.key, class: "chat-item"}).append(main_comment);
@@ -170,7 +170,7 @@ dbRefCommentList.on('child_added', snap => {
         let sub_title = $("<a>", {href: "/profiles/" + sub_author.id})
             .append($("<div>", {class: "chat-item-title"}).append($("<span>", {class:"chat-item-author", 'data-filter-by':"text"}).text(sub_author.username)));
 
-        let sub_body  = $("<div class='chat-item-body' data-filter='text' data-toggle='modal' data-target='#reply-modal'></div>").text(sub_comment);
+        let sub_body  = $("<div class='chat-item-body' data-filter='text' onclick=\"replyModal('" + commentId + "')\"></div>").text(sub_comment);
         let sub_item = $("<div>", {class: "media-body"}).append(sub_title, sub_body);
         let sub = $("<div>", {class: "chat-item-up"}).append(sub_img, sub_item, sub_likeordislike);
         let sub_add = $("<div>", {id: commentId, class: "chat-item-subcomment"}).append(sub);
@@ -200,36 +200,6 @@ dbRefCommentList.on('child_added', snap => {
             });
         }
     }
-//
-// // TODO change to reply-modal
-//
-//     // this is for subcomment
-//     var text_class =  document.getElementsByClassName("chat-item-input form-control");
-//     var text = text_class[text_class.length - 1].value;
-//     var button_class = document.getElementsByClassName("chat-item-reply btn btn-primary btn-small");
-//     button_class[button_class.length - 1].addEventListener("click",function () {
-//             comment_submit(snap.key)
-//     }) ;
-//
-// });
-// function comment_submit(path) {
-//     const url = urlGetter() + "/comments/" + "inside/" + path;
-//     var d1 = document.getElementById(path);
-//     var text =  d1.getElementsByClassName("chat-item-input form-control")[0].value;
-//     console.log(text);
-//     $.ajax({
-//         url:url,
-//         method:"post",
-//         data:{
-//             comment: text,
-//         }
-//     }).done(function () {
-//         console.log("comments inside comments");
-//
-//     }).fail(function (xhr, status) {
-//         console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
-//     })
-//
 });
 
 function sub_upvote(parent, comment) {
@@ -239,26 +209,37 @@ function sub_upvote(parent, comment) {
 function upvote(path) {
     const url = urlGetter() + "/comments/upvote/" + path;
     console.log(url);
-    $.ajax({
-        url: url,
-        method:'put',
-    })
-        .done(function (data) { console.log(data); })
-        .fail(function (xhr, status){ console.log(xhr.status); })
+    //TODO for adding voting number
+    // let id = path.split('/').pop();
+    // let number = $('#'+id + ' .chat-likenum').value;
+    // console.log(number);
+    // console.log("va",number);
+
+    // $.ajax({
+    //     url: url,
+    //     method:'put',
+    // })
+    //     .done(function (data) { console.log(data); })
+    //     .fail(function (xhr, status){ console.log(xhr.status); })
 }
 
 function sub_downvote(parent, comment) {
     const path = parent + '/subcomments/' + comment;
     downvote(path);
 }
+
 function downvote(path) {
     const url = urlGetter() + "/comments/downvote/" + path;
     console.log(url);
+
+
     $.ajax({
         url: url,
         method:'put',
     })
-    .done(function (data) { console.log(data); })
+    .done(function (data) {
+        console.log(data);
+    })
     .fail(function (xhr, status){ console.log(xhr.status); })
 }
 
@@ -395,10 +376,7 @@ function modeChange() {
 }
 
 function hideComments() {
-    let code_content=document.getElementById('code-content');
-    let chat_content=document.getElementById('chat-content');
     let comment_btn_text = document.getElementById('comment-btn-text');
-    // const user_block = document.getElementById("participants_block");
     if (!comment_mode) {
         comment_btn_text.innerHTML = 'Show Comments';
         $('#code-content').animate({width:"97%"}, 300);
@@ -419,13 +397,14 @@ function hideComments() {
         }
     }
 }
+
 function urlGetter() {
     const host = window.location.host;
     const path = window.location.pathname;
     return 'http://' + host + path;
 }
 
-function room_downvote(path) {
+function room_downvote() {
     const url = urlGetter() + "/downvote";
     console.log(url);
     $.ajax({
@@ -436,7 +415,7 @@ function room_downvote(path) {
         .fail(function (xhr, status){ console.log(xhr.status); })
 }
 
-function room_upvote(path) {
+function room_upvote() {
     const url = urlGetter() + "/upvote";
     console.log(url);
     $.ajax({
@@ -445,4 +424,27 @@ function room_upvote(path) {
     })
         .done(function (data) { console.log(data); })
         .fail(function (xhr, status){ console.log(xhr.status); })
+}
+
+function replyModal(commentId) {
+    $("#reply-modal").on('show.bs.modal', function () {
+        $("#reply-btn").on('click', function () {
+            let comment = $("#reply-modal .modal-dialog .modal-content .modal-body .modal-replyblock .modal-replyarea").val();
+            comment_submit(comment, commentId);
+        });
+    }).modal('show');
+}
+
+function comment_submit(content, path) {
+    const url = urlGetter() + "/comments/" + "inside/" + path;
+    $.ajax({
+        url:url,
+        method:"post",
+        data:{
+            comment: content,
+        }
+    })
+        .done(function () { console.log("Comment reply done."); })
+        .fail(function (xhr, status) { console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg);
+    })
 }
