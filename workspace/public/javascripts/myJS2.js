@@ -24,7 +24,8 @@ console.log("roomID: ", roomId);
 //Need further changes for optimization.
 let editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
     mode: "python",
-    theme: "darcula",
+    // theme: "darcula",
+    theme: "material",
     lineNumbers: true,
 // autoMatchBrackets: true,
     readOnly: !permission,                 //set to true if user have the permission.
