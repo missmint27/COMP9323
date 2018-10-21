@@ -4,7 +4,8 @@ var Coderoom = require("../models/coderoom");
 var User = require('../models/user');
 var middleware = require("../middleware");
 var firebase = require('firebase');
-var request = require('request');
+
+
 var pythonExecutor = require('../controllers/pythonExecutor');
 const async = require('async');
 const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v1538825655/sujhmatymeuigsghpfby.png';
@@ -30,14 +31,6 @@ router.get("/", function(req, res, next) {
     });
 });
 
-//search for coderooms
-router.get("/search",function(req, res, next) {
-    console.log("query coderooms: ", req.query);
-    Coderoom.find(req.query).exec(function(err, coderoom) {
-        if (err) { return next(err); }
-        res.json(coderoom);
-    })
-});
 
 //create new coderoom，
 router.post("/", middleware.isLoggedIn,function(req, res, next) {
@@ -155,11 +148,22 @@ router.put('/:roomId/permission/:userId', middleware.isLoggedIn, function(req, r
 
 
 //Revoke permission
-router.delete('/:roomId/permission', middleware.isOwner, function(req, res, next) {
+router.delete('/:roomId/permission', middleware.isLoggedIn, function(req, res, next) {
     console.log('Resetting permission');
-    const permissionRef = fb_root.child('permission/' + req.params.roomId);
-    permissionRef.update( {'userId': req.user.id} );
-    res.redirect('/');
+    Coderoom.findOne({
+        '_id': req.params.roomId,
+        "author.id": req.user.id
+    }, function (err, coderoom) {
+        if (err) return next(err);
+        if (!coderoom) {
+            res.status('400').json({'msg': 'No permission'});
+            return;
+        }
+        const permissionRef = fb_root.child('permission/' + req.params.roomId);
+        permissionRef.update( {'userId': req.user.id} );
+        console.log("updated");
+        res.status('200').json({'msg': 'Reset permission.'});
+    });
 });
 
 //require for permission

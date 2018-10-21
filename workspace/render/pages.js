@@ -1,6 +1,8 @@
 var express = require("express");
 var router  = express.Router();
 var request = require('request');
+var url = require('url');
+var Coderoom = require("../models/coderoom");
 router.get("/",function (req,res,next) {
     const url = 'http://' + req.headers.host + '/coderooms/';
     request({url: url, json: true}, function (error, response, coderooms) {
@@ -28,6 +30,15 @@ router.get("/",function (req,res,next) {
             }
             i++;
         }
+    });
+});
+
+
+router.get("/search",function (req,res,next) {
+    const author = url.parse(req.originalUrl, true).query.author;
+    Coderoom.find({"author.username": author}).exec(function(err, coderooms) {
+        if (err) { return next(err); }
+        res.render("pages/search.ejs", {author: author, coderoom_list: coderooms});
     });
 });
 module.exports = router;

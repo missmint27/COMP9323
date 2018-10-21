@@ -29,74 +29,46 @@
            style="font-size:2rem; margin-left:auto; margin-right:auto">
             OURCODES
         </a>
-        <%if(currentUser){%>
         <div class="navbar-brand text-center"
-             style="font-size:1rem; margin-top: -3em; margin-left:auto; margin-right:auto" cnavbar-brand text-center> Management Page</div>
-        <%}%>
+             style="font-size:1rem; margin-top: -3em; margin-left:auto; margin-right:auto" cnavbar-brand text-center> Welcome <%=currentUser.username%></div>
+
 
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
-            <%if(currentUser){%>
-            <!--TODO currentUser in passport will not update automatically-->
-            <%if(currentUser.avatar) {%>
             <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
                  style="width:50px;height:50px;margin-left:auto; margin-right:auto">
-            <%} else {%>
-                <img id="logo" src="/icon/anonymous.png" class="avatar" alt=""
-                     style="width:50px;height:50px;margin-left:auto; margin-right:auto">
-            <%}%>
-            <div class="nav-bottom text-center" style="margin: 100px auto 0 auto;">
-                <div class="nav-bo">
-                    <img class="nav-icon" onclick="javascript:location.href='/profiles/<%=currentUser.id%>'"
-                         src="icon/settings-fff.png"
-                         onmouseover="this.src='icon/settings-e6e6e6.png'"
-                         onmouseout="this.src='icon/settings-fff.png'"/>
-                </div>
-            </div>
-            <%} else {%>
-                <img id="logo" src="/icon/anonymous.png" class="avatar" alt=""
-                     style="width:50px;height:50px;margin-left:auto; margin-right:auto">
-                <div class="nav-sign btn-group text-center" style="margin-left:auto; margin-right:auto; font-weight:bold">
-                    <a class="nav-sign" href="/register" id="signup">Sign up</a>
-                    <a class="nav-sign" href="/login" id="signin">Sign in</a>
-                </div>
-                <div class="nav-bottom text-center" style="margin: 100px auto 0 auto;">
-                </div>
-            <%}%>
-            <hr>
+        </div>
 
 
-            <div>
-                <form>
+        <div class="d-none d-lg-block" style="margin-bottom: 1em">
+            <div style="margin-bottom: 1em">
+                <hr>
+                <form method="get" action="/search">
                     <div class="input-group input-group-dark input-group-round">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i class="material-icons">search</i>
                             </span>
                         </div>
-                        <input type="search" class="form-control form-control-dark" placeholder="Search"
+                        <input type="search" name="author" class="form-control form-control-dark" placeholder="Search author"
                                aria-label="Search app" aria-describedby="search-app">
                     </div>
                 </form>
-                <div class=" mt-2">
-                    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#task-add-modal">
-                        Create Coderoom
-                    </button>
-                </div>
             </div>
-        </div>
-
-
-        <div class="d-none d-lg-block">
             <div class="dropup">
-                <%if(currentUser){%>
                 <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img alt="Image" src='icon/settings-e6e6e6.png' class="avatar"/>
+                    <img alt="Image" src='/icon/settings-e6e6e6.png' class="avatar" style="width:50px;height:50px;margin-left:auto; margin-right:auto"/>
                 </a>
                 <div class="dropdown-menu">
-                    <a href="/profile/<%=currentUser.id%>" class="dropdown-item">Profile</a>
+                    <a href="/profiles/<%=currentUser.id%>" class="dropdown-item">Profile</a>
                     <a href="/logout" class="dropdown-item">Log Out</a>
                 </div>
-                <%}%>
+                <div class="bottom-rigth" style="margin-left: 4em">
+                    <div class=" mt-2">
+                        <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#task-add-modal">
+                            Create Coderoom
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -106,7 +78,9 @@
             <div class="row justify-content-center">
                 <div class="col-lg-11 col-xl-10">
                     <div class="page-header">
-                        <h1>Start your coding journey</h1>
+                        <h1>
+                            Start your coding journey
+                        </h1>
                         <p class="lead">Sharing let your idea goes deeper</p>
                     </div>
                     <div class="tab-content">
@@ -116,18 +90,6 @@
                                 <div class="col-auto">
                                     <h3>Manage CodeRooms</h3>
                                 </div>
-                                <form class="col-md-auto">
-                                    <div class="input-group input-group-round">
-                                        <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="material-icons">filter_list</i>
-                                        </span>
-                                        </div>
-                                        <input type="search" class="form-control filter-list-input"
-                                               placeholder="Filter tasks" aria-label="Filter Tasks"
-                                               aria-describedby="filter-tasks">
-                                    </div>
-                                </form>
                             </div>
                             <!--end of content list head-->
 
@@ -148,10 +110,10 @@
                                                         <h6 data-filter-by="text"><%=myroom.name%></h6>
                                                     </a>
                                                     <div class="text-small"
-                                                         style="max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap;">
+                                                         style="max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap;">
                                                         <%=myroom.description%>
                                                     </div>
-                                                    <p class="text-small" style="margin-top: 1rem;">Author:<%=myroom.author.username%></p>
+                                                    <p class="text-small" style="margin-top: 1rem;"><a href="/profiles/<%=myroom.author.id%>">Author:<%=myroom.author.username%></a></p>
 
                                                 </div>
                                                 <div class="card-meta">
@@ -166,28 +128,15 @@
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <form method="post" action="/coderooms/<%=myroom._id%>?_method=DELETE">
-                                                                <button type="submit" class="dropdown-item text-danger" >Delete
-                                                                    room</button>
+                                                                <button type="submit" class="dropdown-item text-danger" >Delete room</button>
                                                             </form>
-                                                            <div class="dropdown-divider"></div>
-                                                            <form method="post" action="/coderooms/<%=myroom._id%>/permission?_method=DELETE">
-                                                                <button type="submit" class="dropdown-item text-danger" >Revoke permission</button>
-                                                            </form>
-                                                        </div>
+                                                            </div>
                                                     </div>
-                                                    <!--TODO Should be only numbers-->
                                                     <div class="card-likeordislike">
-                                                        <div class="card-like">
-                                                            <i class="up"></i>
-                                                        </div>
                                                         <div class="card-likenum">
                                                             <p><%=myroom.upvote.length - myroom.downvote.length%></p>
                                                         </div>
-                                                        <div class="card-dislike">
-                                                            <i class="down"></i>
-                                                        </div>
                                                     </div>
-                                                    <!--TODO Should be only numbers-->
                                                     <div>
                                                         <form method="get" action="/coderooms/<%=myroom._id%>">
                                                             <button type="submit" class="btn btn-outline-primary">Enter
@@ -200,6 +149,7 @@
 
                                         </div>
                                         <%})%>
+
                                     </div>
                                     <!--</div>-->
 
@@ -208,7 +158,6 @@
                                 <!--**********************************************-->
                                 <!--end of content list body-->
                             </div>
-
                         </div>
                     </div>
                     <!--end of tab-->
@@ -275,6 +224,14 @@
 <script type="text/javascript" src="javascripts/bootstrap/theme.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
 <script src="/javascripts/homepageJS.js"></script>
+<script type="text/javascript">
+    $("#signin").mouseover(function () {
+        $("#logo").css("transform", "scaleX(-1)")
+    });
+    $("#signin").mouseout(function () {
+        $("#logo").css("transform", "scaleX(1)")
+    });
+</script>
 
 <div style="display:none">
     Icons made by

@@ -29,3 +29,15 @@ for(let i = 0; i < avatar_list.length; i++) {
         });
     }
 }
+
+function revoke_permission(roomId) {
+    const host = window.location.host;
+    const url = 'http://' + host + '/coderooms/'+roomId + '/permission';
+    console.log(url);
+    $.ajax({
+        url: url,
+        method:'delete',
+    })
+        .done(function (data) { console.log(data); })
+        .fail(function (xhr, status){ console.log(xhr.status); })
+}

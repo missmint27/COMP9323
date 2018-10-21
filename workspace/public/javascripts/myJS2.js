@@ -17,14 +17,14 @@ let comment_dict = {};
 //change the global comment mode to shift display mode.
 let comment_mode = false;
 let permission = false;
-
+let permission_holder = null;
 console.log("userID: ", userId);
 console.log("roomID: ", roomId);
 //CodeMirro Editor initialize
 //Need further changes for optimization.
 let editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
     mode: "python",
-    theme: "darcula",
+    theme: 'lucario',
     //theme: "material",
     lineNumbers: true,
 // autoMatchBrackets: true,
@@ -47,33 +47,47 @@ const dbRefRoomPermission = dbRefObject.child('permission/' + roomId);
 const dbRefAskForPermission = dbRefObject.child('ask-for-permission/' + roomId);
 
 
+dbRefUserList.on('child_added', snap => {
+    const user_obj = snap.val();
+    const avatar   = $("<a>", {href: "/profiles/" + user_obj.id}).append($("<img>", { alt: user_obj.username, class: "avatar mr-2",id: "user_avatar" + user_obj.id, src:user_obj.avatar}));
+    const user     = $("<a>", {href: "/profiles/" + user_obj.id}).append($("<span>", {href: "/profiles/" + user_obj.id, class: "h6 mb-0", "data-filter-by": "text"}).text(user_obj.username));
+    const add = $("<div>", {id: snap.key, class: "custom-control custom-checkbox"})
+        .append($("<div>", {class:"d-flex align-items-center", id: user_obj.userId}).append(avatar, user));
+    $("div[id='user-group']").append(add);
+});
+
+dbRefUserList.on('child_removed', snap => {
+    const liToRemove = document.getElementById(snap.key);
+    liToRemove.remove();
+});
+
 //track the permission status.
 //if permission is true, set the editor readOnly to false, theme will be changed as well.
 dbRefRoomPermission.on('value', snap => {
-    const permission_holder = snap.val().userId;
+    permission_holder = snap.val().userId;
+    $("#permission-holder-btn").remove();
+    const button = $("<button>", {id: "permission-holder-btn", class: "btn btn-primary", style: "display: inline; width: 10em; margin-left:13em;"}).text("Permission Holder");
+    $("div[id=" + permission_holder + "] div[class='d-flex align-items-center']").append(button);
     console.log("permission holder: ", permission_holder);
     const permission_write = document.getElementById('write-permission');
-
     if (permission_holder !== userId && permission === false) {
     } else {
         permission = permission_holder === userId;
         dbRefCode.once('value', codeSnap => {
             const content = codeSnap.val();
-            //global var permission
             code_input.value = content['content'];
             editor.setValue(code_input.value);
             editor.setOption("readOnly", !permission);
             if(permission) {
+                console.log("You have the permission.");
                 editor.setOption("theme", 'darcula');
                 permission_write.className = "have-this-permission";
-                $("#read-permission").css('visibility', 'hidden');
                 $("#write-permission").css('visibility', 'visible');
             } else {
+                console.log("You don't have the permission.");
                 editor.setOption("theme", 'lucario');
                 permission_write.className = "no-permission";
-                $("#read-permission").css('visibility', 'visible');
                 $("#write-permission").css('visibility', 'hidden');
-                // $("#write-permission").hide();
             }
         });
     }
@@ -94,27 +108,22 @@ dbRefCode.on('value', snap => {
         editor.setValue(code_input.value);
 });
 
-dbRefUserList.on('child_added', snap => {
-    const user_obj = snap.val();
-    const avatar   = $("<a>", {href: "/profiles/" + user_obj.id}).append($("<img>", { alt: user_obj.username, class: "avatar mr-2",id: "user_avatar" + user_obj.id, src:user_obj.avatar}));
-    const user     = $("<a>", {href: "/profiles/" + user_obj.id}).append($("<span>", {href: "/profiles/" + user_obj.id, class: "h6 mb-0", "data-filter-by": "text"}).text(user_obj.username));
-    const add = $("<div>", {id: snap.key, class: "custom-control custom-checkbox"})
-        .append($("<div>", {class:"d-flex align-items-center", id: user_obj.userId}).append(avatar, user));
-    $("div[id='user-group']").append(add);
-});
 
-dbRefUserList.on('child_removed', snap => {
-    const liToRemove = document.getElementById(snap.key);
-    liToRemove.remove();
-});
 
 // Ask for permission need to be after user list, because it needs the elements user list generates.
 dbRefAskForPermission.on('child_added', snap => {
     console.log("ask for permission: ", snap.val());
     if (permission) {
         const request_user = snap.key;
-            const button = $("<button>", {id: "require-btn"+snap.key, 'data-dismiss': "modal", class: "btn btn-danger", style: "display: inline; width: 10em; margin-left:6em;"}).text("Pass Permission").click({passTo: request_user}, passPermission);
+        if (request_user !== permission_holder) {
+            const button = $("<button>", {
+                id: "require-btn" + snap.key,
+                'data-dismiss': "modal",
+                class: "btn btn-danger",
+                style: "display: inline; width: 10em; margin-left:13em;"
+            }).text("Pass Permission").click({passTo: request_user}, passPermission);
             $("div[id=" + request_user + "] div[class='d-flex align-items-center']").append(button);
+        }
     }
 });
 

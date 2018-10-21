@@ -53,15 +53,17 @@
             <div class="d-none d-lg-block" style="margin-bottom: 1em; position: absolute; bottom: 24px;">
                 <hr>
                 <form>
-                    <div class="input-group input-group-dark input-group-round">
-                        <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="material-icons">search</i>
-                                </span>
+                    <form method="get" action="/search">
+                        <div class="input-group input-group-dark input-group-round">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="material-icons">search</i>
+                            </span>
+                            </div>
+                            <input type="search" name="author" class="form-control form-control-dark" placeholder="Search author"
+                                   aria-label="Search app" aria-describedby="search-app">
                         </div>
-                        <input type="search" class="form-control form-control-dark" placeholder="Search"
-                               aria-label="Search app" aria-describedby="search-app">
-                    </div>
+                    </form>
                 </form>
                 <div class="dropup"style="margin-top: 1em">
                     <%if(currentUser){%>
@@ -199,13 +201,11 @@
                                                                                             </form>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <!--TODO Should be only numbers-->
                                                                                     <div class="card-likeordislike">
                                                                                         <div class="card-likenum">
                                                                                             <p><%= coderoom.upvote.length - coderoom.downvote.length%></p>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <!--TODO Should be only numbers-->
                                                                                     <div>
                                                                                         <form method="get" action="/coderooms/<%=coderoom._id%>">
                                                                                         <button type="submit" class="btn btn-outline-primary">Enter
@@ -215,7 +215,6 @@
                                                                                 </div>
                                 
                                                                             </div>
-                                                                            <!--TODO-->
                                 
                                                                         </div>
                                                                     <%});%>

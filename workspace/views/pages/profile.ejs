@@ -52,14 +52,14 @@
 
             <div class="d-none d-lg-block" style="margin-bottom: 1em; position: absolute; bottom: 24px;">
                 <hr>
-                <form>
+                <form method="get" action="/search">
                     <div class="input-group input-group-dark input-group-round">
                         <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="material-icons">search</i>
-                                </span>
+                            <span class="input-group-text">
+                                <i class="material-icons">search</i>
+                            </span>
                         </div>
-                        <input type="search" class="form-control form-control-dark" placeholder="Search"
+                        <input type="search" name="author" class="form-control form-control-dark" placeholder="Search author"
                                aria-label="Search app" aria-describedby="search-app">
                     </div>
                 </form>
@@ -156,7 +156,7 @@
                                     <div class="card-meta">
                                         <div class="card-likeordislike">
                                             <div class="card-likenum">
-                                                <p>3</p>
+                                                <%= coderoom.upvote.length - coderoom.downvote.length%>
                                             </div>
                                         </div>
                                         <div>

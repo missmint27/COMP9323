@@ -106,14 +106,14 @@
                     </div>
                 <%}%>
                 <hr>
-                <form>
+                <form method="get" action="/search">
                     <div class="input-group input-group-dark input-group-round">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i class="material-icons">search</i>
                             </span>
                         </div>
-                        <input type="search" class="form-control form-control-dark" placeholder="Search"
+                        <input type="search" name="author" class="form-control form-control-dark" placeholder="Search author"
                                aria-label="Search app" aria-describedby="search-app">
                     </div>
                 </form>
@@ -216,7 +216,7 @@
                         <!--Done-->
                         <!--</button>-->
                         <button type="button" class="btn btn-warning" data-dismiss="modal" aria-label="Close">
-                            <i class="material-icons">close</i>
+                            Close
                         </button>
                     </div>
                 </div>
