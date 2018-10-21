@@ -231,8 +231,7 @@
 
                                         </div>
                                         <div class="tab-pane fade" role="tabpanel" id="following" aria-labelledby="following-tab">
-                                            <span>You are following <%=me.follower.length%> people:</span>
-                                            <p><%=me.following%></p>
+                                            <span>You are following <%=me.following.length%> people:</span>
                                             <div id="following-list mt-3" style="margin-top: 20px;">
                                                 <% me.following.forEach(function(person) {%>
                                                     <div class="row one-user">
