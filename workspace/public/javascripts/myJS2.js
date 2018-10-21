@@ -110,16 +110,16 @@ dbRefUserList.on('child_removed', snap => {
 
 // Ask for permission need to be after user list, because it needs the elements user list generates.
 dbRefAskForPermission.on('child_added', snap => {
+    console.log("ask for permission: ", snap.val());
     if (permission) {
         const request_user = snap.key;
-        if (snap.val()) {
             const button = $("<button>", {class: "btn btn-warning", style: "display: inline; width: 10em; margin-left:6em;"}).text("Pass Permission").click({passTo: request_user}, passPermission);
             $("div[id=" + request_user + "] div[class='d-flex align-items-center']").append(button);
-        }
     }
 });
 
 dbRefAskForPermission.on('child_removed', snap => {
+    console.log("no ask for permission: ", snap.val());
     if (permission) {
         const request_user = snap.key;
         if (snap.val()) {

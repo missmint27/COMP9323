@@ -58,25 +58,6 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
         });
     });
 
-    router.get('/users/:id', function(req, res, next) {
-        User.findById(req.params.id).exec(function(err, user) {
-            if (err) return next(err);
-            const user_info = {
-                username:   user.username,
-                userId:     user._id,
-                email:      user.email,
-                birthday:   user.birthday,
-                country:    user.country,
-                city:       user.city,
-                avatar:     user.avatar,
-                coderoom:   user.coderoom,
-                following:  user.following,
-                follower:   user.follower,
-            };
-            res.json(user_info);
-        })
-    });
-
     router.get("/logout", function(req, res){
         req.logout();
         req.flash("success", "LOGGED YOU OUT!");
