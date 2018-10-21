@@ -161,6 +161,7 @@
                         <i class="fa fa-user"></i>
                         User List
                     </button>
+                    <%console.log(currentUser)%>
                     <button type="button" class="btn btn-outline-primary" id="comment-btn" onclick="modeChange()">
                         <i class="fa fa-comment" style="transform: translateY(5px);"></i>
                         <div id="comment-btn-text" style="display: inline-flex;
@@ -283,5 +284,8 @@
 <script type="text/javascript" src="/javascripts/bootstrap/list.min.js"></script>
 <script type="text/javascript" src="/javascripts/bootstrap/bootstrap.js"></script>
 <!--<script type="text/javascript" src="/javascripts/bootstrap/theme.js"></script>-->
-
+<script>
+    $("#write-permission").css('visibility', 'hidden');
+    // $("#read-permission").css('visibility', 'hidden');
+</script>
 </html>
