@@ -32,10 +32,11 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
             avatar: DEFAULT_USER_AVATAR,
         });
         user.save(function (err) {
-            if (err) {
-                return next(err);
-            }
-            res.redirect('/');
+            if (err) { return next(err); }
+            req.login({username: user.username, id: user._id, avatar: user.avatar, isAdmin: user.isAdmin}, function(err) {
+                if (err) { return next(err); }
+                return res.redirect('/');
+            });
         });
     });
 
@@ -49,10 +50,11 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
             isAdmin: true,
         });
         user.save(function (err) {
-            if (err) {
-                return next(err);
-            }
-            res.redirect('/');
+            if (err) { return next(err); }
+            req.login({username: user.username, id: user._id, avatar: user.avatar, isAdmin: user.isAdmin}, function(err) {
+                if (err) { return next(err); }
+                return res.redirect('/');
+            });
         });
     });
 
@@ -73,7 +75,6 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
             };
             res.json(user_info);
         })
-        //TODO get the full info.
     });
 
     router.get("/logout", function(req, res){
@@ -122,8 +123,7 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
                         }
                     } else {
                         if (results.me.following[i]._id.equals(req.params.id)) {
-                            found = true;
-                            i = len - 1;
+                            found = true; i = len - 1;
                         }
                     }
                     i++;
@@ -170,14 +170,12 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
             {new:true},
             function(err, followee) {
                 if(err) {console.log(err);return next(err);}
-                console.log(followee);
                 //TODO ugly
                 // update the follower
                 User.findByIdAndUpdate(req.user.id,
                     {$addToSet: {following: {"_id": req.params.id, 'avatar': followee['avatar'], 'username': followee['username']}}},
                     {new:true}, function(err, follower) {
                         if(err) {console.log(err);return next(err);}
-                        console.log(follower);
                     });
         });
         res.json({'msg': 'followed user: ' + req.params.id})
@@ -186,15 +184,12 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
     router.delete("/users/:id/follow", middleware.isLoggedIn, function(req, res, next) {
         console.log("User: "+ req.user.id + "is trying to defollow: ", req.params.id);
         // update the follower
-        //TODO basic info about the followee
         User.findByIdAndUpdate(req.user.id, {$pull: {following: {"_id": req.params.id}}}, {new:true}, function(err, user) {
             if(err) {console.log(err);return next(err);}
-            console.log(user);
         });
         // update the followee
         User.findByIdAndUpdate(req.params.id, {$pull: {follower: {"_id": req.user.id}}}, {new:true}, function(err, user) {
             if(err) {console.log(err);return next(err);}
-            console.log(user);
         });
         res.json({'msg': 'defollowed user: ' + req.params.id})
     });

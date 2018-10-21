@@ -36,7 +36,7 @@ router.get("/",function (req,res,next) {
             return;
         }
         const length = results.coderooms.length;
-        let i = 0; let ret = {coderoom_list: results.coderooms, myrooms: []};
+        let i = 0; let ret = {coderoom_list: [], myrooms: []};
         while (i<=length) {
             if ((i === length) || !results.user_info) {
                 res.render("pages/homepage.ejs",ret);
@@ -44,6 +44,8 @@ router.get("/",function (req,res,next) {
             }
             if (results.coderooms[i]['author']['id'] === req.user.id) {
                 ret['myrooms'].push(results.coderooms[i]);
+            } else {
+                ret['coderoom_list'].push(results.coderooms[i]);
             }
             i++;
         }
