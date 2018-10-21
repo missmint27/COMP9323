@@ -36,6 +36,10 @@ router.get("/",function (req,res,next) {
             return;
         }
         const length = results.coderooms.length;
+        if (!results.user_info) {
+            res.render("pages/homepage.ejs",{coderoom_list: results.coderooms, myrooms: []});
+            return;
+        }
         let i = 0; let ret = {coderoom_list: [], myrooms: []};
         while (i<=length) {
             if ((i === length) || !results.user_info) {

@@ -5,12 +5,10 @@ var coderoomSchema = new mongoose.Schema({
     upvote: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        unique : true
     }],
     downvote: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        unique : true
     }],
     rank: Number,
     description: String,

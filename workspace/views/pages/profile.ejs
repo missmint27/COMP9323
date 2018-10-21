@@ -183,9 +183,9 @@
                 </div><!--end of content list head-->
 
                 <div class="content-list-body">
-                    <ul class="profile-ul">
+                    <ul id="follower-list" class="profile-ul">
                         <%user.follower.forEach(function(person) {%>
-                            <li class="profile-li">
+                            <li class="profile-li" id="follower<%=person._id%>">
                                 <a href="/profiles/<%=person._id%>">
                                     <img style="width:50px;height:50px;" src='<%=person.avatar%>' class="profile-ava-li" alt="<%=person.username%>"/>
                                 </a>
@@ -203,7 +203,7 @@
                 </div><!--end of content list head-->
 
                 <div class="content-list-body">
-                    <ul class="profile-ul">
+                    <ul id="following-list" class="profile-ul">
                         <%user.following.forEach(function(person) {%>
                             <li class="profile-li">
                                 <a href="/profiles/<%=person._id%>">
@@ -232,9 +232,12 @@
 <script src="/javascripts/homepageJS.js"></script>
 <script src="/javascripts/follow.js"></script>
 <script>
+    let follow_btn = $('#follow-btn');
     <%if (flag) {%>
-        let follow_btn = $('#follow-btn');
         follow_btn.addClass('follow-ing');
+        follow_btn.attr("onclick","unfollow('<%=user._id%>')");
+    <%} else {%>
+        follow_btn.removeClass('follow-ing');
         follow_btn.attr("onclick","follow('<%=user._id%>')");
     <%}%>
 </script>

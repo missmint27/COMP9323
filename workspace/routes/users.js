@@ -178,7 +178,8 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
                         if(err) {console.log(err);return next(err);}
                     });
         });
-        res.json({'msg': 'followed user: ' + req.params.id})
+        res.json({'msg': 'followed', 'user': req.params.id, 'me': req.user});
+
     });
 
     router.delete("/users/:id/follow", middleware.isLoggedIn, function(req, res, next) {
@@ -191,7 +192,7 @@ const DEFAULT_USER_AVATAR = 'https://res.cloudinary.com/db1kyoeue/image/upload/v
         User.findByIdAndUpdate(req.params.id, {$pull: {follower: {"_id": req.user.id}}}, {new:true}, function(err, user) {
             if(err) {console.log(err);return next(err);}
         });
-        res.json({'msg': 'defollowed user: ' + req.params.id})
+        res.json({'msg': 'defollowed', 'user': req.params.id, 'me': req.user});
     });
 
     router.put("/profiles/:id/avatar", middleware.isLoggedIn, function(req, res, next) {

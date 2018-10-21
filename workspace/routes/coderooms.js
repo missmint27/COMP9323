@@ -21,14 +21,6 @@ firebase.initializeApp(config);
 //firebase root directory
 var fb_root = firebase.database().ref();
 
-router.get("/test", function(req, res, next) {
-    console.log("TEST");
-    console.log(req.user);
-
-    req.user.avatar = 'testing';
-    console.log(req.user);
-    res.json({"msg": "DONE"});
-});
 //functioning
 router.get("/", function(req, res, next) {
     console.log("Show all coderooms");
@@ -63,7 +55,6 @@ router.post("/", middleware.isLoggedIn,function(req, res, next) {
         User.findByIdAndUpdate(req.user.id,
             {$addToSet: {myrooms: {_id:coderoom.id}}}, {new:true}, function(err, user) {
                 if(err) { return next(err); }
-                console.log(user);
             });
         fb_root.child('code/').child(coderoom.id).update(
             {'content': "print(\"Hello World\")","upvote":0, "downvote":0}
@@ -207,7 +198,6 @@ router.delete("/:id",middleware.isLoggedIn, function(req, res, next) {
         });
         User.findByIdAndUpdate(req.user.id, {$pull: {myrooms: {"_id": req.params.id}}}, {new:true}, function(err, user) {
             if(err) {console.log(err);return next(err);}
-            console.log(user);
         });
     }
     // delete all coderoom entries in fireabse.
@@ -347,26 +337,28 @@ router.put('/:roomId/comments/downvote/:path',middleware.isLoggedIn, function(re
 //TODO pull not working
 router.put('/:roomId/upvote',middleware.isLoggedIn, function(req, res,next) {
     console.log("modify room upvote.");
-    Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {upvote: {"_id": req.user.id}}}, {new:true}, function(err, coderoom) {
+    Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {upvote: {_id: req.user.id}}}, {new:true}, function(err, coderoom) {
         if(err) {console.log(err);return next(err);}
+        console.log(coderoom);
     });
-    Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {downvote: {"_id": req.user.id}}}, {new:true}, function(err, coderoom) {
+    Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {downvote: {_id: req.user.id}}}, {new:true}, function(err, coderoom) {
         if(err) {console.log(err);return next(err);}
+        console.log(coderoom);
     });
-    console.log(coderoom);
     res.json({'msg': 'Upvoted!'});
 });
 
 //TODO pull not working
 router.put('/:roomId/downvote',middleware.isLoggedIn, function(req, res, next) {
     console.log("modify room downvote.");
-    Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {downvote: {"_id": req.user.id}}}, {new:true}, function(err, coderoom) {
+    Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {downvote: {_id: req.user.id}}}, {new:true}, function(err, coderoom) {
         if(err) {console.log(err);return next(err);}
+        console.log(coderoom);
     });
-    Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {upvote: {"_id": req.user.id}}}, {new:true}, function(err, coderoom) {
+    Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {upvote: {_id: req.user.id}}}, {new:true}, function(err, coderoom) {
         if(err) {console.log(err);return next(err);}
+        console.log(coderoom);
     });
-    console.log(coderoom);
     res.json({'msg': 'Downvoted!'});
 });
 

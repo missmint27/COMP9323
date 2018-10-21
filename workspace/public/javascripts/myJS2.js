@@ -96,8 +96,8 @@ dbRefCode.on('value', snap => {
 
 dbRefUserList.on('child_added', snap => {
     const user_obj = snap.val();
-    const avatar   = $("<img>", {alt: user_obj.username, class: "avatar mr-2",id: "user_avatar" + user_obj.id, src:user_obj.avatar});
-    const user     = $("<span>", {class: "h6 mb-0", "data-filter-by": "text"}).text(user_obj.username);
+    const avatar   = $("<a>", {href: "/profiles/" + user_obj.id}).append($("<img>", { alt: user_obj.username, class: "avatar mr-2",id: "user_avatar" + user_obj.id, src:user_obj.avatar}));
+    const user     = $("<a>", {href: "/profiles/" + user_obj.id}).append($("<span>", {href: "/profiles/" + user_obj.id, class: "h6 mb-0", "data-filter-by": "text"}).text(user_obj.username));
     const add = $("<div>", {id: snap.key, class: "custom-control custom-checkbox"})
         .append($("<div>", {class:"d-flex align-items-center", id: user_obj.userId}).append(avatar, user));
     $("div[id='user-group']").append(add);

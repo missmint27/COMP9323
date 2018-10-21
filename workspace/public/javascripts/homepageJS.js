@@ -18,7 +18,7 @@ for(let i = 0; i < avatar_list.length; i++) {
         dbRefUserList.on('child_added', snap => {
             const user_obj = snap.val();
             const img     = $("<img>", {alt: user_obj.username, class: "avatar", src:user_obj.avatar});
-            const link    = $("<a>", {href: "#", src:user_obj.avatar, "data-toggle": "tooltip", title: user_obj.username }).append(img);
+            const link    = $("<a>", {href: "/profiles/" + user_obj.id, src:user_obj.avatar, "data-toggle": "tooltip", title: user_obj.username }).append(img);
             const li = $("<li>", {id: snap.key}).append(link);
             $("ul[id=" + avatar_list[i].id+ "]").append(li);
         });
