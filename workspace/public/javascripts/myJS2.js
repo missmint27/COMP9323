@@ -438,7 +438,7 @@ function room_downvote() {
         url: url,
         method:'put',
     })
-        .done(function (data) { console.log(data); })
+        .done(function (data) { console.log(data);$("#like-number").text(data.new_rank); })
         .fail(function (xhr, status){ console.log(xhr.status); })
 }
 
@@ -449,7 +449,7 @@ function room_upvote() {
         url: url,
         method:'put',
     })
-        .done(function (data) { console.log(data); })
+        .done(function (data) { console.log(data);$("#like-number").text(data.new_rank); })
         .fail(function (xhr, status){ console.log(xhr.status); })
 }
 

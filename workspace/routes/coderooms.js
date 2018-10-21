@@ -338,33 +338,27 @@ router.put('/:roomId/comments/downvote/:path',middleware.isLoggedIn, function(re
     //TODO err handler?
 });
 
-
-//TODO pull not working
 router.put('/:roomId/upvote',middleware.isLoggedIn, function(req, res,next) {
     console.log("modify room upvote.");
     Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {upvote: {_id: req.user.id}}}, {new:true}, function(err, coderoom) {
         if(err) {console.log(err);return next(err);}
-        console.log(coderoom);
+        Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {downvote: req.user.id}}, {new:true}, function(err, coderoom) {
+            if(err) {console.log(err);return next(err);}
+            res.json({'msg': 'Upvoted!', 'new_rank': parseInt(coderoom.upvote.length) - parseInt(coderoom.downvote.length)});
+        });
     });
-    Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {downvote: {_id: req.user.id}}}, {new:true}, function(err, coderoom) {
-        if(err) {console.log(err);return next(err);}
-        console.log(coderoom);
-    });
-    res.json({'msg': 'Upvoted!'});
+
 });
 
-//TODO pull not working
 router.put('/:roomId/downvote',middleware.isLoggedIn, function(req, res, next) {
     console.log("modify room downvote.");
     Coderoom.findByIdAndUpdate(req.params.roomId, {$addToSet: {downvote: {_id: req.user.id}}}, {new:true}, function(err, coderoom) {
         if(err) {console.log(err);return next(err);}
-        console.log(coderoom);
+        Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {upvote: req.user.id}}, {new:true}, function(err, coderoom) {
+            if(err) {console.log(err);return next(err);}
+            res.json({'msg': 'Downvoted!', 'new_rank': parseInt(coderoom.upvote.length) - parseInt(coderoom.downvote.length)});
+        });
     });
-    Coderoom.findByIdAndUpdate(req.params.roomId, {$pull: {upvote: {_id: req.user.id}}}, {new:true}, function(err, coderoom) {
-        if(err) {console.log(err);return next(err);}
-        console.log(coderoom);
-    });
-    res.json({'msg': 'Downvoted!'});
 });
 
 
