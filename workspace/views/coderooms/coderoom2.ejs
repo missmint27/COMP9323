@@ -54,7 +54,6 @@
     
             <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
                 <%if(currentUser){%>
-                    <!--TODO currentUser in passport will not update automatically-->
                     <%if(currentUser.avatar) {%>
                         <img id="logo" src="<%=currentUser.avatar%>" class="avatar" alt=""
                              style="width:50px;height:50px;margin-left:auto; margin-right:auto">
@@ -90,6 +89,8 @@
 
         <div class="d-none d-lg-block" style="margin-bottom: 1em; position: absolute; bottom: 24px;">
             <div style="margin-bottom: 1em">
+                <!--TODO style and place and update-->
+                <div id="like-number"><%=coderoom.room_rank%></div>
                 <%if(currentUser){%>
                     <div class="like-btn-group">
                         <div id="user-like" class='btn-like like' onclick="room_upvote()">

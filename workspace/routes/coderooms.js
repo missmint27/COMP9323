@@ -112,6 +112,7 @@ router.get("/:id",function(req, res, next) {
                 name: results.room.name,
                 id: results.room._id,
                 description: results.room.description,
+                room_rank: results.room.upvote.length - results.room.downvote.length
             }, user: {
                 username: results.user.username,
                 id: results.user.id,
