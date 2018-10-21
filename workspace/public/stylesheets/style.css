@@ -982,7 +982,6 @@ search-icon{
     margin-right: 1rem;
     width: 7px;
     z-index: 100;
-
 }
 .card-likeordislike i {
     border: solid #4abdac;
@@ -995,6 +994,13 @@ search-icon{
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 3px;
+}
+.card-likenum p {
+    color: #4abdac;
+    font-size: 20px;
+    text-shadow:
+            -1px -1px 1px #fff,
+            2px 2px 1px #4abdac69;
 }
 .card-like .card-likenum .card-dislike{
     display: block;
@@ -1105,7 +1111,14 @@ search-icon{
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
-
+#like-number{
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow:
+            1px 1px 0px #2c2c2c,
+            2px 2px 0px rgba(0, 0, 0, 0.2);
+}
 
 /*profile*/
 
