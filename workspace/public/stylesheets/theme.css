@@ -6566,7 +6566,7 @@ h3 + .btn-round, h5 + .btn-round {
 .card {
   margin-bottom: 0.75rem; }
   .card .card-title {
-    max-width: 90%; }
+    max-width: 40%; }
 
 .card-note {
   background: #fff7dd;
@@ -7398,7 +7398,7 @@ label[class*='col'] {
       padding: 1.5rem;
       width: 264px;
       height: 100vh;
-      overflow-y: scroll;
+      /*overflow-y: scroll;*/
       -ms-overflow-style: none;
       flex-direction: column;
       align-items: flex-start; }
