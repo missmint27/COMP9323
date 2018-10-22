@@ -66,7 +66,7 @@ dbRefUserList.on('child_removed', snap => {
 dbRefRoomPermission.on('value', snap => {
     permission_holder = snap.val().userId;
     $("#permission-holder-btn").remove();
-    const button = $("<button>", {id: "permission-holder-btn", class: "btn btn-primary", style: "display: inline; width: 10em; margin-left:13em;"}).text("Permission Holder");
+    const button = $("<button>", {id: "permission-holder-btn", class: "btn btn-primary", style: "display: inline; width: 10em; margin-left:auto;"}).text("Permission Holder");
     $("div[id=" + permission_holder + "] div[class='d-flex align-items-center']").append(button);
     console.log("permission holder: ", permission_holder);
     const permission_write = document.getElementById('write-permission');
@@ -120,7 +120,7 @@ dbRefAskForPermission.on('child_added', snap => {
                 id: "require-btn" + snap.key,
                 'data-dismiss': "modal",
                 class: "btn btn-danger",
-                style: "display: inline; width: 10em; margin-left:13em;"
+                style: "display: inline; width: 10em; margin-left:auto;"
             }).text("Pass Permission").click({passTo: request_user}, passPermission);
             $("div[id=" + request_user + "] div[class='d-flex align-items-center']").append(button);
         }

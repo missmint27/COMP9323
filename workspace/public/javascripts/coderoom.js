@@ -25,12 +25,10 @@ $(function() {
                 if (dragging) {
                     clickY = e.pageY;
                     
-                    //判断拖动的第几个按钮
                     if (index == 0) {
-                        //第一个拖动按钮左边不出界
                         if (clickY > topOffset) {
                             dragBtn.css('top', clickY - 7 - topOffset + 'px');
-                            //按钮移动
+                           
                             dragBtn.prev().height(clickY - topOffset + 'px');
                             nextW2 = clickY - topOffset;
                             dragBtn.next().height(wrapHeight - nextW2);
@@ -54,7 +52,7 @@ $(function() {
         mouseup: function() {
             $(doc).mouseup(function(e) {
                 dragging = false;
-                e.cancelBubble = true; //禁止事件冒泡
+                e.cancelBubble = true; 
             })
         }
     };

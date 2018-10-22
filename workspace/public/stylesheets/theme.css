@@ -7247,7 +7247,6 @@ label[class*='col'] {
   .form-group-users::-webkit-scrollbar {
     display: none; }
   .form-group-users .custom-control {
-    padding-right: 1.5rem;
     padding-left: 0;
     margin-bottom: 0.375rem; }
   .form-group-users .custom-control-label {

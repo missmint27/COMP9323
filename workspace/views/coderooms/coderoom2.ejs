@@ -87,10 +87,10 @@
 
         </div>
 
-        <div class="d-none d-lg-block" style="margin-bottom: 1em; position: absolute; bottom: 24px;">
+        <div class="d-none d-lg-block" style="margin-bottom: 1em; margin-top:195px; bottom: 24px;">
             <div style="margin-bottom: 1em">
                 <!--TODO style and place and update-->
-                <div id="like-number"><%=coderoom.room_rank%></div>
+                <div id="like-number" class="like-text"><%=coderoom.room_rank%></div>
                 <%if(currentUser){%>
                     <div class="like-btn-group">
                         <div id="user-like" class='btn-like like' onclick="room_upvote()">
@@ -127,7 +127,7 @@
                         <a href="/profiles/<%=currentUser.id%>" class="dropdown-item">Profile</a>
                         <a href="/logout" class="dropdown-item">Log Out</a>
                     </div>
-                    <div class="bottom-rigth" style="margin-left: 4em">
+                    <div class="bottom-rigth" style="margin-left: 4em;display:none;">
                             <div class=" mt-2">
                                 <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#task-add-modal">
                                     Create Coderoom
@@ -140,7 +140,7 @@
     </div>
     </div>
     
-    <div id="content" style="height:100vh; width:calc(100vw - 264px)">
+    <div id="content" style="height:100vh; width:calc(100vw - 264px); width:-webkit-calc(100vw-264px);">
         <div class="bg-white breadcrumb-bar" style="padding: 8px 16px; margin-bottom:0px;border-bottom: solid 2px #EEE">
             <nav aria-label="breadcrumb" style="width:100%">
                 <div class="button-group" style="display:inline">
@@ -207,6 +207,7 @@
                         <!--TODO user list-->
                         <div class="users-manage" data-filter-list="form-group-users">
                             <div id="user-group" class="form-group-users">
+
                             </div>
                         </div>
                     </div>
@@ -222,7 +223,7 @@
                 </div>
             </div>
         </div>
-        <div id="chat-content" class="content-container" style="height: calc(100vh - 5rem); display: none;">
+        <div id="chat-content" class="content-container" style="height: calc(100vh - 5rem);height: -webkit-calc(100vh-5rem); display: none;">
             <div class="chat-module" data-filter-list="chat-module-body">
 
                 <div class="chat-module-top">
@@ -288,5 +289,15 @@
 <script>
     $("#write-permission").css('visibility', 'hidden');
     // $("#read-permission").css('visibility', 'hidden');
+</script>
+<script>
+    $(document).ready(function(){
+        if (!$("#user-like").length>0) {
+            $("#like-number").css("transform","none");
+        }
+        if ($("#user-like").length>0) {
+            $("#like-number").removeClass("like-text");
+        }
+    })
 </script>
 </html>
