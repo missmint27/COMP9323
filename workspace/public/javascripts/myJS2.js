@@ -66,7 +66,7 @@ dbRefUserList.on('child_removed', snap => {
 dbRefRoomPermission.on('value', snap => {
     permission_holder = snap.val().userId;
     $("#permission-holder-btn").remove();
-    const button = $("<button>", {id: "permission-holder-btn", class: "btn btn-primary", style: "display: inline; width: 10em; margin-left:auto;"}).text("Permission Holder");
+    const button = $("<button>", {id: "permission-holder-btn", class: "btn btn-primary", style: "display: inline; width: 10em; margin-left:auto; font-weight:300;"}).text("Permission Holder");
     $("div[id=" + permission_holder + "] div[class='d-flex align-items-center']").append(button);
     console.log("permission holder: ", permission_holder);
     const permission_write = document.getElementById('write-permission');
