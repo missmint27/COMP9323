@@ -14,6 +14,8 @@ function follow(user) {
                 .append($("<li>", {class: "profile-li", id: "follower"+data.me.id})
                     .append($("<a>", {href: "/profiles/" + data.me.id})
                         .append($("<img>", {src: data.me.avatar, class:"profile-ava-li", alt:data.me.username, style:"width:50px;height:50px;"}))));
+            let num = parseInt($("span[id='num_followers_inner']").text());
+            $("span[id='num_followers_inner']").text(num + 1);
         })
         .fail(function (xhr, status) { console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg); })
 }
@@ -29,6 +31,10 @@ function unfollow(user) {
         url:url,
         method:"delete",
     })
-        .done(function (data) { $("#follower"+data.me.id).remove(); })
+        .done(function (data) {
+            $("#follower"+data.me.id).remove();
+            let num = parseInt($("span[id='num_followers_inner']").text());
+            $("span[id='num_followers_inner']").text(num - 1);
+        })
         .fail(function (xhr, status) { console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg); })
 }
