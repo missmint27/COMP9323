@@ -10,9 +10,10 @@ function follow(user) {
         method:"put",
     })
         .done(function (data) {
-            $("#follower-list")
-                .append($("<a>", {href: "/profiles/" + data.me.id, id: "follower"+data.me.id})
-                    .append($("<img>", {src: data.me.avatar, class:"profile-ava-li", alt:data.me.username, style:"width:50px;height:50px;"})))
+            $("ul[id='follower-list']")
+                .append($("<li>", {class: "profile-li", id: "follower"+data.me.id})
+                    .append($("<a>", {href: "/profiles/" + data.me.id})
+                        .append($("<img>", {src: data.me.avatar, class:"profile-ava-li", alt:data.me.username, style:"width:50px;height:50px;"}))));
         })
         .fail(function (xhr, status) { console.log('Fail: ' + xhr.status + ', msg: ' + xhr.responseJSON.msg); })
 }
