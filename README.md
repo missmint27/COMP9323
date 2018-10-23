@@ -1,11 +1,16 @@
-# COMP9323
-## codeing review website
+# COMP9323 Codeing review website
+## How to run
 1. install nodejs `$brew install node`
 2. terminal run `$npm install`
 3. check version `$node -v`, mine is v10.11.0; `$npm -v`, mine is 6.4.1. 
 4. Go into "workspace" file
 5. terminal run `$nodemon app.js`
 6. Browser opens `http://127.0.0.1:3000/`
+
+## File structure
+### HTML: workspace/views
+### css: workspace/public/stylesheets
+### main JS: workspace/public/javascripts
 
 ## Operations
 ### 1. sign up/sign in 
