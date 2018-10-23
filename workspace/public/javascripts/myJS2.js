@@ -24,7 +24,7 @@ console.log("roomID: ", roomId);
 //Need further changes for optimization.
 let editor = CodeMirror.fromTextArea(document.getElementById("code_input"), {
     mode: "python",
-    theme: 'lucario',
+    theme: 'rubyblue',
     //theme: "material",
     lineNumbers: true,
 // autoMatchBrackets: true,
@@ -85,7 +85,7 @@ dbRefRoomPermission.on('value', snap => {
                 $("#write-permission").css('visibility', 'visible');
             } else {
                 console.log("You don't have the permission.");
-                editor.setOption("theme", 'lucario');
+                editor.setOption("theme", 'rubyblue');
                 permission_write.className = "no-permission";
                 $("#write-permission").css('visibility', 'hidden');
             }
